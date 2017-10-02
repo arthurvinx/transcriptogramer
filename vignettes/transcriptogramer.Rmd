@@ -1,0 +1,255 @@
+---
+title: "The transcriptogramer user's guide"
+output: 
+  BiocStyle::html_document
+bibliography: cite.bib
+date: '`r NULL`'
+vignette: >
+  %\VignetteIndexEntry{The transcriptogramer user's guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+**Authors**: Diego Morais [aut, cre], Rodrigo Dalmolin [aut]<br />
+**Version**: `r packageDescription("transcriptogramer")[["Version"]]`<br />
+
+# Overview
+The transcriptogramer package is designed for transcriptional analysis
+based on transcriptograms,
+a method to analyze transcriptomes that projects
+expression values on a set of
+ordered proteins, arranged such that the probability that gene products
+participate
+in the same metabolic pathway exponentially decreases with the increase of
+the distance between two proteins of the ordering. Transcriptograms are,
+hence, genome wide gene expression profiles that provide a global view for
+the cellular metabolism, while indicating gene sets whose expression are
+altered [@Silva2014; @Filho2011].
+
+Methods are provided to analyze topological properties of an
+interactome, to generate transcriptograms, to detect and to display
+differentially expressed gene clusters, and to perform a functional 
+enrichment analysis on these clusters.
+
+As a set of ordered proteins is required in order to run the methods,
+datasets are available for four species (Homo sapiens, Mus musculus,
+Saccharomyces cerevisiae and Rattus norvegicus). Each species has three 
+datasets, originated from [STRINGdb](https://string-db.org/) release 10.5
+protein network data, with combined scores equal or above 700, 800 and 900
+(see Hs900, Hs800, Hs700, Mm900, Mm800, Mm700, Sc900, Sc800, Sc700, Rn900,
+Rn800 and Rn700 datasets).
+Custom sets of ordered proteins can be generated from protein network data using
+[The transcriptogramer](https://lief.if.ufrgs.br/pub/biosoftwares/transcriptogramer/)
+on Windows, or the [Seriation package](https://github.com/amamory/seriation) on
+Mac and Linux.
+
+# Quick start
+The first step is to create an Transcriptogram object by running the
+**transcriptogram.preprocess()** function. This example uses a subset of the
+Homo sapiens protein network data, from STRINGdb release 10.5, containing only
+associations of proteins of combined score equal or above 900 (see **Hs900** and
+**association** datasets).
+
+```{r message = FALSE}
+library(transcriptogramer)
+t <- transcriptogram.preprocess(association = association, ordering = Hs900)
+```
+
+## Topological analysis
+There are two methods to perform topological analysis,
+**connectivityProperties()** calculates average graph properties as a function
+of the node connectivity, and **orderingProperties()** calculates graph
+properties projected on the ordered proteins. Some methods, such as
+orderingProperties(), uses a window, region of n (radius * 2 + 1) proteins
+centered at a protein, whose radius changes the output. The Transctiprogram
+object has a **radius** slot that can be setted during, or after, its
+preprocessing.
+
+```{r message = FALSE}
+## during the preprocessing
+
+## this command creates the object and set the radius as 0
+t <- transcriptogram.preprocess(association = association, ordering = Hs900)
+
+## this command creates the object and set the radius as 50
+t <- transcriptogram.preprocess(association = association, ordering = Hs900,
+                                radius = 50)
+```
+```{r message = FALSE}
+## after the preprocessing
+
+## this command modify the radius of an existing Transcriptogram object
+t <- setRadius(.Object = t, radius = 25)
+
+## this command get the radius of an existing Transcriptogram object
+r <- getSlot(.Object = t, slot = "radius")
+```
+
+The output of the orderingProperties() method is partially affected by
+the radius slot.
+
+```{r message = FALSE}
+oPropertiesR25 <- orderingProperties(.Object = t)
+```
+```{r eval = FALSE}
+## slight change of radius
+t <- setRadius(.Object = t, radius = 30)
+
+oPropertiesR30 <- orderingProperties(.Object = t)
+```
+
+As the connectivityProperties() method does not uses a window, its output is not
+affected by the radius slot.
+
+```{r message = FALSE}
+cProperties <- connectivityProperties(.Object = t)
+```
+
+## Transcriptogram
+A transcriptogram is generated in two steps and requires expression values,
+from microarray or RNA-Seq assays, and a dictionary. This example uses the
+datasets **GSE9988**,
+which contains normalized expression values of 3 cases and 3 controls referring
+to the innate immune responses to TREM-1 activation, and **GPL570**, a mapping
+between ENSEMBL Peptide ID and Affymetrix Human Genome U133 Plus 2.0 Array
+probe identifier.
+
+The methods to generate a transcriptogram are **transcriptogramStep1()** and
+**transcriptogramStep2()**. The transcriptogramStep1() assigns to each protein,
+of each transcriptome sample, the average of the expression values of all the
+identifiers related to it.
+
+```{r message = FALSE}
+t <- transcriptogramStep1(.Object = t, expression = GSE9988,
+                          dictionary = GPL570)
+```
+
+To each position of the ordering, the transcriptogramStep2() method assigns a
+value equal to the average of the expression values inside a window, which
+considers periodic boundary conditions to deal with proteins near the ends of
+the ordering, in order to reduce random noise.
+
+```{r eval = FALSE}
+t <- transcriptogramStep2(.Object = t)
+```
+
+The Transcriptogram object has slots to store the outputs of the
+transcriptogramStep1() and transcriptogramStep2() methods, called
+transcriptogramS1 and transcriptogramS2 respectively. As the output of some
+methods are affected by the content of the transcriptogramS2 slot, it can be
+recalculated using the content of the transcriptogramS1 slot.
+
+```{r eval = FALSE}
+t <- setRadius(.Object = t, radius = 50)
+t <- transcriptogramStep2(.Object = t)
+```
+
+## Functional enrichment analysis
+As nearby genes of a transcriptogram have a high probability to interact with
+each other, gene sets whose expression are altered can be identified using the
+`r Biocpkg("limma")` package. The **differentiallyExpressed()** method uses the
+limma package to identify differentially expressed genes, for the contrast
+"case-control", grouping as a cluster
+a set of genes which positions are within a radius range specified by the
+content of the radius slot.
+
+For this example, the p-value threshold for false
+discovery rate will be setted as 0.005. If the name of a species is provided
+on the input, the `r Biocpkg("biomaRt")` package will be used to translate the
+ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data frame can be
+provided and used instead.
+The levels argument classify the columns of
+the transcriptogramS2 slot referring to samples, as there are 6 columns (see
+dataset GSE9988), is created a logical vector that uses TRUE to label the
+columns referring to controls samples, and FALSE to label the
+columns referring to case samples.
+
+```{r eval = FALSE}
+levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005)
+```
+```{r eval = FALSE}
+## this command also translates ENSEMBL Peptide IDs to Symbols
+## internet connection is required
+t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
+                             species = "Homo sapiens")
+
+## this command also translates ENSEMBL Peptide IDs to Symbols
+## see dataset DEsymbols
+t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
+                             species = DEsymbols)
+```
+
+This method also produces a plot referring to its output. In this case,
+four clusters were detected, and each one is represented by a color. It is
+important to mention that not all the colored genes were detected as
+differentially expressed, but, as they were within the radius specified by
+the content of the radius slot, they were included in a cluster. The genes that
+are above the horizontal blue line are upregulated, and the genes that
+are below are downregulated.
+
+![](Rplot.png)
+
+The differentially expressed genes identified by this method are stored in the
+DE slot of the Transcriptogram object, its content can be seen using the getSlot
+method. By default, the p-values are adjusted by the Benjamini-Hochberg
+procedure.
+
+```{r eval = FALSE}
+View(getSlot(.Object = t, slot = "DE"))
+
+##this also works
+View(t@DE)
+```
+
+The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to
+display graphs of the differentially expressed clusters. This method returns an
+object of the RedPort Class, allowing interactions via console. The RedeR
+package requires the Java Runtime Environment (>= 6). This method may take some
+time depending on the number of clusters, and nodes per cluster.
+
+
+```{r eval = FALSE}
+rdp <- clusterVisualization(.Object = t)
+
+## if the ENSEMBL Peptide IDs were translated to Symbols
+rdp <- clusterVisualization(.Object = t, symbolAsNodeAlias = TRUE)
+```
+
+![](RedeR.png)
+
+The **clusterEnrichment()** method perform a functional enrichment analysis
+using the `r Biocpkg("topGO")` package. By default, the universe is composed by
+all the proteins present in the transcriptogramS2 slot, the ontology is setted
+to biological process, the algorithm is setted to classic, the statistic is
+setted to fisher, and the p-values are adjusted by the Benjamini-Hochberg
+procedure. For this example, the p-value threshold for false
+discovery rate will be setted as 0.005. This method uses the biomaRt package to
+build a gene2GO list if the name of a species is provided on the input,
+alternatively, a data frame can be provided and used instead.
+
+```{r eval = FALSE}
+## internet connection is required
+terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
+                           pValue = 0.005)
+
+## see HsBPTerms dataset
+terms <- clusterEnrichment(.Object = t, species = HsBPTerms,
+                           pValue = 0.005)
+```
+```{r echo = FALSE}
+load("terms.RData")
+```
+```{r}
+head(terms)
+```
+
+# Session info
+
+```{r}
+sessionInfo()
+```
+
+```{r}
+warnings()
+```
+# References

@@ -1,0 +1,628 @@
+# orderingProperties ####
+
+#' Calculates graph properties projected on the ordered proteins
+#'
+#' Calculates protein (node) properties, such as: degree/connectivity,
+#' number of triangles and
+#' clustering coefficient; and properties of the window, region of n
+#' (radius * 2 + 1) proteins
+#' centered at a protein, such as: connectivity, clustering coefficient
+#' and modularity.
+#'
+#' @details
+#' Connectivity/degree of a node is the number of edges it presents.
+#' A triangle of a node represents a
+#' pair of connected neighbors, the number of triangles on the adjacency
+#' list of a node is required to
+#' calculate its clustering coefficient. The clustering coefficient of a
+#' node measures, in the interval [0, 1],
+#' the likelihood that any two of its neighbors are themselves connected,
+#' this is calculated by the ratio
+#' between the number of triangles that the node has, and the maximum
+#' possible number of edges on its cluster
+#' (nodeTriangles / (nodeDegree * (nodeDegree - 1) / 2)). The window
+#' connectivity is the average connectivity
+#' calculated over the window. The window clustering coefficient, a value
+#' in the interval [0, 1],
+#' is the average clustering coefficient calculated over the window.
+#' The window modularity, a value in the
+#' interval [0, 1], is defined as the ratio between the total number
+#' of edges between any two nodes of the window,
+#' and the sum of the degrees of the nodes presents in the window.
+#' The window considers periodic boundary
+#' conditions to deal with proteins near the ends of the ordering.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @return This method returns a data frame containing: ENSEMBL Peptide ID,
+#' its position on the ordering,
+#' node degree, number of triangles and clustering coefficient, and window
+#' connectivity,
+#' clustering coefficient and modularity.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 2)
+#' \dontrun{
+#' oProperties <- orderingProperties(transcriptogram)
+#' }
+#'
+#' @importFrom foreach %dopar%
+#' @importFrom igraph graph.data.frame
+#' @importFrom igraph count_triangles
+#' @importFrom progress progress_bar
+#' @importFrom parallel detectCores
+#' @importFrom snow makeSOCKcluster
+#' @importFrom snow stopCluster
+#' @importFrom doSNOW registerDoSNOW
+#' @importFrom foreach foreach
+#'
+#' @seealso
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#'
+#' @references
+#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
+#' Transcriptograms: Reproducibility enhancement and differential expression
+#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
+#' 1181 (2014).
+#'
+#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
+#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
+#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
+#' PMID:21169199
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname orderingProperties-method
+#' @export
+
+setGeneric("orderingProperties", function(.Object) standardGeneric("orderingProperties"),
+    package = "transcriptogramer")
+
+# connectivityProperties ####
+
+#' Calculates average graph properties as a function of the node connectivity
+#'
+#' Calculates protein (node) connectivity/degree (k) and network properties as
+#' a function of this connectivity,
+#' such as: probability of a protein of the graph has degree k, average
+#' assortativity
+#' of the nodes of degree k, and the average clustering coefficient of the
+#' nodes of degree k.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @details
+#' The assortativity of a node can be measured by the average degree of its
+#' neighbors
+#'
+#' @return This method returns a data frame containing: unique degrees (k) of
+#' the nodes of the graph,
+#' probability (pk) of a node of the graph has degree k, average assortativity
+#' (ak) of the nodes of degree
+#' k, and the average clustering coefficient (ck) of the nodes of degree k
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900)
+#' \dontrun{
+#' cProperties <- connectivityProperties(transcriptogram)
+#' }
+#'
+#' @seealso
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @importFrom igraph graph.data.frame
+#' @importFrom igraph count_triangles
+#'
+#' @docType methods
+#' @rdname connectivityProperties-method
+#' @export
+
+setGeneric("connectivityProperties", function(.Object) standardGeneric("connectivityProperties"),
+    package = "transcriptogramer")
+
+# transcriptogramS1 ####
+
+#' Calculates the average of the expression values related to the same protein
+#'
+#' For each transcriptome sample, this method assigns to each protein the
+#' average of the expression values of all the identifiers related to
+#' it. It is necessary a
+#' \code{dictionary} to map the identifiers to proteins.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param expression A matrix, or data frame, containing normalized expression
+#' values from samples of microarrays
+#' or RNA-Seq
+#'
+#' @param dictionary A matrix, or data frame, containing two columns, the first
+#' column must contains the
+#' ENSEMBL Peptide ID, and the second column must contains values that appear
+#' as rownames in \code{expression},
+#' in order to recognize the ENSEMBL Peptide ID of the other column
+#'
+#' @return This method creates a data frame to feed the transcriptogramS1
+#' slot of an object
+#' of class Transcriptogram. Each row of the data frame contains: an ENSEMBL
+#' Peptide ID, its
+#' respective position in the ordering and the mean of the expression values
+#' of the identifiers
+#' related to the same protein.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' }
+#'
+#' @importFrom foreach %dopar%
+#' @importFrom progress progress_bar
+#' @importFrom parallel detectCores
+#' @importFrom snow makeSOCKcluster
+#' @importFrom snow stopCluster
+#' @importFrom doSNOW registerDoSNOW
+#' @importFrom foreach foreach
+#'
+#'
+#' @seealso
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{GSE9988}
+#' \link[transcriptogramer]{GPL570}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @references
+#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
+#' Transcriptograms: Reproducibility enhancement and differential expression
+#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
+#' 1181 (2014).
+#'
+#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
+#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
+#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
+#' PMID:21169199
+#'
+#' @docType methods
+#' @rdname transcriptogramStep1-method
+#' @export
+
+setGeneric("transcriptogramStep1", function(.Object,
+    expression, dictionary) standardGeneric("transcriptogramStep1"),
+    package = "transcriptogramer")
+
+# transcriptogramS2 ####
+
+#' Calculates the average of the expression values using a sliding window
+#'
+#' To each position of the ordering, this method assigns a value
+#' equal to the average of the expression values inside a window, region of n
+#' (radius * 2 + 1) proteins
+#' centered at a protein. The window considers periodic boundary conditions to
+#' deal
+#' with proteins near the ends of the ordering.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @return This method creates a data frame to feed the transcriptogramS2
+#' slot of an object
+#' of class Transcriptogram. Each row of the data frame contains: the ENSEMBL
+#' Peptide ID used as center of the
+#' window, its position on the ordering, and the mean of the expression values
+#' of the window.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' }
+#'
+#' @importFrom foreach %dopar%
+#' @importFrom progress progress_bar
+#' @importFrom parallel detectCores
+#' @importFrom snow makeSOCKcluster
+#' @importFrom snow stopCluster
+#' @importFrom doSNOW registerDoSNOW
+#' @importFrom foreach foreach
+#'
+#' @seealso
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{GSE9988}
+#' \link[transcriptogramer]{GPL570}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogramStep1-method}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @references
+#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
+#' Transcriptograms: Reproducibility enhancement and differential expression
+#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
+#' 1181 (2014).
+#'
+#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
+#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
+#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
+#' PMID:21169199
+#'
+#' @docType methods
+#' @rdname transcriptogramStep2-method
+#' @export
+
+setGeneric("transcriptogramStep2", function(.Object) standardGeneric("transcriptogramStep2"),
+    package = "transcriptogramer")
+
+# setRadius ####
+
+#' Changes the radius
+#'
+#' Changes the value of the radius slot of an object of class Transcriptogram.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param radius An integer, non negative, number referring to the window
+#' radius required for some
+#' methods
+#'
+#' @return This method changes the value of the radius slot of an object of
+#' class Transcriptogram.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' transcriptogram <- setRadius(transcriptogram, 80)
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{transcriptogramStep2-method}
+#' \link[transcriptogramer]{orderingProperties}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname setRadius-method
+#' @export
+
+setGeneric("setRadius", function(.Object,
+    radius) standardGeneric("setRadius"),
+    package = "transcriptogramer")
+
+# getSlot ####
+
+#' Get the content of a slot
+#'
+#' Get the content of a slot of an object of class Transcriptogram.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param slot A character specifying the slot
+#'
+#' @return This method returns the content of the specified slot of an object
+#' of class Transcriptogram.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' ord <- getSlot(transcriptogram, 'ordering')
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{Transcriptogram-class}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname getSlot-method
+#' @export
+
+setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
+    package = "transcriptogramer")
+
+# differentiallyExpressed ####
+
+#' Identify which genes are differentially expressed
+#'
+#' This method uses the limma package to identify which genes are
+#' differentially expressed,
+#' meeting the \code{pValue} requirement, for the contrast "case-control".
+#' The \code{levels} lenght must be
+#' equal to the number of samples present in the transcriptogramS2 slot of
+#' the \code{.Object}, and its contents
+#' is related to the order that the samples appear. FALSE must be used to
+#' indicate case samples,
+#' and TRUE to indicate control samples. If \code{species} is NULL, no
+#' translation will be done, if \code{species} is a character,
+#' the biomaRt package will be used to translate the ENSEMBL
+#' Peptide ID to Symbol
+#' (Gene Name), and if \code{species} is a data frame, it will be used
+#' instead.
+#' If the translation fail for some protein, its ENSEMBL
+#' Peptide ID will be present
+#' into the Symbol column. This method also groups the proteins detected as
+#' differentially expressed
+#' in clusters, and plots a graphical representation of the groupings.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param levels A logical vector that classify the columns, referring to
+#' samples, of the transcriptogramS2 slot of the \code{.Object}
+#'
+#' @param pValue A numeric value between 0 and 1 giving the required
+#' family-wise error rate
+#' or false discovery rate, the default value is 0.05
+#'
+#' @param species If not NULL, a character string that will be used,
+#' ignoring case sensitivity,
+#' to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data frame
+#' containing two columns, the first one with ENSEMBL Peptide IDs (character),
+#' which may, or not, to contain the taxonomy ID of the species as prefix,
+#' and the second containing its respective Symbol (character)
+#'
+#' @param adjustMethod Character string specifying p-value adjustment method,
+#' the possible values are
+#' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
+#' for this argument is
+#' 'BH'
+#'
+#' @return This method creates a data frame to feed the DE slot of an object
+#' of class Transcriptogram. This data frame of differentially expressed
+#' proteins
+#' contains the log Fold Change, the p-values and an
+#' integer number that indicates if the protein is downregulated or upregulated.
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+#'
+#' ## translating ENSEMBL Peptide IDs to Symbols
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' "Homo sapiens")
+#'
+#' ## this call also works
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' "H sapiens")
+#'
+#' ## this call also works
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' DEsymbols)
+#' }
+#'
+#' @seealso
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{GSE9988}
+#' \link[transcriptogramer]{GPL570}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{DEsymbols}
+#' \link[transcriptogramer]{transcriptogramStep1-method}
+#' \link[transcriptogramer]{transcriptogramStep2-method}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @importFrom limma lmFit
+#' @importFrom limma makeContrasts
+#' @importFrom limma eBayes
+#' @importFrom limma decideTests
+#' @importFrom limma contrasts.fit
+#' @importFrom graphics plot
+#' @importFrom graphics grid
+#' @importFrom graphics abline
+#' @importFrom graphics lines
+#' @importFrom graphics legend
+#' @importFrom grDevices rainbow
+#' @importFrom stats na.omit
+#' @importFrom stats model.matrix
+#' @importFrom stats smooth.spline
+#' @importFrom biomaRt useMart
+#' @importFrom biomaRt getBM
+#'
+#' @docType methods
+#' @rdname differentiallyExpressed-method
+#' @export
+
+setGeneric("differentiallyExpressed", function(.Object,
+    levels, pValue = 0.05, species = NULL,
+    adjustMethod = "BH") standardGeneric("differentiallyExpressed"),
+    package = "transcriptogramer")
+
+# clusterVisualization ####
+
+#' Displays graphs of the differentially expressed clusters
+#'
+#' This method uses the RedeR package to display graphs of the differentially
+#' expressed clusters.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param symbolAsNodeAlias Logical value, should be setted as TRUE only if the
+#' DE slot of \code{.Object}
+#' contains a column, named 'Symbol', for the Symbols
+#'
+#' @param maincomp Logical value, whether to display only the main component of
+#' each cluster
+#'
+#' @param connected Logical value, whether to display only connected nodes
+#'
+#' @param host The domain name of the machine that is running the RedeR XML-RPC
+#' server
+#'
+#' @param port An integer specifying the port on which the XML-RPC server should
+#' listen
+#'
+#' @return This function returns an object of the RedPort Class
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' "Homo sapiens")
+#' rdp <- clusterVisualization(transcriptogram, TRUE)
+#' }
+#'
+#' @seealso
+#' \link[transcriptogramer]{differentiallyExpressed-method}
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{GSE9988}
+#' \link[transcriptogramer]{GPL570}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogramStep1-method}
+#' \link[transcriptogramer]{transcriptogramStep2-method}
+#' \link[RedeR]{RedPort}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @details
+#' RedeR package requirements: Java Runtime Environment (>= 6)
+#'
+#' @importFrom RedeR RedPort
+#' @importFrom RedeR calld
+#' @importFrom RedeR subg
+#' @importFrom RedeR att.setv
+#' @importFrom RedeR addGraph
+#' @importFrom RedeR selectNodes
+#' @importFrom RedeR relax
+#' @importFrom grDevices rainbow
+#' @importFrom igraph graph.data.frame
+#'
+#' @docType methods
+#' @rdname clusterVisualization-method
+#' @export
+
+setGeneric("clusterVisualization", function(.Object,
+    symbolAsNodeAlias = FALSE, maincomp = FALSE,
+    connected = FALSE, host = "127.0.0.1",
+    port = 9091) standardGeneric("clusterVisualization"),
+    package = "transcriptogramer")
+
+# clusterEnrichment ####
+
+#' Term enrichment
+#'
+#' If \code{species} is a character, this method uses the biomaRt package to
+#' build a gene2GO list, if \code{species} is a data frame, it will be used
+#' instead.
+#' The gene2GO list will be used with the
+#' package topGO to detect the most significant terms of each cluster present
+#' in the DE slot of the
+#' \code{.Object}.
+#'
+#' @param .Object An object of class Transcriptogram
+#'
+#' @param universe A character vector containing ENSEMBL Peptide IDs, or NULL,
+#' if the universe
+#' is composed by all the proteins present in the transcriptogramS2 slot of
+#' \code{.Object}
+#'
+#' @param species A character string specifying the species; or a data frame
+#' containing two columns, the first one with ENSEMBL Peptide IDs (character),
+#' which may, or not, to contain the taxonomy ID of the species as prefix,
+#' and the second containing its respective Gene Ontology term (character)
+#'
+#' @param ontology A character string specifying the Gene Ontology domain,
+#' ignoring case sensitivity,
+#' the possible values are 'biological process', 'cellular component' and
+#' 'molecular function',
+#' the default value for this argument is 'biological process'
+#'
+#' @param algorithm Character string specifying which algorithm to use, the
+#' possible values are
+#' 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
+#' the default value for this argument is 'classic'
+#'
+#' @param statistic Character string specifying which test to use, the possible
+#' values are
+#' 'fisher', 'ks', 't', 'sum' and 'globaltest',
+#' the default value for this argument is 'fisher'
+#'
+#' @param pValue A numeric value between 0 and 1 giving the required
+#' family-wise error rate or false discovery rate, the default value is 0.05
+#'
+#' @param adjustMethod Character string specifying p-value adjustment method,
+#' the possible values are
+#' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
+#' 'bonferroni', and 'holm',
+#' the default value for this argument is 'BH'
+#'
+#' @return A data frame containing the most significant terms of each cluster
+#'
+#' @examples
+#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+#' terms <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
+#' pValue = 0.005)
+#'
+#' ## this call also works
+#' terms <- clusterEnrichment(transcriptogram, species = HsBPTerms,
+#' pValue = 0.005)
+#' }
+#'
+#' @seealso
+#' \link[transcriptogramer]{differentiallyExpressed-method}
+#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{GSE9988}
+#' \link[transcriptogramer]{GPL570}
+#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{HsBPTerms}
+#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogramStep1-method}
+#' \link[transcriptogramer]{transcriptogramStep2-method}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname clusterEnrichment-method
+#' @export
+#'
+#' @importFrom methods new
+#' @importClassesFrom topGO topGOdata
+#' @importFrom topGO groupGOTerms
+#' @importFrom topGO annFUN.gene2GO
+#' @importFrom topGO GenTable
+#' @importFrom topGO runTest
+#' @importFrom biomaRt useMart
+#' @importFrom biomaRt getBM
+#' @importFrom stats na.omit
+#' @importFrom stats p.adjust
+#' @importFrom snow stopCluster
+#' @importFrom snow parLapply
+#' @importFrom snow makeSOCKcluster
+#' @importFrom parallel detectCores
+
+setGeneric("clusterEnrichment", function(.Object,
+    universe = NULL, species, ontology = "biological process",
+    algorithm = "classic", statistic = "fisher",
+    pValue = 0.05, adjustMethod = "BH") standardGeneric("clusterEnrichment"),
+    package = "transcriptogramer")
