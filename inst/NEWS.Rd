@@ -4,6 +4,6 @@
 
 \section{Version 0.99.0}{
   \itemize{
-    \item First submission of transcriptogramer to Bioconductor [YYYY-MM-DD].
+    \item First submission of transcriptogramer to Bioconductor [2017-10-02].
   }
 }
