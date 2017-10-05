@@ -58,7 +58,8 @@
 #'
 #' A subset of the Homo sapiens protein network data from STRINGdb,
 #' release 10.5. This subset
-#' contains only associations of proteins of combined score equal or above 900.
+#' contains only associations of proteins of combined score greater than or
+#' equal to 900.
 #'
 #' @format Each row of the data frame contains two variables:
 #' \describe{
@@ -77,11 +78,11 @@
 
 "association"
 
-#' Ordered Homo sapiens proteins of combined score equal or above 700
+#' Ordered Homo sapiens proteins of combined score greater than or equal to 700
 #'
 #' A character vector containing the Homo sapiens proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 700.
+#' of combined score greater than or equal to 700.
 #'
 #' @examples
 #' Hs700
@@ -91,11 +92,11 @@
 
 "Hs700"
 
-#' Ordered Homo sapiens proteins of combined score equal or above 800
+#' Ordered Homo sapiens proteins of combined score greater than or equal to 800
 #'
 #' A character vector containing the Homo sapiens proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 800.
+#' of combined score greater than or equal to 800.
 #'
 #' @examples
 #' Hs800
@@ -105,11 +106,11 @@
 
 "Hs800"
 
-#' Ordered Homo sapiens proteins of combined score equal or above 900
+#' Ordered Homo sapiens proteins of combined score greater than or equal to 900
 #'
 #' A character vector containing the Homo sapiens proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 900.
+#' of combined score greater than or equal to 900.
 #'
 #' @examples
 #' Hs900
@@ -119,11 +120,12 @@
 
 "Hs900"
 
-#' Ordered Rattus norvegicus proteins of combined score equal or above 700
+#' Ordered Rattus norvegicus proteins of combined score greater than or equal
+#' to 700
 #'
 #' A character vector containing the Rattus norvegicus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 700.
+#' of combined score greater than or equal to 700.
 #'
 #' @examples
 #' Rn700
@@ -133,11 +135,12 @@
 
 "Rn700"
 
-#' Ordered Rattus norvegicus proteins of combined score equal or above 800
+#' Ordered Rattus norvegicus proteins of combined score greater than or equal
+#' to 800
 #'
 #' A character vector containing the Rattus norvegicus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 800.
+#' of combined score greater than or equal to 800.
 #'
 #' @examples
 #' Rn800
@@ -147,11 +150,12 @@
 
 "Rn800"
 
-#' Ordered Rattus norvegicus proteins of combined score equal or above 900
+#' Ordered Rattus norvegicus proteins of combined score greater than or equal
+#' to 900
 #'
 #' A character vector containing the Rattus norvegicus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 900.
+#' of combined score greater than or equal to 900.
 #'
 #' @examples
 #' Rn900
@@ -161,11 +165,11 @@
 
 "Rn900"
 
-#' Ordered Mus musculus proteins of combined score equal or above 700
+#' Ordered Mus musculus proteins of combined score greater than or equal to 700
 #'
 #' A character vector containing the Mus musculus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 700.
+#' of combined score greater than or equal to 700.
 #'
 #' @examples
 #' Mm700
@@ -175,11 +179,11 @@
 
 "Mm700"
 
-#' Ordered Mus musculus proteins of combined score equal or above 800
+#' Ordered Mus musculus proteins of combined score greater than or equal to 800
 #'
 #' A character vector containing the Mus musculus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 800.
+#' of combined score greater than or equal to 800.
 #'
 #' @examples
 #' Mm800
@@ -189,11 +193,11 @@
 
 "Mm800"
 
-#' Ordered Mus musculus proteins of combined score equal or above 900
+#' Ordered Mus musculus proteins of combined score greater than or equal to 900
 #'
 #' A character vector containing the Mus musculus proteins, from STRINGdb
 #' release 10.5,
-#' of combined score equal or above 900.
+#' of combined score greater than or equal to 900.
 #'
 #' @examples
 #' Mm700
@@ -203,12 +207,12 @@
 
 "Mm900"
 
-#' Ordered Saccharomyces cerevisiae proteins of combined score equal or above
-#' 700
+#' Ordered Saccharomyces cerevisiae proteins of combined score greater than or
+#' equal to 700
 #'
 #' A character vector containing the Saccharomyces cerevisiae proteins, from
 #' STRINGdb release 10.5,
-#' of combined score equal or above 700.
+#' of combined score greater than or equal to 700.
 #'
 #' @examples
 #' Sc700
@@ -218,12 +222,12 @@
 
 "Sc700"
 
-#' Ordered Saccharomyces cerevisiae proteins of combined score equal or above
-#' 800
+#' Ordered Saccharomyces cerevisiae proteins of combined score greater than or
+#' equal to 800
 #'
 #' A character vector containing the Saccharomyces cerevisiae proteins, from
 #' STRINGdb release 10.5,
-#' of combined score equal or above 800.
+#' of combined score greater than or equal to 800.
 #'
 #' @examples
 #' Sc800
@@ -233,12 +237,12 @@
 
 "Sc800"
 
-#' Ordered Saccharomyces cerevisiae proteins of combined score equal or above
-#' 900
+#' Ordered Saccharomyces cerevisiae proteins of combined score greater than or
+#' equal to 900
 #'
 #' A character vector containing the Saccharomyces cerevisiae proteins, from
 #' STRINGdb release 10.5,
-#' of combined score equal or above 900.
+#' of combined score greater than or equal to 900.
 #'
 #' @examples
 #' Sc900

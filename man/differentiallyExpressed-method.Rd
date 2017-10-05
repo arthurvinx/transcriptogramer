@@ -43,7 +43,7 @@ contains the log Fold Change, the p-values and an
 integer number that indicates if the protein is downregulated or upregulated.
 }
 \description{
-This method uses the limma package to identify which genes are
+This method uses the \pkg{limma} package to identify which genes are
 differentially expressed,
 meeting the \code{pValue} requirement, for the contrast "case-control".
 The \code{levels} lenght must be
@@ -53,7 +53,7 @@ is related to the order that the samples appear. FALSE must be used to
 indicate case samples,
 and TRUE to indicate control samples. If \code{species} is NULL, no
 translation will be done, if \code{species} is a character,
-the biomaRt package will be used to translate the ENSEMBL
+the \pkg{biomaRt} package will be used to translate the ENSEMBL
 Peptide ID to Symbol
 (Gene Name), and if \code{species} is a data frame, it will be used
 instead.
@@ -75,24 +75,23 @@ transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 "Homo sapiens")
 
-## this call also works
+## these calls also works
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 "H sapiens")
 
-## this call also works
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 DEsymbols)
 }
 
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{GSE9988}
-\link[transcriptogramer]{GPL570}
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{association}
-\link[transcriptogramer]{DEsymbols}
-\link[transcriptogramer]{transcriptogramStep1-method}
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{GSE9988},
+\link[transcriptogramer]{GPL570},
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{association},
+\link[transcriptogramer]{DEsymbols},
+\link[transcriptogramer]{transcriptogramStep1-method},
 \link[transcriptogramer]{transcriptogramStep2-method}
 }
 \author{

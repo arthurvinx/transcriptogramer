@@ -18,7 +18,7 @@ links <- links[which(links$protein1 %in% ord),]
 t <- transcriptogram.preprocess(links, ord, 2)
 
 testOrderingProperties <- function(){
-        oProperties <- orderingProperties(t)
+        oProperties <- orderingProperties(t, nCores = TRUE)
         checkTrue(is.data.frame(oProperties) &&
             ncol(oProperties) == 8 && nrow(oProperties) ==
             1000 && oProperties[757, 5] ==
@@ -29,8 +29,8 @@ testOrderingProperties <- function(){
 
 testTranscriptogramStep2 <- function(){
         t <- transcriptogramStep1(t, GSE9988,
-            GPL570)
-        t <- transcriptogramStep2(t)
+            GPL570, nCores = TRUE)
+        t <- transcriptogramStep2(t, nCores = TRUE)
         checkTrue(class(t) == "Transcriptogram" &&
             is.data.frame(t@transcriptogramS2) &&
             nrow(t@transcriptogramS2) ==

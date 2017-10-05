@@ -31,23 +31,23 @@ differentially expressed gene clusters, and to perform a functional
 enrichment analysis on these clusters.
 
 As a set of ordered proteins is required in order to run the methods,
-datasets are available for four species (Homo sapiens, Mus musculus,
-Saccharomyces cerevisiae and Rattus norvegicus). Each species has three 
+datasets are available for four species (*Homo sapiens*, *Mus musculus*,
+*Saccharomyces cerevisiae* and *Rattus norvegicus*). Each species has three 
 datasets, originated from [STRINGdb](https://string-db.org/) release 10.5
-protein network data, with combined scores equal or above 700, 800 and 900
-(see Hs900, Hs800, Hs700, Mm900, Mm800, Mm700, Sc900, Sc800, Sc700, Rn900,
-Rn800 and Rn700 datasets).
+protein network data, with combined scores greater than or equal to 700, 800
+and 900 (see **Hs900**, **Hs800**, **Hs700**, **Mm900**, **Mm800**, **Mm700**,
+**Sc900**, **Sc800**, **Sc700**, **Rn900**, **Rn800** and **Rn700** datasets).
 Custom sets of ordered proteins can be generated from protein network data using
 [The transcriptogramer](https://lief.if.ufrgs.br/pub/biosoftwares/transcriptogramer/)
 on Windows, or the [Seriation package](https://github.com/amamory/seriation) on
 Mac and Linux.
 
 # Quick start
-The first step is to create an Transcriptogram object by running the
+The first step is to create a Transcriptogram object by running the
 **transcriptogram.preprocess()** function. This example uses a subset of the
-Homo sapiens protein network data, from STRINGdb release 10.5, containing only
-associations of proteins of combined score equal or above 900 (see **Hs900** and
-**association** datasets).
+*Homo sapiens* protein network data, from STRINGdb release 10.5, containing only
+associations of proteins of combined score greater than or equal to 900
+(see **Hs900** and **association** datasets).
 
 ```{r message = FALSE}
 library(transcriptogramer)
@@ -60,27 +60,27 @@ There are two methods to perform topological analysis,
 of the node connectivity, and **orderingProperties()** calculates graph
 properties projected on the ordered proteins. Some methods, such as
 orderingProperties(), uses a window, region of n (radius * 2 + 1) proteins
-centered at a protein, whose radius changes the output. The Transctiprogram
+centered at a protein, whose radius changes the output. The Transcriptogram
 object has a **radius** slot that can be setted during, or after, its
-preprocessing.
+preprocessing (see **Transcriptogram-class** documentation).
 
 ```{r message = FALSE}
 ## during the preprocessing
 
-## this command creates the object and set the radius as 0
+## creating the object and setting the radius as 0
 t <- transcriptogram.preprocess(association = association, ordering = Hs900)
 
-## this command creates the object and set the radius as 50
+## creating the object and setting the radius as 50
 t <- transcriptogram.preprocess(association = association, ordering = Hs900,
                                 radius = 50)
 ```
 ```{r message = FALSE}
 ## after the preprocessing
 
-## this command modify the radius of an existing Transcriptogram object
+## modifying the radius of an existing Transcriptogram object
 t <- setRadius(.Object = t, radius = 25)
 
-## this command get the radius of an existing Transcriptogram object
+## getting the radius of an existing Transcriptogram object
 r <- getSlot(.Object = t, slot = "radius")
 ```
 
@@ -94,6 +94,7 @@ oPropertiesR25 <- orderingProperties(.Object = t)
 ## slight change of radius
 t <- setRadius(.Object = t, radius = 30)
 
+## this output is partially different comparing to oPropertiesR25
 oPropertiesR30 <- orderingProperties(.Object = t)
 ```
 
@@ -159,7 +160,7 @@ ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data frame can be
 provided and used instead.
 The levels argument classify the columns of
 the transcriptogramS2 slot referring to samples, as there are 6 columns (see
-dataset GSE9988), is created a logical vector that uses TRUE to label the
+dataset **GSE9988**), is created a logical vector that uses TRUE to label the
 columns referring to controls samples, and FALSE to label the
 columns referring to case samples.
 
@@ -168,13 +169,12 @@ levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005)
 ```
 ```{r eval = FALSE}
-## this command also translates ENSEMBL Peptide IDs to Symbols
-## internet connection is required
+## translating ENSEMBL Peptide IDs to Symbols
+## Internet connection is required for this command
 t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
                              species = "Homo sapiens")
 
-## this command also translates ENSEMBL Peptide IDs to Symbols
-## see dataset DEsymbols
+## translating ENSEMBL Peptide IDs to Symbols using the DEsymbols dataset
 t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
                              species = DEsymbols)
 ```
@@ -197,22 +197,21 @@ procedure.
 ```{r eval = FALSE}
 View(getSlot(.Object = t, slot = "DE"))
 
-##this also works
+##this command also works
 View(t@DE)
 ```
 
 The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to
-display graphs of the differentially expressed clusters. This method returns an
-object of the RedPort Class, allowing interactions via console. The RedeR
-package requires the Java Runtime Environment (>= 6). This method may take some
-time depending on the number of clusters, and nodes per cluster.
+display graphs of the differentially expressed clusters and returns an
+object of the RedPort Class, allowing interactions through functions
+of the RedeR package. This method may take some time depending on the number of
+clusters, and nodes per cluster, and requires the Java Runtime Environment
+(>= 6). If the DE slot of the Transcriptogram object has a column named Symbol,
+its contents will be used as node alias.
 
 
 ```{r eval = FALSE}
 rdp <- clusterVisualization(.Object = t)
-
-## if the ENSEMBL Peptide IDs were translated to Symbols
-rdp <- clusterVisualization(.Object = t, symbolAsNodeAlias = TRUE)
 ```
 
 ![](RedeR.png)
@@ -228,11 +227,11 @@ build a gene2GO list if the name of a species is provided on the input,
 alternatively, a data frame can be provided and used instead.
 
 ```{r eval = FALSE}
-## internet connection is required
+## Internet connection is required for this command
 terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
                            pValue = 0.005)
 
-## see HsBPTerms dataset
+## using the HsBPTerms dataset to create the gene2GO list
 terms <- clusterEnrichment(.Object = t, species = HsBPTerms,
                            pValue = 0.005)
 ```

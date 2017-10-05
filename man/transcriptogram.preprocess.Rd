@@ -37,8 +37,8 @@ transcriptogram <- transcriptogram.preprocess(association, Hs900)
 
 }
 \seealso{
-\link[transcriptogramer]{Transcriptogram-class}
-\link[transcriptogramer]{association}
+\link[transcriptogramer]{Transcriptogram-class},
+\link[transcriptogramer]{association},
 \link[transcriptogramer]{Hs900}
 }
 \author{

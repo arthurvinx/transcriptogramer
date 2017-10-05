@@ -3,8 +3,8 @@
 \docType{data}
 \name{Sc900}
 \alias{Sc900}
-\title{Ordered Saccharomyces cerevisiae proteins of combined score equal or above
-900}
+\title{Ordered Saccharomyces cerevisiae proteins of combined score greater than or
+equal to 900}
 \format{An object of class \code{character} of length 4386.}
 \usage{
 Sc900
@@ -12,7 +12,7 @@ Sc900
 \description{
 A character vector containing the Saccharomyces cerevisiae proteins, from
 STRINGdb release 10.5,
-of combined score equal or above 900.
+of combined score greater than or equal to 900.
 }
 \examples{
 Sc900

@@ -30,10 +30,10 @@ transcriptogram <- setRadius(transcriptogram, 80)
 
 }
 \seealso{
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{association}
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{transcriptogramStep2-method}
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{association},
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramStep2-method},
 \link[transcriptogramer]{orderingProperties}
 }
 \author{

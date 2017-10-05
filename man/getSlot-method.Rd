@@ -28,9 +28,9 @@ ord <- getSlot(transcriptogram, 'ordering')
 
 }
 \seealso{
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{association}
-\link[transcriptogramer]{transcriptogram.preprocess}
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{association},
+\link[transcriptogramer]{transcriptogram.preprocess},
 \link[transcriptogramer]{Transcriptogram-class}
 }
 \author{

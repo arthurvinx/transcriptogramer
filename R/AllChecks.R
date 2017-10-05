@@ -162,8 +162,7 @@ transcriptogramer.check <- function(name,
         if (!is.logical(argument)) {
             error(name)
         }
-    } else if (name %in% c("symbolAsNodeAlias",
-        "maincomp", "connected")) {
+    } else if (name %in% c("maincomp", "connected")) {
         if (!is.logical(argument) || length(argument) !=
             1) {
             error(name)
@@ -244,6 +243,25 @@ transcriptogramer.check <- function(name,
         }
     } else if (name == "universe") {
         if (!(is.character(argument) || is.null(argument))) {
+            error(name)
+        }
+    } else if (name == "nCores") {
+        nc <- parallel::detectCores()
+        if(is.logical(argument)){
+            if(TRUE){
+                return (nc)
+            }else{
+                return (1L)
+            }
+        }else if(is.numeric(argument)){
+            argument <- as.integer(argument)
+            if(argument < 1 || argument > nc){
+                stop(paste0("argument nCores - should be greater than 0 and ",
+                            "less than or equal to ", nc))
+            }else{
+                return (argument)
+            }
+        }else{
             error(name)
         }
     }

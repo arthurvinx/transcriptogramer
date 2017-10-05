@@ -27,12 +27,13 @@ setMethod("setRadius", "Transcriptogram",
 #' @rdname orderingProperties-method
 
 setMethod("orderingProperties", "Transcriptogram",
-    function(.Object) {
+    function(.Object, nCores = 1L) {
         if (is.na(.Object@status)) {
             stop(paste0("argument of class Transcriptogram - ",
                 "needs preprocessing!"))
         }
-        message("calculating nodes properties... step 1 of 2")
+        nCores <- transcriptogramer.check("nCores", nCores)
+        message("calculating node properties... step 1 of 2")
         message("** this may take some time...")
         nodeDegrees <- table(.Object@association$p1)
         nodeDegrees <- as.data.frame(nodeDegrees)
@@ -66,13 +67,11 @@ setMethod("orderingProperties", "Transcriptogram",
             width = 60)
         adjlist <- tapply(.Object@association$p1,
             .Object@association$p2, unique)
-        nCores <- parallel::detectCores()
         message(paste0("applying sliding window and mounting resulting ",
             "data... step 2 of 2"))
         message("** this may take some time...")
         cl <- snow::makeSOCKcluster(nCores)
         on.exit(snow::stopCluster(cl))
-        rm(nCores)
         doSNOW::registerDoSNOW(cl)
         progress <- function() {
             pb$tick()
@@ -180,20 +179,21 @@ setMethod("connectivityProperties", "Transcriptogram",
 #' @rdname transcriptogramStep1-method
 
 setMethod("transcriptogramStep1", "Transcriptogram",
-    function(.Object, expression, dictionary) {
+    function(.Object, expression, dictionary, nCores = 1L) {
         if (is.na(.Object@status)) {
             stop(paste0("argument of class Transcriptogram ",
                 "- needs preprocessing!"))
         }
-        dictionary = transcriptogramer.check("dictionary",
+        nCores <- transcriptogramer.check("nCores", nCores)
+        dictionary <- transcriptogramer.check("dictionary",
             dictionary)
-        expression = transcriptogramer.check("expression",
+        expression <- transcriptogramer.check("expression",
             expression)
         if (!(any(rownames(expression) %in%
             unique(dictionary$identifier)))) {
             stop("arguments expression and dictionary - does not match!")
         }
-        dictionary = dictionary[which(dictionary$protein %in%
+        dictionary <- dictionary[which(dictionary$protein %in%
             .Object@ordering$Protein), ]
         singletons <- names(which(table(dictionary$identifier) ==
             1))
@@ -220,7 +220,6 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         pb <- progress::progress_bar$new(format = "running [:bar] :percent elapsed time :elapsed",
             total = ntasks, clear = FALSE,
             width = 60)
-        nCores <- parallel::detectCores()
         cl <- snow::makeSOCKcluster(nCores)
         on.exit(snow::stopCluster(cl))
         doSNOW::registerDoSNOW(cl)
@@ -255,12 +254,13 @@ setMethod("transcriptogramStep1", "Transcriptogram",
 #' @rdname transcriptogramStep2-method
 
 setMethod("transcriptogramStep2", "Transcriptogram",
-    function(.Object) {
+    function(.Object, nCores = 1L) {
         if (.Object@status < 1L) {
             stop(paste0("argument of class Transcriptogram - be sure ",
                 "to call the method transcriptogramStep1() ",
                 "before this one!"))
         }
+        nCores <- transcriptogramer.check("nCores", nCores)
         .Object@transcriptogramS1 = .Object@transcriptogramS1[order(.Object@transcriptogramS1$Position),
             ]
         min <- min(.Object@transcriptogramS1$Position)
@@ -270,7 +270,6 @@ setMethod("transcriptogramStep2", "Transcriptogram",
             total = ntasks, clear = FALSE,
             width = 60)
         result <- data.frame()
-        nCores <- parallel::detectCores()
         cl <- snow::makeSOCKcluster(nCores)
         on.exit(snow::stopCluster(cl))
         doSNOW::registerDoSNOW(cl)
@@ -411,11 +410,12 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     })
     smoothedLine <- stats::smooth.spline(.Object@transcriptogramS2$Position,
         caseValues, spar = 0.35)
+    lim <- max(abs(min(caseValues)), abs(max(caseValues)))
     rm(case, control, n, caseValues)
     graphics::plot(smoothedLine, type = "l",
         ylab = "Difference of means (case - control)",
         xlab = "Gene position", main = "Differential expression",
-        col = "black", lwd = 2)
+        col = "black", lwd = 2, ylim = c(-lim, lim))
     graphics::grid(NULL, NULL, lwd = 1, lty = 1, col = "gray")
     graphics::abline(h = 0, col = "blue", lwd = 2)
     myColors <- grDevices::rainbow(length(pBreaks))
@@ -475,7 +475,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
 #' @rdname clusterVisualization-method
 
 setMethod("clusterVisualization", "Transcriptogram",
-    function(.Object, symbolAsNodeAlias = FALSE,
+    function(.Object,
     maincomp = FALSE, connected = FALSE,
     host = "127.0.0.1", port = 9091) {
     if (.Object@status < 3L) {
@@ -483,18 +483,15 @@ setMethod("clusterVisualization", "Transcriptogram",
             "call the method differentiallyExpressed() ",
             "before this one!"))
     }
-    transcriptogramer.check("symbolAsNodeAlias",
-        symbolAsNodeAlias)
+    symbolAsNodeAlias <- FALSE
     transcriptogramer.check("maincomp",
         maincomp)
     transcriptogramer.check("connected",
         connected)
     transcriptogramer.check("host", host)
     transcriptogramer.check("port", port)
-    if (isTRUE(symbolAsNodeAlias) &&
-        !("Symbol" %in% colnames(.Object@DE))) {
-        stop(paste0("argument symbolAsNodeAlias - there is no ",
-            "column for Symbol in the DE slot!"))
+    if ("Symbol" %in% colnames(.Object@DE)) {
+        symbolAsNodeAlias <- TRUE
     }
     message("invoking RedeR... step 1 of 4")
     message("** this may take some time...")
@@ -557,11 +554,12 @@ setMethod("clusterVisualization", "Transcriptogram",
 setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher", pValue = 0.05,
-    adjustMethod = "BH") {
+    adjustMethod = "BH", nCores = 1L) {
     if (.Object@status < 3L) {
         stop(paste0("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!"))
     }
+    nCores <- transcriptogramer.check("nCores", nCores)
     transcriptogramer.check("universe", universe)
     transcriptogramer.check("pValue", pValue)
     aux <- species
@@ -617,10 +615,8 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     message("** this may take some time...")
     ontology <- toupper(gsub("^([[:alpha:]]).*\\_([[:alpha:]]).*$",
         "\\1\\2", ontology))
-    nCores <- parallel::detectCores()
     cl <- snow::makeSOCKcluster(nCores)
     on.exit(snow::stopCluster(cl))
-    rm(nCores)
     enrichment <- snow::parLapply(cl, 1:n, function(i){
         e <- environment()
         suppressMessages(topGO::groupGOTerms(e))

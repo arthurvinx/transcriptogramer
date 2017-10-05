@@ -15,7 +15,8 @@ association
 \description{
 A subset of the Homo sapiens protein network data from STRINGdb,
 release 10.5. This subset
-contains only associations of proteins of combined score equal or above 900.
+contains only associations of proteins of combined score greater than or
+equal to 900.
 }
 \examples{
 association

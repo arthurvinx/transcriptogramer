@@ -3,7 +3,7 @@
 \docType{data}
 \name{Hs800}
 \alias{Hs800}
-\title{Ordered Homo sapiens proteins of combined score equal or above 800}
+\title{Ordered Homo sapiens proteins of combined score greater than or equal to 800}
 \format{An object of class \code{character} of length 13273.}
 \usage{
 Hs800
@@ -11,7 +11,7 @@ Hs800
 \description{
 A character vector containing the Homo sapiens proteins, from STRINGdb
 release 10.5,
-of combined score equal or above 800.
+of combined score greater than or equal to 800.
 }
 \examples{
 Hs800

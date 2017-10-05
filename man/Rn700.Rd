@@ -3,7 +3,8 @@
 \docType{data}
 \name{Rn700}
 \alias{Rn700}
-\title{Ordered Rattus norvegicus proteins of combined score equal or above 700}
+\title{Ordered Rattus norvegicus proteins of combined score greater than or equal
+to 700}
 \format{An object of class \code{character} of length 14285.}
 \usage{
 Rn700
@@ -11,7 +12,7 @@ Rn700
 \description{
 A character vector containing the Rattus norvegicus proteins, from STRINGdb
 release 10.5,
-of combined score equal or above 700.
+of combined score greater than or equal to 700.
 }
 \examples{
 Rn700

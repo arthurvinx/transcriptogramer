@@ -34,6 +34,11 @@
 #'
 #' @param .Object An object of class Transcriptogram
 #'
+#' @param nCores An integer number, referring to the number of processing cores
+#' to be used; or a logical value, TRUE indicating that all processing cores
+#' should be used, and FALSE indicating the use of just one processing core.
+#' The default value of this argument is 1.
+#'
 #' @return This method returns a data frame containing: ENSEMBL Peptide ID,
 #' its position on the ordering,
 #' node degree, number of triangles and clustering coefficient, and window
@@ -57,8 +62,8 @@
 #' @importFrom foreach foreach
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association}
 #'
 #' @references
@@ -79,7 +84,8 @@
 #' @rdname orderingProperties-method
 #' @export
 
-setGeneric("orderingProperties", function(.Object) standardGeneric("orderingProperties"),
+setGeneric("orderingProperties", function(.Object, nCores = 1L)
+    standardGeneric("orderingProperties"),
     package = "transcriptogramer")
 
 # connectivityProperties ####
@@ -112,8 +118,8 @@ setGeneric("orderingProperties", function(.Object) standardGeneric("orderingProp
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association}
 #'
 #' @author
@@ -150,6 +156,11 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #' as rownames in \code{expression},
 #' in order to recognize the ENSEMBL Peptide ID of the other column
 #'
+#' @param nCores An integer number, referring to the number of processing cores
+#' to be used; or a logical value, TRUE indicating that all processing cores
+#' should be used, and FALSE indicating the use of just one processing core.
+#' The default value of this argument is 1.
+#'
 #' @return This method creates a data frame to feed the transcriptogramS1
 #' slot of an object
 #' of class Transcriptogram. Each row of the data frame contains: an ENSEMBL
@@ -174,10 +185,10 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #'
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{GSE9988}
-#' \link[transcriptogramer]{GPL570}
-#' \link[transcriptogramer]{Hs900}
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association}
 #'
 #' @author
@@ -199,7 +210,8 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #' @export
 
 setGeneric("transcriptogramStep1", function(.Object,
-    expression, dictionary) standardGeneric("transcriptogramStep1"),
+    expression, dictionary, nCores = 1L)
+    standardGeneric("transcriptogramStep1"),
     package = "transcriptogramer")
 
 # transcriptogramS2 ####
@@ -214,6 +226,11 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' with proteins near the ends of the ordering.
 #'
 #' @param .Object An object of class Transcriptogram
+#'
+#' @param nCores An integer number, referring to the number of processing cores
+#' to be used; or a logical value, TRUE indicating that all processing cores
+#' should be used, and FALSE indicating the use of just one processing core.
+#' The default value of this argument is 1.
 #'
 #' @return This method creates a data frame to feed the transcriptogramS2
 #' slot of an object
@@ -238,11 +255,11 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' @importFrom foreach foreach
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{GSE9988}
-#' \link[transcriptogramer]{GPL570}
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{association}
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
 #' \link[transcriptogramer]{transcriptogramStep1-method}
 #'
 #' @author
@@ -263,7 +280,8 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' @rdname transcriptogramStep2-method
 #' @export
 
-setGeneric("transcriptogramStep2", function(.Object) standardGeneric("transcriptogramStep2"),
+setGeneric("transcriptogramStep2", function(.Object, nCores = 1L)
+    standardGeneric("transcriptogramStep2"),
     package = "transcriptogramer")
 
 # setRadius ####
@@ -286,10 +304,10 @@ setGeneric("transcriptogramStep2", function(.Object) standardGeneric("transcript
 #' transcriptogram <- setRadius(transcriptogram, 80)
 #'
 #' @seealso
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{association}
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{transcriptogramStep2-method}
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramStep2-method},
 #' \link[transcriptogramer]{orderingProperties}
 #'
 #' @author
@@ -321,9 +339,9 @@ setGeneric("setRadius", function(.Object,
 #' ord <- getSlot(transcriptogram, 'ordering')
 #'
 #' @seealso
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{association}
-#' \link[transcriptogramer]{transcriptogram.preprocess}
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogram.preprocess},
 #' \link[transcriptogramer]{Transcriptogram-class}
 #'
 #' @author
@@ -340,7 +358,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 
 #' Identify which genes are differentially expressed
 #'
-#' This method uses the limma package to identify which genes are
+#' This method uses the \pkg{limma} package to identify which genes are
 #' differentially expressed,
 #' meeting the \code{pValue} requirement, for the contrast "case-control".
 #' The \code{levels} lenght must be
@@ -350,7 +368,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' indicate case samples,
 #' and TRUE to indicate control samples. If \code{species} is NULL, no
 #' translation will be done, if \code{species} is a character,
-#' the biomaRt package will be used to translate the ENSEMBL
+#' the \pkg{biomaRt} package will be used to translate the ENSEMBL
 #' Peptide ID to Symbol
 #' (Gene Name), and if \code{species} is a data frame, it will be used
 #' instead.
@@ -400,23 +418,22 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 #' "Homo sapiens")
 #'
-#' ## this call also works
+#' ## these calls also works
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 #' "H sapiens")
 #'
-#' ## this call also works
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
 #' DEsymbols)
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{GSE9988}
-#' \link[transcriptogramer]{GPL570}
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{association}
-#' \link[transcriptogramer]{DEsymbols}
-#' \link[transcriptogramer]{transcriptogramStep1-method}
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{DEsymbols},
+#' \link[transcriptogramer]{transcriptogramStep1-method},
 #' \link[transcriptogramer]{transcriptogramStep2-method}
 #'
 #' @author
@@ -452,14 +469,11 @@ setGeneric("differentiallyExpressed", function(.Object,
 
 #' Displays graphs of the differentially expressed clusters
 #'
-#' This method uses the RedeR package to display graphs of the differentially
-#' expressed clusters.
+#' This method uses the \pkg{RedeR} package to display graphs of the
+#' differentially expressed clusters. If the DE slot has a column named Symbol,
+#' its contents will be used as node alias.
 #'
 #' @param .Object An object of class Transcriptogram
-#'
-#' @param symbolAsNodeAlias Logical value, should be setted as TRUE only if the
-#' DE slot of \code{.Object}
-#' contains a column, named 'Symbol', for the Symbols
 #'
 #' @param maincomp Logical value, whether to display only the main component of
 #' each cluster
@@ -481,19 +495,19 @@ setGeneric("differentiallyExpressed", function(.Object,
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
 #' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
-#' "Homo sapiens")
-#' rdp <- clusterVisualization(transcriptogram, TRUE)
+#' DEsymbols)
+#' rdp <- clusterVisualization(transcriptogram)
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{differentiallyExpressed-method}
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{GSE9988}
-#' \link[transcriptogramer]{GPL570}
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{association}
-#' \link[transcriptogramer]{transcriptogramStep1-method}
-#' \link[transcriptogramer]{transcriptogramStep2-method}
+#' \link[transcriptogramer]{differentiallyExpressed-method},
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramStep1-method},
+#' \link[transcriptogramer]{transcriptogramStep2-method},
 #' \link[RedeR]{RedPort}
 #'
 #' @author
@@ -517,7 +531,7 @@ setGeneric("differentiallyExpressed", function(.Object,
 #' @export
 
 setGeneric("clusterVisualization", function(.Object,
-    symbolAsNodeAlias = FALSE, maincomp = FALSE,
+    maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
     port = 9091) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
@@ -526,13 +540,12 @@ setGeneric("clusterVisualization", function(.Object,
 
 #' Term enrichment
 #'
-#' If \code{species} is a character, this method uses the biomaRt package to
-#' build a gene2GO list, if \code{species} is a data frame, it will be used
+#' If \code{species} is a character, this method uses the \pkg{biomaRt} package
+#' to build a gene2GO list, if \code{species} is a data frame, it will be used
 #' instead.
 #' The gene2GO list will be used with the
-#' package topGO to detect the most significant terms of each cluster present
-#' in the DE slot of the
-#' \code{.Object}.
+#' \pkg{topGO} package to detect the most significant terms of each cluster
+#' present in the DE slot of the \code{.Object}.
 #'
 #' @param .Object An object of class Transcriptogram
 #'
@@ -571,6 +584,11 @@ setGeneric("clusterVisualization", function(.Object,
 #' 'bonferroni', and 'holm',
 #' the default value for this argument is 'BH'
 #'
+#' @param nCores An integer number, referring to the number of processing cores
+#' to be used; or a logical value, TRUE indicating that all processing cores
+#' should be used, and FALSE indicating the use of just one processing core.
+#' The default value of this argument is 1.
+#'
 #' @return A data frame containing the most significant terms of each cluster
 #'
 #' @examples
@@ -589,14 +607,14 @@ setGeneric("clusterVisualization", function(.Object,
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{differentiallyExpressed-method}
-#' \link[transcriptogramer]{transcriptogram.preprocess}
-#' \link[transcriptogramer]{GSE9988}
-#' \link[transcriptogramer]{GPL570}
-#' \link[transcriptogramer]{Hs900}
-#' \link[transcriptogramer]{HsBPTerms}
-#' \link[transcriptogramer]{association}
-#' \link[transcriptogramer]{transcriptogramStep1-method}
+#' \link[transcriptogramer]{differentiallyExpressed-method},
+#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{HsBPTerms},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramStep1-method},
 #' \link[transcriptogramer]{transcriptogramStep2-method}
 #'
 #' @author
@@ -624,5 +642,6 @@ setGeneric("clusterVisualization", function(.Object,
 setGeneric("clusterEnrichment", function(.Object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher",
-    pValue = 0.05, adjustMethod = "BH") standardGeneric("clusterEnrichment"),
+    pValue = 0.05, adjustMethod = "BH", nCores = 1L)
+    standardGeneric("clusterEnrichment"),
     package = "transcriptogramer")

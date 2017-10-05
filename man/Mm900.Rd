@@ -3,7 +3,7 @@
 \docType{data}
 \name{Mm900}
 \alias{Mm900}
-\title{Ordered Mus musculus proteins of combined score equal or above 900}
+\title{Ordered Mus musculus proteins of combined score greater than or equal to 900}
 \format{An object of class \code{character} of length 9648.}
 \usage{
 Mm900
@@ -11,7 +11,7 @@ Mm900
 \description{
 A character vector containing the Mus musculus proteins, from STRINGdb
 release 10.5,
-of combined score equal or above 900.
+of combined score greater than or equal to 900.
 }
 \examples{
 Mm700

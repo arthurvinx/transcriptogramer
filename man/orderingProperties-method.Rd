@@ -6,12 +6,17 @@
 \alias{orderingProperties,Transcriptogram-method}
 \title{Calculates graph properties projected on the ordered proteins}
 \usage{
-orderingProperties(.Object)
+orderingProperties(.Object, nCores = 1L)
 
-\S4method{orderingProperties}{Transcriptogram}(.Object)
+\S4method{orderingProperties}{Transcriptogram}(.Object, nCores = 1L)
 }
 \arguments{
 \item{.Object}{An object of class Transcriptogram}
+
+\item{nCores}{An integer number, referring to the number of processing cores
+to be used; or a logical value, TRUE indicating that all processing cores
+should be used, and FALSE indicating the use of just one processing core.
+The default value of this argument is 1.}
 }
 \value{
 This method returns a data frame containing: ENSEMBL Peptide ID,
@@ -70,8 +75,8 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{Hs900}
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association}
 }
 \author{

@@ -6,19 +6,14 @@
 \alias{clusterVisualization,Transcriptogram-method}
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
-clusterVisualization(.Object, symbolAsNodeAlias = FALSE, maincomp = FALSE,
-  connected = FALSE, host = "127.0.0.1", port = 9091)
-
-\S4method{clusterVisualization}{Transcriptogram}(.Object,
-  symbolAsNodeAlias = FALSE, maincomp = FALSE, connected = FALSE,
+clusterVisualization(.Object, maincomp = FALSE, connected = FALSE,
   host = "127.0.0.1", port = 9091)
+
+\S4method{clusterVisualization}{Transcriptogram}(.Object, maincomp = FALSE,
+  connected = FALSE, host = "127.0.0.1", port = 9091)
 }
 \arguments{
 \item{.Object}{An object of class Transcriptogram}
-
-\item{symbolAsNodeAlias}{Logical value, should be setted as TRUE only if the
-DE slot of \code{.Object}
-contains a column, named 'Symbol', for the Symbols}
 
 \item{maincomp}{Logical value, whether to display only the main component of
 each cluster}
@@ -35,8 +30,9 @@ listen}
 This function returns an object of the RedPort Class
 }
 \description{
-This method uses the RedeR package to display graphs of the differentially
-expressed clusters.
+This method uses the \pkg{RedeR} package to display graphs of the
+differentially expressed clusters. If the DE slot has a column named Symbol,
+its contents will be used as node alias.
 }
 \details{
 RedeR package requirements: Java Runtime Environment (>= 6)
@@ -48,20 +44,20 @@ transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
-"Homo sapiens")
-rdp <- clusterVisualization(transcriptogram, TRUE)
+DEsymbols)
+rdp <- clusterVisualization(transcriptogram)
 }
 
 }
 \seealso{
-\link[transcriptogramer]{differentiallyExpressed-method}
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{GSE9988}
-\link[transcriptogramer]{GPL570}
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{association}
-\link[transcriptogramer]{transcriptogramStep1-method}
-\link[transcriptogramer]{transcriptogramStep2-method}
+\link[transcriptogramer]{differentiallyExpressed-method},
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{GSE9988},
+\link[transcriptogramer]{GPL570},
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{association},
+\link[transcriptogramer]{transcriptogramStep1-method},
+\link[transcriptogramer]{transcriptogramStep2-method},
 \link[RedeR]{RedPort}
 }
 \author{

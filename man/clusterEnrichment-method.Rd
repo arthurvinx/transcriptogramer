@@ -8,11 +8,11 @@
 \usage{
 clusterEnrichment(.Object, universe = NULL, species,
   ontology = "biological process", algorithm = "classic",
-  statistic = "fisher", pValue = 0.05, adjustMethod = "BH")
+  statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L)
 
 \S4method{clusterEnrichment}{Transcriptogram}(.Object, universe = NULL,
   species, ontology = "biological process", algorithm = "classic",
-  statistic = "fisher", pValue = 0.05, adjustMethod = "BH")
+  statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L)
 }
 \arguments{
 \item{.Object}{An object of class Transcriptogram}
@@ -51,18 +51,22 @@ the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
 'bonferroni', and 'holm',
 the default value for this argument is 'BH'}
+
+\item{nCores}{An integer number, referring to the number of processing cores
+to be used; or a logical value, TRUE indicating that all processing cores
+should be used, and FALSE indicating the use of just one processing core.
+The default value of this argument is 1.}
 }
 \value{
 A data frame containing the most significant terms of each cluster
 }
 \description{
-If \code{species} is a character, this method uses the biomaRt package to
-build a gene2GO list, if \code{species} is a data frame, it will be used
+If \code{species} is a character, this method uses the \pkg{biomaRt} package
+to build a gene2GO list, if \code{species} is a data frame, it will be used
 instead.
 The gene2GO list will be used with the
-package topGO to detect the most significant terms of each cluster present
-in the DE slot of the
-\code{.Object}.
+\pkg{topGO} package to detect the most significant terms of each cluster
+present in the DE slot of the \code{.Object}.
 }
 \examples{
 transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
@@ -81,14 +85,14 @@ pValue = 0.005)
 
 }
 \seealso{
-\link[transcriptogramer]{differentiallyExpressed-method}
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{GSE9988}
-\link[transcriptogramer]{GPL570}
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{HsBPTerms}
-\link[transcriptogramer]{association}
-\link[transcriptogramer]{transcriptogramStep1-method}
+\link[transcriptogramer]{differentiallyExpressed-method},
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{GSE9988},
+\link[transcriptogramer]{GPL570},
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{HsBPTerms},
+\link[transcriptogramer]{association},
+\link[transcriptogramer]{transcriptogramStep1-method},
 \link[transcriptogramer]{transcriptogramStep2-method}
 }
 \author{

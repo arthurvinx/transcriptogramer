@@ -40,8 +40,8 @@ cProperties <- connectivityProperties(transcriptogram)
 
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{Hs900}
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association}
 }
 \author{

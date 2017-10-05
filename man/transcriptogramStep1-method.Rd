@@ -6,10 +6,10 @@
 \alias{transcriptogramStep1,Transcriptogram-method}
 \title{Calculates the average of the expression values related to the same protein}
 \usage{
-transcriptogramStep1(.Object, expression, dictionary)
+transcriptogramStep1(.Object, expression, dictionary, nCores = 1L)
 
 \S4method{transcriptogramStep1}{Transcriptogram}(.Object, expression,
-  dictionary)
+  dictionary, nCores = 1L)
 }
 \arguments{
 \item{.Object}{An object of class Transcriptogram}
@@ -23,6 +23,11 @@ column must contains the
 ENSEMBL Peptide ID, and the second column must contains values that appear
 as rownames in \code{expression},
 in order to recognize the ENSEMBL Peptide ID of the other column}
+
+\item{nCores}{An integer number, referring to the number of processing cores
+to be used; or a logical value, TRUE indicating that all processing cores
+should be used, and FALSE indicating the use of just one processing core.
+The default value of this argument is 1.}
 }
 \value{
 This method creates a data frame to feed the transcriptogramS1
@@ -58,10 +63,10 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{GSE9988}
-\link[transcriptogramer]{GPL570}
-\link[transcriptogramer]{Hs900}
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{GSE9988},
+\link[transcriptogramer]{GPL570},
+\link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association}
 }
 \author{

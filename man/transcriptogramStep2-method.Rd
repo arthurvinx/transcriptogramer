@@ -6,12 +6,17 @@
 \alias{transcriptogramStep2,Transcriptogram-method}
 \title{Calculates the average of the expression values using a sliding window}
 \usage{
-transcriptogramStep2(.Object)
+transcriptogramStep2(.Object, nCores = 1L)
 
-\S4method{transcriptogramStep2}{Transcriptogram}(.Object)
+\S4method{transcriptogramStep2}{Transcriptogram}(.Object, nCores = 1L)
 }
 \arguments{
 \item{.Object}{An object of class Transcriptogram}
+
+\item{nCores}{An integer number, referring to the number of processing cores
+to be used; or a logical value, TRUE indicating that all processing cores
+should be used, and FALSE indicating the use of just one processing core.
+The default value of this argument is 1.}
 }
 \value{
 This method creates a data frame to feed the transcriptogramS2
@@ -49,11 +54,11 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess}
-\link[transcriptogramer]{GSE9988}
-\link[transcriptogramer]{GPL570}
-\link[transcriptogramer]{Hs900}
-\link[transcriptogramer]{association}
+\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{GSE9988},
+\link[transcriptogramer]{GPL570},
+\link[transcriptogramer]{Hs900},
+\link[transcriptogramer]{association},
 \link[transcriptogramer]{transcriptogramStep1-method}
 }
 \author{
