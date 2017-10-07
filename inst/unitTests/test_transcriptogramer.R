@@ -12,7 +12,7 @@ testData <- function(){
         11030, "Hs900")
 }
 
-ord <- Hs900[1:1000]
+ord <- Hs900[seq_len(1000)]
 links <- association
 links <- links[which(links$protein1 %in% ord),]
 t <- transcriptogram.preprocess(links, ord, 2)

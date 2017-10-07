@@ -1,8 +1,8 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 0.99.3
-Date: 2017-10-05
+Version: 0.99.4
+Date: 2017-10-07
 Authors@R: c(
     person("Diego", "Morais", email = "arthur.vinx@gmail.com",
     role = c("aut", "cre")),
@@ -16,12 +16,12 @@ Description: R package for transcriptional analysis based on transcriptograms,
     Transcriptograms are, hence, genome wide gene expression profiles that
     provide a global view for the cellular metabolism, while indicating gene
     sets whose expression are altered.
-Depends: R (>= 3.4.1), methods
+Depends: R (>= 3.4), methods
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 biocViews: Software, Network, Visualization, SystemsBiology, GeneExpression,
-    GenomeWideAssociation
+    GenomeWideAssociation, GeneSetEnrichment
 Imports: biomaRt,
     data.table,
     doSNOW,

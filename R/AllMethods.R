@@ -78,7 +78,7 @@ setMethod("orderingProperties", "Transcriptogram",
         }
         opts <- list(progress = progress)
         i <- NULL
-        data <- foreach::foreach(i = 1:ntasks,
+        data <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
             {
                 pos <- ord[i, "Position"]
@@ -230,7 +230,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         message(paste0("calculating average over all identifiers ",
             "related to the same protein... step 2 of 2"))
         i <- NULL
-        result <- foreach::foreach(i = 1:ntasks,
+        result <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
             {
                 temp <- map[which(map$Protein ==
@@ -242,7 +242,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
                 return(temp[1, ])
             }
         rownames(result) <- NULL
-        result <- result[, c(col, 1:nsamples)]
+        result <- result[, c(col, seq.int(1, nsamples))]
         message("done!")
         .Object@transcriptogramS1 = result
         .Object@status = 1L
@@ -281,7 +281,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
             "data... step 1 of 1"))
         col <- c(1, 2)
         i <- NULL
-        result <- foreach::foreach(i = 1:ntasks,
+        result <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
             {
                 pos <- .Object@transcriptogramS1[i,
@@ -314,7 +314,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
         result$Protein <- .Object@transcriptogramS1$Protein
         result$Position <- .Object@transcriptogramS1$Position
         result <- result[, c(nsamples + 1,
-            nsamples + 2, 1:nsamples)]
+            nsamples + 2, seq.int(1, nsamples))]
         message("done!")
         .Object@transcriptogramS2 = result
         .Object@status = 2L
@@ -378,7 +378,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     positions <- DElimma$Position
     clusterStartIndex <- clusterNumber <- 1
     nextIndex <- NULL
-    invisible(sapply(1:(length(positions) - 1), function(i) {
+    invisible(sapply(seq.int(1, (length(positions) - 1)), function(i) {
         nextIndex <<- i + 1
         if ((positions[nextIndex] - positions[i]) > .Object@radius) {
             pBreaks[[clusterNumber]] <<- c(positions[clusterStartIndex],
@@ -392,7 +392,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
         positions[nextIndex])
     rm(nextIndex, clusterNumber, clusterStartIndex, positions)
     DElimma$ClusterNumber <- NA
-    invisible(sapply(1:length(pBreaks), function(i) {
+    invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
         DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
             pBreaks[[i]][2]), "ClusterNumber"] <<- i
         return(NULL)
@@ -403,7 +403,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     control <- case[, which(levels == TRUE)]
     case <- case[, which(levels == FALSE)]
     n <- nrow(control)
-    caseValues <- sapply(1:n, function(i) {
+    caseValues <- sapply(seq.int(1, n), function(i) {
         result <- mean(unlist(case[i, ])) - mean(unlist(control[i,
             ]))
         return(result)
@@ -419,7 +419,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     graphics::grid(NULL, NULL, lwd = 1, lty = 1, col = "gray")
     graphics::abline(h = 0, col = "blue", lwd = 2)
     myColors <- grDevices::rainbow(length(pBreaks))
-    invisible(sapply(1:length(pBreaks), function(i) {
+    invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
         idx <- which(smoothedLine$x >= pBreaks[[i]][1] & smoothedLine$x <=
             pBreaks[[i]][2])
         graphics::lines(x = smoothedLine$x[idx], y = smoothedLine$y[idx],
@@ -457,7 +457,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
         symbols[symbols == ""] <- NA
         symbols <- stats::na.omit(symbols)
         DElimma$Symbol <- DElimma$Protein
-        invisible(sapply(1:nrow(symbols), function(i) {
+        invisible(sapply(seq.int(1, nrow(symbols)), function(i) {
             DElimma[which(DElimma$Protein == paste0(taxonomyID, ".",
                 symbols[i, "ensembl_peptide_id"])), "Symbol"] <<- symbols[i,
                 "external_gene_name"]
@@ -502,7 +502,7 @@ setMethod("clusterVisualization", "Transcriptogram",
         directed = FALSE)
     n <- length(unique(.Object@DE$ClusterNumber))
     myColors <- grDevices::rainbow(n)
-    sgList <- lapply(1:n, function(i) {
+    sgList <- lapply(seq.int(1, n), function(i) {
         RedeR::subg(g = g, dat = .Object@DE[
             which(.Object@DE$ClusterNumber ==
             i), ], refcol = 1, maincomp = maincomp,
@@ -519,7 +519,7 @@ setMethod("clusterVisualization", "Transcriptogram",
     if (n > 3) {
         message("** this may take some time...")
     }
-    invisible(sapply(1:n, function(i) {
+    invisible(sapply(seq.int(1, n), function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
             cols = myColors[i])
         if (symbolAsNodeAlias) {
@@ -617,7 +617,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
         "\\1\\2", ontology))
     cl <- snow::makeSOCKcluster(nCores)
     on.exit(snow::stopCluster(cl))
-    enrichment <- snow::parLapply(cl, 1:n, function(i){
+    enrichment <- snow::parLapply(cl, seq.int(1, n), function(i){
         e <- environment()
         suppressMessages(topGO::groupGOTerms(e))
         attach(e)
@@ -647,7 +647,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
         return(result)
     })
     df <- data.frame()
-    invisible(sapply(1:n, function(i){
+    invisible(sapply(seq.int(1, n), function(i){
         if(!is.null(enrichment[[i]])){
             enrichment[[i]]$ClusterNumber <- i
             df <<- rbind(df, enrichment[[i]])

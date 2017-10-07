@@ -3,7 +3,7 @@ citEntry(entry = "Manual",
   title = "Transcriptogramer: transcriptional analysis based on
   transcriptograms.",
   year = "2017",
-  note = "R package version 0.99.3",
+  note = "R package version 1.0.0",
   textVersion = "Morais DAA, Dalmolin RJS. Transcriptogramer: transcriptional
   analysis based on transcriptograms. R package, 2017."
 )

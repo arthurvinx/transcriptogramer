@@ -15,8 +15,8 @@ transcriptogramer.check <- function(name,
         } else if (is.character(argument) &&
             length(argument) > 1) {
             argument <- data.frame(Protein = argument,
-                Position = 0:(length(argument) -
-                  1), stringsAsFactors = FALSE)
+                Position = seq.int(0, length(argument) - 1),
+                  stringsAsFactors = FALSE)
             if (orderingCheck(argument)) {
                 return(argument)
             } else {
