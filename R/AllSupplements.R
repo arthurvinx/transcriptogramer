@@ -1,6 +1,5 @@
 error <- function(name) {
-    stop(paste0("argument ", name, " - does not have a valid value!"),
-        call. = FALSE)
+    stop("argument ", name, " - does not have a valid value!", call. = FALSE)
 }
 
 orderingCheck <- function(argument) {

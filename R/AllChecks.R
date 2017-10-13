@@ -138,14 +138,14 @@ transcriptogramer.check <- function(name,
         if(species1Check(argument)){
           return (argument)
         }else{
-          stop(paste0("argument species - does not have a valid value!"),
+          stop("argument species - does not have a valid value!",
                 call. = FALSE)
         }
       } else if (!(is.null(argument) || (is.character(argument) &&
             length(strsplit(argument, " ")[[1]]) ==
                 2 && length(argument) ==
             1))) {
-            stop(paste0("argument species - does not have a valid value!"),
+            stop("argument species - does not have a valid value!",
                 call. = FALSE)
         }
     } else if (name == "adjustMethod1") {
@@ -153,10 +153,8 @@ transcriptogramer.check <- function(name,
             "holm")
         if (!is.character(argument) || length(argument) !=
             1 || !(argument %in% opts)) {
-            stop(paste0(
-                "argument adjustMethod - should be any one of the options:\n",
-                paste0(opts, collapse = ", "),
-                "!"), call. = FALSE)
+            stop("argument adjustMethod - should be any one of the options:\n",
+                paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
     } else if (name == "levels") {
         if (!is.logical(argument)) {
@@ -187,10 +185,8 @@ transcriptogramer.check <- function(name,
             "holm")
         if (!is.character(argument) || length(argument) !=
             1 || !(argument %in% opts)) {
-            stop(paste0(
-                "argument adjustMethod: should be any one of the options:\n",
-                paste0(opts, collapse = ", "),
-                "!"), call. = FALSE)
+            stop("argument adjustMethod: should be any one of the options:\n",
+                paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
     } else if (name == "ontology") {
         opts <- c("biological process", "cellular component",
@@ -199,10 +195,8 @@ transcriptogramer.check <- function(name,
             1 || !(argument %in% opts) ||
             length(strsplit(argument, " ")[[1]]) !=
                 2) {
-            stop(paste0("argument ", name,
-                " - should be any one of the options:\n",
-                paste0(opts, collapse = ", "),
-                "!"), call. = FALSE)
+            stop("argument ", name, " - should be any one of the options:\n",
+                paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
     } else if (name == "algorithm") {
         opts <- c("classic", "weight01",
@@ -210,20 +204,16 @@ transcriptogramer.check <- function(name,
             "weight")
         if (!is.character(argument) || length(argument) !=
             1 || !(argument %in% opts)) {
-            stop(paste0("argument ", name,
-                " - should be any one of the options:\n",
-                paste0(opts, collapse = ", "),
-                "!"), call. = FALSE)
+            stop("argument ", name, " - should be any one of the options:\n",
+                paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
     } else if (name == "statistic") {
         opts <- c("fisher", "ks", "t", "sum",
             "globaltest")
         if (!is.character(argument) || length(argument) !=
             1 || !(argument %in% opts)) {
-            stop(paste0("argument ", name,
-                " - should be any one of the options:\n",
-                paste0(opts, collapse = ", "),
-                "!"), call. = FALSE)
+            stop("argument ", name, " - should be any one of the options:\n",
+                paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
     } else if (name == "species2") {
       if(is.data.frame(argument)){
@@ -232,13 +222,13 @@ transcriptogramer.check <- function(name,
         if(species2Check(argument)){
           return (argument)
         }else{
-          stop(paste0("argument species - does not have a valid value!"),
+          stop("argument species - does not have a valid value!",
                 call. = FALSE)
         }
       } else if (!(is.character(argument) && length(strsplit(argument,
             " ")[[1]]) == 2) || length(argument) !=
             1) {
-            stop(paste0("argument species - does not have a valid value!"),
+            stop("argument species - does not have a valid value!",
                 call. = FALSE)
         }
     } else if (name == "universe") {
@@ -256,8 +246,8 @@ transcriptogramer.check <- function(name,
         }else if(is.numeric(argument)){
             argument <- as.integer(argument)
             if(argument < 1 || argument > nc){
-                stop(paste0("argument nCores - should be greater than 0 and ",
-                            "less than or equal to ", nc))
+                stop("argument nCores - should be greater than 0 and ",
+                    "less than or equal to ", nc)
             }else{
                 return (argument)
             }

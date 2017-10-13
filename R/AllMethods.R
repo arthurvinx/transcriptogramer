@@ -29,8 +29,7 @@ setMethod("setRadius", "Transcriptogram",
 setMethod("orderingProperties", "Transcriptogram",
     function(.Object, nCores = 1L) {
         if (is.na(.Object@status)) {
-            stop(paste0("argument of class Transcriptogram - ",
-                "needs preprocessing!"))
+            stop("argument of class Transcriptogram - needs preprocessing!")
         }
         nCores <- transcriptogramer.check("nCores", nCores)
         message("calculating node properties... step 1 of 2")
@@ -67,8 +66,8 @@ setMethod("orderingProperties", "Transcriptogram",
             width = 60)
         adjlist <- tapply(.Object@association$p1,
             .Object@association$p2, unique)
-        message(paste0("applying sliding window and mounting resulting ",
-            "data... step 2 of 2"))
+        message("applying sliding window and mounting resulting ",
+            "data... step 2 of 2")
         message("** this may take some time...")
         cl <- snow::makeSOCKcluster(nCores)
         on.exit(snow::stopCluster(cl))
@@ -126,8 +125,7 @@ setMethod("orderingProperties", "Transcriptogram",
 setMethod("connectivityProperties", "Transcriptogram",
     function(.Object) {
         if (is.na(.Object@status)) {
-            stop(paste0("argument of class Transcriptogram - ",
-                "needs preprocessing!"))
+            stop("argument of class Transcriptogram - needs preprocessing!")
         }
         message("calculating graph properties... step 1 of 2")
         nodes <- table(.Object@association$p1)
@@ -181,8 +179,7 @@ setMethod("connectivityProperties", "Transcriptogram",
 setMethod("transcriptogramStep1", "Transcriptogram",
     function(.Object, expression, dictionary, nCores = 1L) {
         if (is.na(.Object@status)) {
-            stop(paste0("argument of class Transcriptogram ",
-                "- needs preprocessing!"))
+            stop("argument of class Transcriptogram - needs preprocessing!")
         }
         nCores <- transcriptogramer.check("nCores", nCores)
         dictionary <- transcriptogramer.check("dictionary",
@@ -204,8 +201,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         nsamples <- ncol(expression)
         samples <- expression
         samples$identifier <- rownames(samples)
-        message(paste0("mapping identifiers to ENSEMBL Peptide ",
-            "ID... step 1 of 2"))
+        message("mapping identifiers to ENSEMBL Peptide ID... step 1 of 2")
         map <- merge(.Object@ordering, dictionary,
             by.x = "Protein", by.y = "protein")
         map <- merge(samples, map, by.x = "identifier",
@@ -227,8 +223,8 @@ setMethod("transcriptogramStep1", "Transcriptogram",
             pb$tick()
         }
         opts <- list(progress = progress)
-        message(paste0("calculating average over all identifiers ",
-            "related to the same protein... step 2 of 2"))
+        message("calculating average over all identifiers ",
+            "related to the same protein... step 2 of 2")
         i <- NULL
         result <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
@@ -256,9 +252,8 @@ setMethod("transcriptogramStep1", "Transcriptogram",
 setMethod("transcriptogramStep2", "Transcriptogram",
     function(.Object, nCores = 1L) {
         if (.Object@status < 1L) {
-            stop(paste0("argument of class Transcriptogram - be sure ",
-                "to call the method transcriptogramStep1() ",
-                "before this one!"))
+            stop("argument of class Transcriptogram - be sure ",
+                "to call the method transcriptogramStep1() before this one!")
         }
         nCores <- transcriptogramer.check("nCores", nCores)
         .Object@transcriptogramS1 = .Object@transcriptogramS1[order(.Object@transcriptogramS1$Position),
@@ -277,8 +272,8 @@ setMethod("transcriptogramStep2", "Transcriptogram",
             pb$tick()
         }
         opts <- list(progress = progress)
-        message(paste0("applying sliding window and mounting resulting ",
-            "data... step 1 of 1"))
+        message("applying sliding window and mounting resulting ",
+            "data... step 1 of 1")
         col <- c(1, 2)
         i <- NULL
         result <- foreach::foreach(i = seq.int(1, ntasks),
@@ -328,9 +323,9 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     levels, pValue = 0.05, species = NULL, adjustMethod = "BH") {
     if (.Object@status < 2L) {
-        stop(paste0("argument of class Transcriptogram - be sure to ",
+        stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
-            "transcriptogramStep2() before this one!"))
+            "transcriptogramStep2() before this one!")
     }
     transcriptogramer.check("pValue", pValue)
     aux <- species
@@ -367,8 +362,8 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     features <- rowSums(res.fit != 0) > 0
     DElimma <- temp[features, ]
     if (nrow(DElimma) == 0) {
-        stop(paste0("no differentially expressed protein, ",
-            "meeting the p-value requirement, was detected!"))
+        stop("no differentially expressed protein, ",
+            "meeting the p-value requirement, was detected!")
     }
     rm(temp)
     colnames(DElimma)[c(3, 4, 5)] <- c("logFC", "pValue", "degenes")
@@ -431,8 +426,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
         inset = c(0, -0.15))
     if (!is.null(species)) {
         symbols <- NULL
-        message(paste0("translating ENSEMBL Peptide ID to ",
-            "SYMBOL... extra step"))
+        message("translating ENSEMBL Peptide ID to SYMBOL... extra step")
         taxonomyID <- sapply(strsplit(DElimma[1, 1], "\\."),
             "[", 1)
         if (is.character(species)) {
@@ -442,8 +436,12 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
             species <- paste0(species, "_gene_ensembl")
             ensembl <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
                 dataset = species)
-            proteins <- sapply(strsplit(DElimma[, 1], "\\."),
-                "[", 2)
+            if (grepl("\\.", DElimma[1, 1])) {
+                proteins <- sapply(strsplit(DElimma[, 1], "\\."),
+                    "[", 2)
+            } else {
+                proteins <- DElimma[, 1]
+            }
             symbols <- biomaRt::getBM(filters = "ensembl_peptide_id",
                 attributes = c("ensembl_peptide_id", "external_gene_name"),
                 values = proteins, mart = ensembl)
@@ -479,9 +477,9 @@ setMethod("clusterVisualization", "Transcriptogram",
     maincomp = FALSE, connected = FALSE,
     host = "127.0.0.1", port = 9091) {
     if (.Object@status < 3L) {
-        stop(paste0("argument of class Transcriptogram - be sure to ",
+        stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() ",
-            "before this one!"))
+            "before this one!")
     }
     symbolAsNodeAlias <- FALSE
     transcriptogramer.check("maincomp",
@@ -526,8 +524,7 @@ setMethod("clusterVisualization", "Transcriptogram",
             sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
               from = "Symbol", to = "nodeAlias")
         }
-        message(paste0("** adding cluster ",
-            i, " of ", n, "..."))
+        message("** adding cluster ", i, " of ", n, "...")
         suppressMessages(RedeR::addGraph(rdp,
             sgList[[i]], theme = c(myTheme,
               nestAlias = paste0("C",
@@ -556,8 +553,8 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     algorithm = "classic", statistic = "fisher", pValue = 0.05,
     adjustMethod = "BH", nCores = 1L) {
     if (.Object@status < 3L) {
-        stop(paste0("argument of class Transcriptogram - be sure to ",
-            "call the method differentiallyExpressed() before this one!"))
+        stop("argument of class Transcriptogram - be sure to ",
+            "call the method differentiallyExpressed() before this one!")
     }
     nCores <- transcriptogramer.check("nCores", nCores)
     transcriptogramer.check("universe", universe)
@@ -577,15 +574,16 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
         universe <- .Object@transcriptogramS2$Protein
     }
     if (!any(.Object@DE[, "Protein"] %in% universe)) {
-        stop(paste0("argument of class Transcriptogram - none of ",
-            "the Proteins of the DE slot are present ",
-            "in the argument universe!"))
+        stop("argument of class Transcriptogram - none of ",
+            "the Proteins of the DE slot are present in the argument universe!")
     }
     message("getting the terms... step 1 of 2")
     ontology <- tolower(ontology)
     ontology <- gsub(" ", "_", ontology)
     GO <- NULL
-    universe <- sapply(strsplit(universe, "\\."), "[", 2)
+    if (grepl("\\.", universe[1])) {
+        universe <- sapply(strsplit(universe, "\\."), "[", 2)
+    }
     if (is.character(species)) {
         message("** this may take some time...")
         species <- tolower(species)
@@ -610,8 +608,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     gene2GO <- lapply(gene2GO, unique)
     rm(species, GO)
     n <- length(unique(.Object@DE$ClusterNumber))
-    message(paste0("running topGO enrichment for each ",
-        "cluster... step 2 of 2"))
+    message("running topGO enrichment for each cluster... step 2 of 2")
     message("** this may take some time...")
     ontology <- toupper(gsub("^([[:alpha:]]).*\\_([[:alpha:]]).*$",
         "\\1\\2", ontology))
@@ -670,9 +667,8 @@ setMethod("getSlot", "Transcriptogram", function(.Object,
         "radius", "status")
     if (!is.character(slot) || length(slot) !=
         1 || !(slot %in% opts)) {
-        stop(paste0("argument slot - should be any one of the options:\n",
-            paste0(opts, collapse = ", "),
-            "!"))
+        stop("argument slot - should be any one of the options:\n",
+            paste0(opts, collapse = ", "), "!")
     }
     if (slot == "DE") {
         return(.Object@DE)

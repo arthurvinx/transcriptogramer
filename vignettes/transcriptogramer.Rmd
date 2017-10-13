@@ -89,8 +89,7 @@ the radius slot.
 
 ```{r message = FALSE}
 oPropertiesR25 <- orderingProperties(.Object = t)
-```
-```{r eval = FALSE}
+
 ## slight change of radius
 t <- setRadius(.Object = t, radius = 30)
 
@@ -129,7 +128,7 @@ value equal to the average of the expression values inside a window, which
 considers periodic boundary conditions to deal with proteins near the ends of
 the ordering, in order to reduce random noise.
 
-```{r eval = FALSE}
+```{r message = FALSE}
 t <- transcriptogramStep2(.Object = t)
 ```
 
@@ -139,7 +138,7 @@ transcriptogramS1 and transcriptogramS2 respectively. As the output of some
 methods are affected by the content of the transcriptogramS2 slot, it can be
 recalculated using the content of the transcriptogramS1 slot.
 
-```{r eval = FALSE}
+```{r message = FALSE}
 t <- setRadius(.Object = t, radius = 50)
 t <- transcriptogramStep2(.Object = t)
 ```
@@ -164,12 +163,12 @@ dataset **GSE9988**), is created a logical vector that uses TRUE to label the
 columns referring to controls samples, and FALSE to label the
 columns referring to case samples.
 
-```{r eval = FALSE}
+```{r message = FALSE, fig.show = "hide"}
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005)
 ```
 ```{r eval = FALSE}
-## translating ENSEMBL Peptide IDs to Symbols
+## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
 ## Internet connection is required for this command
 t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
                              species = "Homo sapiens")
@@ -194,10 +193,10 @@ DE slot of the Transcriptogram object, its content can be seen using the getSlot
 method. By default, the p-values are adjusted by the Benjamini-Hochberg
 procedure.
 
-```{r eval = FALSE}
+```{r message = FALSE}
 View(getSlot(.Object = t, slot = "DE"))
 
-##this command also works
+## this command also works
 View(t@DE)
 ```
 
@@ -226,13 +225,15 @@ discovery rate will be setted as 0.005. This method uses the biomaRt package to
 build a gene2GO list if the name of a species is provided on the input,
 alternatively, a data frame can be provided and used instead.
 
-```{r eval = FALSE}
-## Internet connection is required for this command
-terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
-                           pValue = 0.005)
-
+```{r message = FALSE}
 ## using the HsBPTerms dataset to create the gene2GO list
 terms <- clusterEnrichment(.Object = t, species = HsBPTerms,
+                           pValue = 0.005)
+```
+```{r eval = FALSE}
+## using the biomaRt package to create the gene2GO list
+## Internet connection is required for this command
+terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
                            pValue = 0.005)
 ```
 ```{r echo = FALSE}

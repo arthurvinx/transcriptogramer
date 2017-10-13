@@ -50,8 +50,8 @@ transcriptogram.preprocess <- function(association,
     if (!(length(unique(association$p1)) ==
         nrow(ordering) && all(ordering$Protein %in%
         unique(association$p1)))) {
-        stop(paste0("arguments association and ordering - must have the same ",
-            "set of unique proteins!"))
+        stop("arguments association and ordering - must have the same ",
+            "set of unique proteins!")
     }
     object <- methods::new("Transcriptogram",
         association = association, ordering = ordering,
