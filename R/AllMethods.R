@@ -44,11 +44,11 @@ setMethod("orderingProperties", "Transcriptogram",
         rm(nodeDegrees)
         g <- igraph::graph.data.frame(d = .Object@association,
             directed = FALSE)
-        ord$nodeTriangles <- sapply(ord$Protein,
+        ord$nodeTriangles <- vapply(ord$Protein,
             function(x) {
-                igraph::count_triangles(g,
-                  vids = x)
-            })
+                as.integer(igraph::count_triangles(g,
+                  vids = x))
+            }, integer(1))
         rm(g)
         ord$nodeClustering <- mapply(function(x,
             y) {
@@ -103,11 +103,11 @@ setMethod("orderingProperties", "Transcriptogram",
                 }
                 resultConnectivity <- mean(temp$nodeDegree)
                 resultClustering <- mean(temp$nodeClustering)
-                linksWindow <- sum(sapply(temp$Protein,
+                linksWindow <- sum(vapply(temp$Protein,
                   function(x) {
                     sum(temp$Protein %in%
                       adjlist[[x]])
-                  }))
+                  }, integer(1)))
                 linksTotal <- sum(temp$nodeDegree)
                 resultModularity <- linksWindow/linksTotal
                 return(data.frame(windowConnectivity = resultConnectivity,
@@ -133,11 +133,11 @@ setMethod("connectivityProperties", "Transcriptogram",
         colnames(nodes) <- c("protein", "nodeDegree")
         g <- igraph::graph.data.frame(d = .Object@association,
             directed = FALSE)
-        nodes$nodeTriangles <- sapply(nodes$protein,
+        nodes$nodeTriangles <- vapply(nodes$protein,
             function(x) {
-                igraph::count_triangles(g,
-                  vids = x)
-            })
+                as.integer(igraph::count_triangles(g,
+                  vids = x))
+            }, integer(1))
         rm(g)
         nodes$nodeClustering <- mapply(function(x,
             y) {
@@ -149,23 +149,23 @@ setMethod("connectivityProperties", "Transcriptogram",
         }, nodes$nodeTriangles, nodes$nodeDegree)
         adjlist <- tapply(.Object@association$p1,
             .Object@association$p2, unique)
-        nodes$nodeAssortativity <- sapply(nodes$protein,
+        nodes$nodeAssortativity <- vapply(nodes$protein,
             function(x) {
                 return(mean(nodes[which(nodes$protein %in%
                   adjlist[[x]]), "nodeDegree"]))
-            })
+            }, numeric(1))
         rm(adjlist)
         message("mounting resulting data... step 2 of 2")
         result <- unique(nodes$nodeDegree)
         result <- sort(result)
         n <- nrow(nodes)
-        aux <- sapply(result, function(x) {
+        aux <- vapply(result, function(x) {
             temp <- nodes[which(nodes$nodeDegree ==
                 x), c("nodeClustering", "nodeAssortativity")]
             return(c(nrow(temp)/n, mean(temp[,
                 "nodeAssortativity"]), mean(temp[,
                 "nodeClustering"])))
-        })
+        }, vector("numeric", 3))
         message("done!")
         return(result <- data.frame(k = result,
             pk = aux[1, ], ak = aux[2, ],
@@ -398,11 +398,11 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     control <- case[, which(levels == TRUE)]
     case <- case[, which(levels == FALSE)]
     n <- nrow(control)
-    caseValues <- sapply(seq.int(1, n), function(i) {
+    caseValues <- vapply(seq.int(1, n), function(i) {
         result <- mean(unlist(case[i, ])) - mean(unlist(control[i,
             ]))
         return(result)
-    })
+    }, numeric(1))
     smoothedLine <- stats::smooth.spline(.Object@transcriptogramS2$Position,
         caseValues, spar = 0.35)
     lim <- max(abs(min(caseValues)), abs(max(caseValues)))
@@ -427,8 +427,11 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     if (!is.null(species)) {
         symbols <- NULL
         message("translating ENSEMBL Peptide ID to SYMBOL... extra step")
-        taxonomyID <- sapply(strsplit(DElimma[1, 1], "\\."),
-            "[", 1)
+        taxonomyID <- NULL
+        if (grepl("\\.", DElimma[1, 1])) {
+            taxonomyID <- strsplit(DElimma[1, 1], "\\.")[[1]][1]
+            taxonomyID <- paste0(taxonomyID, ".")
+        }
         if (is.character(species)) {
             message("** this may take some time...")
             species <- tolower(species)
@@ -436,6 +439,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
             species <- paste0(species, "_gene_ensembl")
             ensembl <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
                 dataset = species)
+            proteins <- NULL
             if (grepl("\\.", DElimma[1, 1])) {
                 proteins <- sapply(strsplit(DElimma[, 1], "\\."),
                     "[", 2)
@@ -456,7 +460,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
         symbols <- stats::na.omit(symbols)
         DElimma$Symbol <- DElimma$Protein
         invisible(sapply(seq.int(1, nrow(symbols)), function(i) {
-            DElimma[which(DElimma$Protein == paste0(taxonomyID, ".",
+            DElimma[which(DElimma$Protein == paste0(taxonomyID,
                 symbols[i, "ensembl_peptide_id"])), "Symbol"] <<- symbols[i,
                 "external_gene_name"]
             return(NULL)
@@ -621,8 +625,10 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
         on.exit(detach(e))
         genesOfInterest <- .Object@DE[which(.Object@DE$ClusterNumber ==
             i), 1]
-        genesOfInterest <- sapply(strsplit(genesOfInterest,
-            "\\."), "[", 2)
+        if (grepl("\\.", genesOfInterest[1])) {
+            genesOfInterest <- sapply(strsplit(genesOfInterest,
+                "\\."), "[", 2)
+        }
         geneList <- factor(as.integer(universe %in% genesOfInterest))
         names(geneList) <- universe
         myGOdata <- suppressMessages(methods::new("topGOdata",

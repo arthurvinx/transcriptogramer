@@ -88,13 +88,13 @@ The output of the orderingProperties() method is partially affected by
 the radius slot.
 
 ```{r message = FALSE}
-oPropertiesR25 <- orderingProperties(.Object = t)
+oPropertiesR25 <- orderingProperties(.Object = t, nCores = 1)
 
 ## slight change of radius
 t <- setRadius(.Object = t, radius = 30)
 
 ## this output is partially different comparing to oPropertiesR25
-oPropertiesR30 <- orderingProperties(.Object = t)
+oPropertiesR30 <- orderingProperties(.Object = t, nCores = 1)
 ```
 
 As the connectivityProperties() method does not uses a window, its output is not
@@ -120,7 +120,7 @@ identifiers related to it.
 
 ```{r message = FALSE}
 t <- transcriptogramStep1(.Object = t, expression = GSE9988,
-                          dictionary = GPL570)
+                          dictionary = GPL570, nCores = 1)
 ```
 
 To each position of the ordering, the transcriptogramStep2() method assigns a
@@ -129,7 +129,7 @@ considers periodic boundary conditions to deal with proteins near the ends of
 the ordering, in order to reduce random noise.
 
 ```{r message = FALSE}
-t <- transcriptogramStep2(.Object = t)
+t <- transcriptogramStep2(.Object = t, nCores = 1)
 ```
 
 The Transcriptogram object has slots to store the outputs of the
@@ -140,7 +140,7 @@ recalculated using the content of the transcriptogramS1 slot.
 
 ```{r message = FALSE}
 t <- setRadius(.Object = t, radius = 50)
-t <- transcriptogramStep2(.Object = t)
+t <- transcriptogramStep2(.Object = t, nCores = 1)
 ```
 
 ## Functional enrichment analysis
@@ -195,9 +195,6 @@ procedure.
 
 ```{r message = FALSE}
 View(getSlot(.Object = t, slot = "DE"))
-
-## this command also works
-View(t@DE)
 ```
 
 The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to
@@ -228,13 +225,13 @@ alternatively, a data frame can be provided and used instead.
 ```{r message = FALSE}
 ## using the HsBPTerms dataset to create the gene2GO list
 terms <- clusterEnrichment(.Object = t, species = HsBPTerms,
-                           pValue = 0.005)
+                           pValue = 0.005, nCores = 1)
 ```
 ```{r eval = FALSE}
 ## using the biomaRt package to create the gene2GO list
 ## Internet connection is required for this command
 terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
-                           pValue = 0.005)
+                           pValue = 0.005, nCores = 1)
 ```
 ```{r echo = FALSE}
 load("terms.RData")
