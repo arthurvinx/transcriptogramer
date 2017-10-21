@@ -16,7 +16,7 @@ setMethod("initialize", "Transcriptogram",
 
 setReplaceMethod("radius", "Transcriptogram",
     function(object, value) {
-        value <- transcriptogramerCheck("radius", value)
+        value <- check_radius(value)
         object@radius <- value
         object
     }
@@ -31,7 +31,7 @@ setMethod("orderingProperties", "Transcriptogram",
         if (is.na(object@status)) {
             stop("argument of class Transcriptogram - needs preprocessing!")
         }
-        nCores <- transcriptogramerCheck("nCores", nCores)
+        nCores <- check_nCores(nCores)
         message("calculating node properties... step 1 of 2")
         message("** this may take some time...")
         nodeDegrees <- table(object@association$p1)
@@ -181,11 +181,9 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         if (is.na(object@status)) {
             stop("argument of class Transcriptogram - needs preprocessing!")
         }
-        nCores <- transcriptogramerCheck("nCores", nCores)
-        dictionary <- transcriptogramerCheck("dictionary",
-            dictionary)
-        expression <- transcriptogramerCheck("expression",
-            expression)
+        nCores <- check_nCores(nCores)
+        dictionary <- check_dictionary(dictionary)
+        expression <- check_expression(expression)
         if (!(any(rownames(expression) %in%
             unique(dictionary$identifier)))) {
             stop("arguments expression and dictionary - does not match!")
@@ -255,7 +253,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
             stop("argument of class Transcriptogram - be sure ",
                 "to call the method transcriptogramStep1() before this one!")
         }
-        nCores <- transcriptogramerCheck("nCores", nCores)
+        nCores <- check_nCores(nCores)
         object@transcriptogramS1 = object@transcriptogramS1[order(object@transcriptogramS1$Position),
             ]
         min <- min(object@transcriptogramS1$Position)
@@ -327,16 +325,16 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             "call the methods transcriptogramStep1() and ",
             "transcriptogramStep2() before this one!")
     }
-    transcriptogramerCheck("pValue", pValue)
+    check_pValue(pValue)
     aux <- species
     if (is.data.frame(aux)) {
-        species <- transcriptogramerCheck("species1", species)
+        species <- check_species1(species)
     } else {
-        transcriptogramerCheck("species1", species)
+        check_species(species)
     }
     rm(aux)
-    transcriptogramerCheck("adjustMethod1", adjustMethod)
-    transcriptogramerCheck("levels", levels)
+    check_adjustMethod1(adjustMethod)
+    check_levels(levels)
     if (length(levels) != (ncol(object@transcriptogramS2) -
         2)) {
         stop("argument levels - does not have a valid length!")
@@ -486,12 +484,10 @@ setMethod("clusterVisualization", "Transcriptogram",
             "before this one!")
     }
     symbolAsNodeAlias <- FALSE
-    transcriptogramerCheck("maincomp",
-        maincomp)
-    transcriptogramerCheck("connected",
-        connected)
-    transcriptogramerCheck("host", host)
-    transcriptogramerCheck("port", port)
+    check_maincomp(maincomp)
+    check_connected(connected)
+    check_host(host)
+    check_port(port)
     if ("Symbol" %in% colnames(object@DE)) {
         symbolAsNodeAlias <- TRUE
     }
@@ -560,20 +556,20 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
     }
-    nCores <- transcriptogramerCheck("nCores", nCores)
-    transcriptogramerCheck("universe", universe)
-    transcriptogramerCheck("pValue", pValue)
+    nCores <- check_nCores(nCores)
+    check_universe(universe)
+    check_pValue(pValue)
     aux <- species
     if (is.data.frame(species)) {
-        species <- transcriptogramerCheck("species2", species)
+        species <- check_species2(species)
     } else {
-        transcriptogramerCheck("species2", species)
+        check_species2(species)
     }
     rm(aux)
-    transcriptogramerCheck("statistic", statistic)
-    transcriptogramerCheck("algorithm", algorithm)
-    transcriptogramerCheck("ontology", ontology)
-    transcriptogramerCheck("adjustMethod2", adjustMethod)
+    check_statistic(statistic)
+    check_algorithm(algorithm)
+    check_ontology(ontology)
+    check_adjustMethod2(adjustMethod)
     if (is.null(universe)) {
         universe <- object@transcriptogramS2$Protein
     }
@@ -678,4 +674,22 @@ setMethod("radius", "Transcriptogram",
 setMethod("DE", "Transcriptogram",
     function(object) {
         object@DE
+    })
+
+# show ####
+
+setMethod("show", "Transcriptogram",
+    function(object) {
+        cat('Slot "association":\n')
+        print(object@association)
+        cat('\nSlot "ordering":\n')
+        print(object@ordering)
+        cat('\nSlot "transcriptogramS1":\n')
+        print(object@transcriptogramS1)
+        cat('\nSlot "transcriptogramS2":\n')
+        print(object@transcriptogramS2)
+        cat('\nSlot "DE":\n')
+        print(object@DE)
+        cat('\nSlot "radius":\n', object@radius)
+        cat('\n\nSlot "status":\n', object@status, "\n")
     })
