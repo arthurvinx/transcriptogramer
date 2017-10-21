@@ -24,7 +24,7 @@
 #' @return A preprocessed object of class Transcriptogram.
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900)
 #'
 #' @seealso
 #' \link[transcriptogramer]{Transcriptogram-class},
@@ -38,14 +38,14 @@
 #'
 #' @export
 
-transcriptogram.preprocess <- function(association,
+transcriptogramPreprocess <- function(association,
     ordering, radius = 0L) {
     message("preprocessing the input data... step 1 of 1")
-    association = transcriptogramer.check("association",
+    association = transcriptogramerCheck("association",
         association)
-    ordering = transcriptogramer.check("ordering",
+    ordering = transcriptogramerCheck("ordering",
         ordering)
-    radius = transcriptogramer.check("radius",
+    radius = transcriptogramerCheck("radius",
         radius)
     if (!(length(unique(association$p1)) ==
         nrow(ordering) && all(ordering$Protein %in%

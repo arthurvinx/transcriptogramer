@@ -34,7 +34,7 @@ over the window}
 }}
 
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{getSlot-method}
 }
 \author{

@@ -15,7 +15,7 @@ testData <- function(){
 ord <- Hs900[seq_len(1000)]
 links <- association
 links <- links[which(links$protein1 %in% ord),]
-t <- transcriptogram.preprocess(links, ord, 2)
+t <- transcriptogramPreprocess(links, ord, 2)
 
 testOrderingProperties <- function(){
         oProperties <- orderingProperties(t, nCores = TRUE)

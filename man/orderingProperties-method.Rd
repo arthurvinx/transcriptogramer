@@ -6,12 +6,12 @@
 \alias{orderingProperties,Transcriptogram-method}
 \title{Calculates graph properties projected on the ordered proteins}
 \usage{
-orderingProperties(.Object, nCores = 1L)
+orderingProperties(object, nCores = 1L)
 
-\S4method{orderingProperties}{Transcriptogram}(.Object, nCores = 1L)
+\S4method{orderingProperties}{Transcriptogram}(object, nCores = 1L)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores
@@ -57,7 +57,7 @@ The window considers periodic boundary
 conditions to deal with proteins near the ends of the ordering.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 2)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 2)
 \dontrun{
 oProperties <- orderingProperties(transcriptogram)
 }
@@ -75,7 +75,7 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association}
 }

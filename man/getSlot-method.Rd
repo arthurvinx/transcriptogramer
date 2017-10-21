@@ -6,12 +6,12 @@
 \alias{getSlot,Transcriptogram-method}
 \title{Get the content of a slot}
 \usage{
-getSlot(.Object, slot)
+getSlot(object, slot)
 
-\S4method{getSlot}{Transcriptogram}(.Object, slot)
+\S4method{getSlot}{Transcriptogram}(object, slot)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{slot}{A character specifying the slot}
 }
@@ -23,14 +23,14 @@ of class Transcriptogram.
 Get the content of a slot of an object of class Transcriptogram.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 ord <- getSlot(transcriptogram, 'ordering')
 
 }
 \seealso{
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{Transcriptogram-class}
 }
 \author{

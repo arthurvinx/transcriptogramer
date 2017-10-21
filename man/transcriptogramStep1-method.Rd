@@ -6,13 +6,13 @@
 \alias{transcriptogramStep1,Transcriptogram-method}
 \title{Calculates the average of the expression values related to the same protein}
 \usage{
-transcriptogramStep1(.Object, expression, dictionary, nCores = 1L)
+transcriptogramStep1(object, expression, dictionary, nCores = 1L)
 
-\S4method{transcriptogramStep1}{Transcriptogram}(.Object, expression,
-  dictionary, nCores = 1L)
+\S4method{transcriptogramStep1}{Transcriptogram}(object, expression, dictionary,
+  nCores = 1L)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{expression}{A matrix, or data frame, containing normalized expression
 values from samples of microarrays
@@ -45,7 +45,7 @@ it. It is necessary a
 \code{dictionary} to map the identifiers to proteins.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900)
+transcriptogram <- transcriptogramPreprocess(association, Hs900)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 }
@@ -63,7 +63,7 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},

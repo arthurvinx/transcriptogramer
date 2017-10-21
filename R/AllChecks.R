@@ -1,4 +1,4 @@
-transcriptogramer.check <- function(name,
+transcriptogramerCheck <- function(name,
     argument) {
     if (name == "ordering") {
         if (is.character(argument) && length(argument) ==

@@ -6,12 +6,12 @@
 \alias{setRadius,Transcriptogram-method}
 \title{Changes the radius}
 \usage{
-setRadius(.Object, radius)
+setRadius(object, radius)
 
-\S4method{setRadius}{Transcriptogram}(.Object, radius)
+\S4method{setRadius}{Transcriptogram}(object, radius)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{radius}{An integer, non negative, number referring to the window
 radius required for some
@@ -25,14 +25,14 @@ class Transcriptogram.
 Changes the value of the radius slot of an object of class Transcriptogram.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 transcriptogram <- setRadius(transcriptogram, 80)
 
 }
 \seealso{
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{transcriptogramStep2-method},
 \link[transcriptogramer]{orderingProperties}
 }

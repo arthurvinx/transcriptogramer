@@ -6,17 +6,17 @@
 \alias{differentiallyExpressed,Transcriptogram-method}
 \title{Identify which genes are differentially expressed}
 \usage{
-differentiallyExpressed(.Object, levels, pValue = 0.05, species = NULL,
+differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
   adjustMethod = "BH")
 
-\S4method{differentiallyExpressed}{Transcriptogram}(.Object, levels,
+\S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
   pValue = 0.05, species = NULL, adjustMethod = "BH")
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{levels}{A logical vector that classify the columns, referring to
-samples, of the transcriptogramS2 slot of the \code{.Object}}
+samples, of the transcriptogramS2 slot of the \code{object}}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
 family-wise error rate
@@ -48,7 +48,7 @@ differentially expressed,
 meeting the \code{pValue} requirement, for the contrast "case-control".
 The \code{levels} lenght must be
 equal to the number of samples present in the transcriptogramS2 slot of
-the \code{.Object}, and its contents
+the \code{object}, and its contents
 is related to the order that the samples appear. FALSE must be used to
 indicate case samples,
 and TRUE to indicate control samples. If \code{species} is NULL, no
@@ -64,7 +64,7 @@ differentially expressed
 in clusters, and plots a graphical representation of the groupings.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -85,7 +85,7 @@ DEsymbols)
 
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},

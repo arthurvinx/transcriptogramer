@@ -25,7 +25,7 @@
 #' @slot DE A data frame of differentially expressed proteins
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{getSlot-method}
 #'
 #' @author

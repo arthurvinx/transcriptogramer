@@ -6,12 +6,12 @@
 \alias{connectivityProperties,Transcriptogram-method}
 \title{Calculates average graph properties as a function of the node connectivity}
 \usage{
-connectivityProperties(.Object)
+connectivityProperties(object)
 
-\S4method{connectivityProperties}{Transcriptogram}(.Object)
+\S4method{connectivityProperties}{Transcriptogram}(object)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 }
 \value{
 This method returns a data frame containing: unique degrees (k) of
@@ -33,14 +33,14 @@ The assortativity of a node can be measured by the average degree of its
 neighbors
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900)
+transcriptogram <- transcriptogramPreprocess(association, Hs900)
 \dontrun{
 cProperties <- connectivityProperties(transcriptogram)
 }
 
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association}
 }

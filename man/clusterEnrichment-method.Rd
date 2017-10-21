@@ -6,21 +6,21 @@
 \alias{clusterEnrichment,Transcriptogram-method}
 \title{Term enrichment}
 \usage{
-clusterEnrichment(.Object, universe = NULL, species,
+clusterEnrichment(object, universe = NULL, species,
   ontology = "biological process", algorithm = "classic",
   statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L)
 
-\S4method{clusterEnrichment}{Transcriptogram}(.Object, universe = NULL,
+\S4method{clusterEnrichment}{Transcriptogram}(object, universe = NULL,
   species, ontology = "biological process", algorithm = "classic",
   statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{universe}{A character vector containing ENSEMBL Peptide IDs, or NULL,
 if the universe
 is composed by all the proteins present in the transcriptogramS2 slot of
-\code{.Object}}
+\code{object}}
 
 \item{species}{A character string specifying the species; or a data frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
@@ -66,10 +66,10 @@ to build a gene2GO list, if \code{species} is a data frame, it will be used
 instead.
 The gene2GO list will be used with the
 \pkg{topGO} package to detect the most significant terms of each cluster
-present in the DE slot of the \code{.Object}.
+present in the DE slot of the \code{object}.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -86,7 +86,7 @@ pValue = 0.005)
 }
 \seealso{
 \link[transcriptogramer]{differentiallyExpressed-method},
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
