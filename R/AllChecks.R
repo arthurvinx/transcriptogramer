@@ -254,7 +254,7 @@ check_algorithm <- function(argument){
     }
 }
 
-check_statistics <- function(argument){
+check_statistic <- function(argument){
     opts <- c("fisher", "ks", "t", "sum", "globaltest")
     if (!is.character(argument) || length(argument) != 1 ||
         !(argument %in% opts)) {

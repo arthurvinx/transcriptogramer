@@ -1,7 +1,7 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 0.99.8
+Version: 0.99.9
 Date: 2017-10-21
 Authors@R: c(
     person("Diego", "Morais", email = "arthur.vinx@gmail.com",
