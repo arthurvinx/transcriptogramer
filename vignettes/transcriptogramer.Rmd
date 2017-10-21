@@ -78,10 +78,10 @@ t <- transcriptogramPreprocess(association = association, ordering = Hs900,
 ## after the preprocessing
 
 ## modifying the radius of an existing Transcriptogram object
-t <- setRadius(object = t, radius = 25)
+radius(object = t) <- 25
 
 ## getting the radius of an existing Transcriptogram object
-r <- getSlot(object = t, slot = "radius")
+r <- radius(object = t)
 ```
 
 The output of the orderingProperties() method is partially affected by
@@ -91,7 +91,7 @@ the radius slot.
 oPropertiesR25 <- orderingProperties(object = t, nCores = 1)
 
 ## slight change of radius
-t <- setRadius(object = t, radius = 30)
+radius(object = t) <- 30
 
 ## this output is partially different comparing to oPropertiesR25
 oPropertiesR30 <- orderingProperties(object = t, nCores = 1)
@@ -139,7 +139,7 @@ methods are affected by the content of the transcriptogramS2 slot, it can be
 recalculated using the content of the transcriptogramS1 slot.
 
 ```{r message = FALSE}
-t <- setRadius(object = t, radius = 50)
+radius(object = t) <- 50
 t <- transcriptogramStep2(object = t, nCores = 1)
 ```
 
@@ -194,7 +194,7 @@ method. By default, the p-values are adjusted by the Benjamini-Hochberg
 procedure.
 
 ```{r message = FALSE}
-DE <- getSlot(object = t, slot = "DE")
+DE <- DE(object = t)
 ```
 
 The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to

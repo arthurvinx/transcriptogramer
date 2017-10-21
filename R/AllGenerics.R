@@ -284,74 +284,13 @@ setGeneric("transcriptogramStep2", function(object, nCores = 1L)
     standardGeneric("transcriptogramStep2"),
     package = "transcriptogramer")
 
-# setRadius ####
+# radius<- ####
 
-#' Changes the radius
-#'
-#' Changes the value of the radius slot of an object of class Transcriptogram.
-#'
-#' @param object An object of class Transcriptogram
-#'
-#' @param radius An integer, non negative, number referring to the window
-#' radius required for some
-#' methods
-#'
-#' @return This method changes the value of the radius slot of an object of
-#' class Transcriptogram.
-#'
-#' @examples
-#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
-#' transcriptogram <- setRadius(transcriptogram, 80)
-#'
-#' @seealso
-#' \link[transcriptogramer]{Hs900},
-#' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogramPreprocess},
-#' \link[transcriptogramer]{transcriptogramStep2-method},
-#' \link[transcriptogramer]{orderingProperties}
-#'
-#' @author
-#' Diego Morais
-#'
-#' @docType methods
-#' @rdname setRadius-method
+#' @rdname radius-method
 #' @export
 
-setGeneric("setRadius", function(object,
-    radius) standardGeneric("setRadius"),
-    package = "transcriptogramer")
-
-# getSlot ####
-
-#' Get the content of a slot
-#'
-#' Get the content of a slot of an object of class Transcriptogram.
-#'
-#' @param object An object of class Transcriptogram
-#'
-#' @param slot A character specifying the slot
-#'
-#' @return This method returns the content of the specified slot of an object
-#' of class Transcriptogram.
-#'
-#' @examples
-#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
-#' ord <- getSlot(transcriptogram, 'ordering')
-#'
-#' @seealso
-#' \link[transcriptogramer]{Hs900},
-#' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogramPreprocess},
-#' \link[transcriptogramer]{Transcriptogram-class}
-#'
-#' @author
-#' Diego Morais
-#'
-#' @docType methods
-#' @rdname getSlot-method
-#' @export
-
-setGeneric("getSlot", function(object, slot) standardGeneric("getSlot"),
+setGeneric("radius<-", signature = "object",
+    function(object, value) standardGeneric("radius<-"),
     package = "transcriptogramer")
 
 # differentiallyExpressed ####
@@ -644,4 +583,70 @@ setGeneric("clusterEnrichment", function(object,
     algorithm = "classic", statistic = "fisher",
     pValue = 0.05, adjustMethod = "BH", nCores = 1L)
     standardGeneric("clusterEnrichment"),
+    package = "transcriptogramer")
+
+# radius ####
+
+#' Radius
+#'
+#' Retrieve or set the content of the radius slot of an object of class
+#' Transcriptogram.
+#'
+#' @param object An object of class Transcriptogram
+#'
+#' @param value An integer, non negative, number referring to the window
+#' radius required for some methods
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' radius(transcriptogram) <- 80
+#' radius(transcriptogram)
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
+#' \link[transcriptogramer]{transcriptogramStep2-method},
+#' \link[transcriptogramer]{orderingProperties}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname radius-method
+#' @export
+
+setGeneric("radius", function(object)
+    standardGeneric("radius"),
+    package = "transcriptogramer")
+
+# DE ####
+
+#' Get DE
+#'
+#' Gets the content of the DE slot of an object of class Transcriptogram.
+#'
+#' @param object An object of class Transcriptogram
+#'
+#' @return This method returns the content of the DE slot of an object of
+#' class Transcriptogram.
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' DE(transcriptogram)
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramPreprocess}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname DE-method
+#' @export
+
+setGeneric("DE", function(object)
+    standardGeneric("DE"),
     package = "transcriptogramer")

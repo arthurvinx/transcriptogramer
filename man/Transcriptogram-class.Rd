@@ -35,7 +35,15 @@ over the window}
 
 \seealso{
 \link[transcriptogramer]{transcriptogramPreprocess},
-\link[transcriptogramer]{getSlot-method}
+\link[transcriptogramer]{DE-method},
+\link[transcriptogramer]{radius-method},
+\link[transcriptogramer]{orderingProperties-method},
+\link[transcriptogramer]{connectivityProperties-method},
+\link[transcriptogramer]{transcriptogramStep1-method},
+\link[transcriptogramer]{transcriptogramStep2-method},
+\link[transcriptogramer]{differentiallyExpressed-method},
+\link[transcriptogramer]{clusterVisualization-method},
+\link[transcriptogramer]{clusterEnrichment-method}
 }
 \author{
 Diego Morais

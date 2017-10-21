@@ -10,17 +10,17 @@ setMethod("initialize", "Transcriptogram",
         .Object
     })
 
-# setRadius ####
+# radius<- ####
 
-#' @rdname setRadius-method
+#' @rdname radius-method
 
-setMethod("setRadius", "Transcriptogram",
-    function(object, radius) {
-        object@radius = transcriptogramerCheck("radius",
-            radius)
-        message("done!")
+setReplaceMethod("radius", "Transcriptogram",
+    function(object, value) {
+        value <- transcriptogramerCheck("radius", value)
+        object@radius <- value
         object
-    })
+    }
+)
 
 # orderingProperties ####
 
@@ -662,33 +662,20 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
     return(df)
 })
 
-# getSlot ####
+# radius ####
 
-#' @rdname getSlot-method
+#' @rdname radius-method
 
-setMethod("getSlot", "Transcriptogram", function(object,
-    slot) {
-    opts <- c("DE", "association", "ordering",
-        "transcriptogramS1", "transcriptogramS2",
-        "radius", "status")
-    if (!is.character(slot) || length(slot) !=
-        1 || !(slot %in% opts)) {
-        stop("argument slot - should be any one of the options:\n",
-            paste0(opts, collapse = ", "), "!")
-    }
-    if (slot == "DE") {
-        return(object@DE)
-    } else if (slot == "association") {
-        return(object@association)
-    } else if (slot == "ordering") {
-        return(object@ordering)
-    } else if (slot == "radius") {
-        return(object@radius)
-    } else if (slot == "status") {
-        return(object@status)
-    } else if (slot == "transcriptogramS1") {
-        return(object@transcriptogramS1)
-    } else if (slot == "transcriptogramS2") {
-        return(object@transcriptogramS2)
-    }
-})
+setMethod("radius", "Transcriptogram",
+    function(object) {
+        object@radius
+    })
+
+# DE ####
+
+#' @rdname DE-method
+
+setMethod("DE", "Transcriptogram",
+    function(object) {
+        object@DE
+    })
