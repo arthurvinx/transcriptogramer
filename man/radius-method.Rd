@@ -22,6 +22,10 @@ radius(object)
 \item{value}{An integer, non negative, number referring to the window
 radius required for some methods}
 }
+\value{
+This method returns the content of the radius slot of an object of
+class Transcriptogram.
+}
 \description{
 Retrieve or set the content of the radius slot of an object of class
 Transcriptogram.
