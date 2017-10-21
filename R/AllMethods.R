@@ -477,11 +477,10 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
 setMethod("clusterVisualization", "Transcriptogram",
     function(object,
     maincomp = FALSE, connected = FALSE,
-    host = "127.0.0.1", port = 9091) {
+    host = "127.0.0.1", port = 9091, clusters = NULL) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
-            "call the method differentiallyExpressed() ",
-            "before this one!")
+            "call the method differentiallyExpressed() before this one!")
     }
     symbolAsNodeAlias <- FALSE
     check_maincomp(maincomp)
@@ -490,6 +489,17 @@ setMethod("clusterVisualization", "Transcriptogram",
     check_port(port)
     if ("Symbol" %in% colnames(object@DE)) {
         symbolAsNodeAlias <- TRUE
+    }
+    if(is.null(clusters)){
+        clusters  <- unique(object@DE$ClusterNumber)
+    }else{
+        if(is.numeric(clusters)){
+            clusters <- as.integer(clusters)
+        }
+        if(!is.integer(clusters) || !all(clusters %in%
+            unique(object@DE$ClusterNumber))){
+            error("clusters")
+        }
     }
     message("invoking RedeR... step 1 of 4")
     message("** this may take some time...")
@@ -507,29 +517,27 @@ setMethod("clusterVisualization", "Transcriptogram",
             connected = connected, transdat = TRUE)
     })
     rm(g)
-    dim <- ceiling(sqrt(n))
-    slice <- 100/dim
-    myTheme <- list(isNest = TRUE, theme = 3,
-        gscale = slice, nestFontSize = 50,
-        zoom = 40)
-    x <- y <- 0
     message("adding graphs into RedeR... step 3 of 4")
+    n <- length(clusters)
     if (n > 3) {
         message("** this may take some time...")
     }
-    invisible(sapply(seq.int(1, n), function(i) {
+    dim <- ceiling(sqrt(n))
+    slice <- 100/dim
+    myTheme <- list(isNest = TRUE, theme = 3, gscale = slice,
+        nestFontSize = 50, zoom = 40)
+    x <- y <- 0
+    invisible(sapply(clusters, function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
             cols = myColors[i])
         if (symbolAsNodeAlias) {
             sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
               from = "Symbol", to = "nodeAlias")
         }
-        message("** adding cluster ", i, " of ", n, "...")
-        suppressMessages(RedeR::addGraph(rdp,
-            sgList[[i]], theme = c(myTheme,
-              nestAlias = paste0("C",
-                i)), gcoord = c(x * slice,
-              y * slice)))
+        message("** adding cluster ", i, "...")
+        suppressMessages(RedeR::addGraph(rdp, sgList[[i]],
+            theme = c(myTheme, nestAlias = paste0("C", i)),
+            gcoord = c(x * slice, y * slice)))
         x <<- x + 1
         if (x == dim) {
             x <<- 0

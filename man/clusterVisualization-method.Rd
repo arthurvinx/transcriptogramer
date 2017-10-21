@@ -7,10 +7,10 @@
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
 clusterVisualization(object, maincomp = FALSE, connected = FALSE,
-  host = "127.0.0.1", port = 9091)
+  host = "127.0.0.1", port = 9091, clusters = NULL)
 
 \S4method{clusterVisualization}{Transcriptogram}(object, maincomp = FALSE,
-  connected = FALSE, host = "127.0.0.1", port = 9091)
+  connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram}
@@ -25,6 +25,9 @@ server}
 
 \item{port}{An integer specifying the port on which the XML-RPC server should
 listen}
+
+\item{clusters}{An integer vector specifying the clusters to be
+displayed, if NULL, all clusters will be displayed}
 }
 \value{
 This function returns an object of the RedPort Class

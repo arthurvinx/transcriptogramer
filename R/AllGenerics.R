@@ -425,6 +425,9 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param port An integer specifying the port on which the XML-RPC server should
 #' listen
 #'
+#' @param clusters An integer vector specifying the clusters to be
+#' displayed, if NULL, all clusters will be displayed
+#'
 #' @return This function returns an object of the RedPort Class
 #'
 #' @examples
@@ -472,7 +475,7 @@ setGeneric("differentiallyExpressed", function(object,
 setGeneric("clusterVisualization", function(object,
     maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
-    port = 9091) standardGeneric("clusterVisualization"),
+    port = 9091, clusters = NULL) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
 
 # clusterEnrichment ####
