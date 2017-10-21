@@ -189,8 +189,9 @@ are below are downregulated.
 ![](Rplot.png)
 
 The differentially expressed genes identified by this method are stored in the
-DE slot of the Transcriptogram object, its content can be obtained using the getSlot
-method. By default, the p-values are adjusted by the Benjamini-Hochberg
+The differentially expressed genes identified by this method are stored in the
+DE slot of the Transcriptogram object, its content can be obtained using the
+DE method. By default, the p-values are adjusted by the Benjamini-Hochberg
 procedure.
 
 ```{r message = FALSE}
