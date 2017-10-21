@@ -51,7 +51,7 @@ associations of proteins of combined score greater than or equal to 900
 
 ```{r message = FALSE}
 library(transcriptogramer)
-t <- transcriptogram.preprocess(association = association, ordering = Hs900)
+t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 ```
 
 ## Topological analysis
@@ -68,40 +68,40 @@ preprocessing (see **Transcriptogram-class** documentation).
 ## during the preprocessing
 
 ## creating the object and setting the radius as 0
-t <- transcriptogram.preprocess(association = association, ordering = Hs900)
+t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 
 ## creating the object and setting the radius as 50
-t <- transcriptogram.preprocess(association = association, ordering = Hs900,
+t <- transcriptogramPreprocess(association = association, ordering = Hs900,
                                 radius = 50)
 ```
 ```{r message = FALSE}
 ## after the preprocessing
 
 ## modifying the radius of an existing Transcriptogram object
-t <- setRadius(.Object = t, radius = 25)
+radius(object = t) <- 25
 
 ## getting the radius of an existing Transcriptogram object
-r <- getSlot(.Object = t, slot = "radius")
+r <- radius(object = t)
 ```
 
 The output of the orderingProperties() method is partially affected by
 the radius slot.
 
 ```{r message = FALSE}
-oPropertiesR25 <- orderingProperties(.Object = t, nCores = 1)
+oPropertiesR25 <- orderingProperties(object = t, nCores = 1)
 
 ## slight change of radius
-t <- setRadius(.Object = t, radius = 30)
+radius(object = t) <- 30
 
 ## this output is partially different comparing to oPropertiesR25
-oPropertiesR30 <- orderingProperties(.Object = t, nCores = 1)
+oPropertiesR30 <- orderingProperties(object = t, nCores = 1)
 ```
 
 As the connectivityProperties() method does not uses a window, its output is not
 affected by the radius slot.
 
 ```{r message = FALSE}
-cProperties <- connectivityProperties(.Object = t)
+cProperties <- connectivityProperties(object = t)
 ```
 
 ## Transcriptogram
@@ -119,7 +119,7 @@ of each transcriptome sample, the average of the expression values of all the
 identifiers related to it.
 
 ```{r message = FALSE}
-t <- transcriptogramStep1(.Object = t, expression = GSE9988,
+t <- transcriptogramStep1(object = t, expression = GSE9988,
                           dictionary = GPL570, nCores = 1)
 ```
 
@@ -129,7 +129,7 @@ considers periodic boundary conditions to deal with proteins near the ends of
 the ordering, in order to reduce random noise.
 
 ```{r message = FALSE}
-t <- transcriptogramStep2(.Object = t, nCores = 1)
+t <- transcriptogramStep2(object = t, nCores = 1)
 ```
 
 The Transcriptogram object has slots to store the outputs of the
@@ -139,8 +139,8 @@ methods are affected by the content of the transcriptogramS2 slot, it can be
 recalculated using the content of the transcriptogramS1 slot.
 
 ```{r message = FALSE}
-t <- setRadius(.Object = t, radius = 50)
-t <- transcriptogramStep2(.Object = t, nCores = 1)
+radius(object = t) <- 50
+t <- transcriptogramStep2(object = t, nCores = 1)
 ```
 
 ## Functional enrichment analysis
@@ -165,16 +165,16 @@ columns referring to case samples.
 
 ```{r message = FALSE, fig.show = "hide"}
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005)
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005)
 ```
 ```{r eval = FALSE}
 ## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
 ## Internet connection is required for this command
-t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005,
                              species = "Homo sapiens")
 
 ## translating ENSEMBL Peptide IDs to Symbols using the DEsymbols dataset
-t <- differentiallyExpressed(.Object = t, levels = levels, pValue = 0.005,
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005,
                              species = DEsymbols)
 ```
 
@@ -194,7 +194,7 @@ method. By default, the p-values are adjusted by the Benjamini-Hochberg
 procedure.
 
 ```{r message = FALSE}
-DE <- getSlot(.Object = t, slot = "DE")
+DE <- DE(object = t)
 ```
 
 The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to
@@ -207,7 +207,7 @@ its contents will be used as node alias.
 
 
 ```{r eval = FALSE}
-rdp <- clusterVisualization(.Object = t)
+rdp <- clusterVisualization(object = t)
 ```
 
 ![](RedeR.png)
@@ -224,13 +224,13 @@ alternatively, a data frame can be provided and used instead.
 
 ```{r message = FALSE}
 ## using the HsBPTerms dataset to create the gene2GO list
-terms <- clusterEnrichment(.Object = t, species = HsBPTerms,
+terms <- clusterEnrichment(object = t, species = HsBPTerms,
                            pValue = 0.005, nCores = 1)
 ```
 ```{r eval = FALSE}
 ## using the biomaRt package to create the gene2GO list
 ## Internet connection is required for this command
-terms <- clusterEnrichment(.Object = t, species = "Homo sapiens",
+terms <- clusterEnrichment(object = t, species = "Homo sapiens",
                            pValue = 0.005, nCores = 1)
 ```
 ```{r echo = FALSE}

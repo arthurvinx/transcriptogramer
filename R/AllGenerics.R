@@ -32,7 +32,7 @@
 #' The window considers periodic boundary
 #' conditions to deal with proteins near the ends of the ordering.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -46,7 +46,7 @@
 #' clustering coefficient and modularity.
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 2)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 2)
 #' \dontrun{
 #' oProperties <- orderingProperties(transcriptogram)
 #' }
@@ -62,7 +62,7 @@
 #' @importFrom foreach foreach
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association}
 #'
@@ -84,7 +84,7 @@
 #' @rdname orderingProperties-method
 #' @export
 
-setGeneric("orderingProperties", function(.Object, nCores = 1L)
+setGeneric("orderingProperties", function(object, nCores = 1L)
     standardGeneric("orderingProperties"),
     package = "transcriptogramer")
 
@@ -99,7 +99,7 @@ setGeneric("orderingProperties", function(.Object, nCores = 1L)
 #' of the nodes of degree k, and the average clustering coefficient of the
 #' nodes of degree k.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @details
 #' The assortativity of a node can be measured by the average degree of its
@@ -112,13 +112,13 @@ setGeneric("orderingProperties", function(.Object, nCores = 1L)
 #' k, and the average clustering coefficient (ck) of the nodes of degree k
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900)
 #' \dontrun{
 #' cProperties <- connectivityProperties(transcriptogram)
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association}
 #'
@@ -132,7 +132,7 @@ setGeneric("orderingProperties", function(.Object, nCores = 1L)
 #' @rdname connectivityProperties-method
 #' @export
 
-setGeneric("connectivityProperties", function(.Object) standardGeneric("connectivityProperties"),
+setGeneric("connectivityProperties", function(object) standardGeneric("connectivityProperties"),
     package = "transcriptogramer")
 
 # transcriptogramS1 ####
@@ -144,7 +144,7 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #' it. It is necessary a
 #' \code{dictionary} to map the identifiers to proteins.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param expression A matrix, or data frame, containing normalized expression
 #' values from samples of microarrays
@@ -170,7 +170,7 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #' related to the same protein.
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' }
@@ -185,7 +185,7 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #'
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
@@ -209,7 +209,7 @@ setGeneric("connectivityProperties", function(.Object) standardGeneric("connecti
 #' @rdname transcriptogramStep1-method
 #' @export
 
-setGeneric("transcriptogramStep1", function(.Object,
+setGeneric("transcriptogramStep1", function(object,
     expression, dictionary, nCores = 1L)
     standardGeneric("transcriptogramStep1"),
     package = "transcriptogramer")
@@ -225,7 +225,7 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' deal
 #' with proteins near the ends of the ordering.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -240,7 +240,7 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' of the window.
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -255,7 +255,7 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' @importFrom foreach foreach
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
@@ -280,78 +280,17 @@ setGeneric("transcriptogramStep1", function(.Object,
 #' @rdname transcriptogramStep2-method
 #' @export
 
-setGeneric("transcriptogramStep2", function(.Object, nCores = 1L)
+setGeneric("transcriptogramStep2", function(object, nCores = 1L)
     standardGeneric("transcriptogramStep2"),
     package = "transcriptogramer")
 
-# setRadius ####
+# radius<- ####
 
-#' Changes the radius
-#'
-#' Changes the value of the radius slot of an object of class Transcriptogram.
-#'
-#' @param .Object An object of class Transcriptogram
-#'
-#' @param radius An integer, non negative, number referring to the window
-#' radius required for some
-#' methods
-#'
-#' @return This method changes the value of the radius slot of an object of
-#' class Transcriptogram.
-#'
-#' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
-#' transcriptogram <- setRadius(transcriptogram, 80)
-#'
-#' @seealso
-#' \link[transcriptogramer]{Hs900},
-#' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogram.preprocess},
-#' \link[transcriptogramer]{transcriptogramStep2-method},
-#' \link[transcriptogramer]{orderingProperties}
-#'
-#' @author
-#' Diego Morais
-#'
-#' @docType methods
-#' @rdname setRadius-method
+#' @rdname radius-method
 #' @export
 
-setGeneric("setRadius", function(.Object,
-    radius) standardGeneric("setRadius"),
-    package = "transcriptogramer")
-
-# getSlot ####
-
-#' Get the content of a slot
-#'
-#' Get the content of a slot of an object of class Transcriptogram.
-#'
-#' @param .Object An object of class Transcriptogram
-#'
-#' @param slot A character specifying the slot
-#'
-#' @return This method returns the content of the specified slot of an object
-#' of class Transcriptogram.
-#'
-#' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
-#' ord <- getSlot(transcriptogram, 'ordering')
-#'
-#' @seealso
-#' \link[transcriptogramer]{Hs900},
-#' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogram.preprocess},
-#' \link[transcriptogramer]{Transcriptogram-class}
-#'
-#' @author
-#' Diego Morais
-#'
-#' @docType methods
-#' @rdname getSlot-method
-#' @export
-
-setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
+setGeneric("radius<-", signature = "object",
+    function(object, value) standardGeneric("radius<-"),
     package = "transcriptogramer")
 
 # differentiallyExpressed ####
@@ -363,7 +302,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' meeting the \code{pValue} requirement, for the contrast "case-control".
 #' The \code{levels} lenght must be
 #' equal to the number of samples present in the transcriptogramS2 slot of
-#' the \code{.Object}, and its contents
+#' the \code{object}, and its contents
 #' is related to the order that the samples appear. FALSE must be used to
 #' indicate case samples,
 #' and TRUE to indicate control samples. If \code{species} is NULL, no
@@ -378,10 +317,10 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' differentially expressed
 #' in clusters, and plots a graphical representation of the groupings.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param levels A logical vector that classify the columns, referring to
-#' samples, of the transcriptogramS2 slot of the \code{.Object}
+#' samples, of the transcriptogramS2 slot of the \code{object}
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
 #' family-wise error rate
@@ -407,7 +346,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' integer number that indicates if the protein is downregulated or upregulated.
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -427,7 +366,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
@@ -460,7 +399,7 @@ setGeneric("getSlot", function(.Object, slot) standardGeneric("getSlot"),
 #' @rdname differentiallyExpressed-method
 #' @export
 
-setGeneric("differentiallyExpressed", function(.Object,
+setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
     adjustMethod = "BH") standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
@@ -473,7 +412,7 @@ setGeneric("differentiallyExpressed", function(.Object,
 #' differentially expressed clusters. If the DE slot has a column named Symbol,
 #' its contents will be used as node alias.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param maincomp Logical value, whether to display only the main component of
 #' each cluster
@@ -486,10 +425,13 @@ setGeneric("differentiallyExpressed", function(.Object,
 #' @param port An integer specifying the port on which the XML-RPC server should
 #' listen
 #'
+#' @param clusters An integer vector specifying the clusters to be
+#' displayed, if NULL, all clusters will be displayed
+#'
 #' @return This function returns an object of the RedPort Class
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -501,7 +443,7 @@ setGeneric("differentiallyExpressed", function(.Object,
 #'
 #' @seealso
 #' \link[transcriptogramer]{differentiallyExpressed-method},
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
@@ -530,10 +472,10 @@ setGeneric("differentiallyExpressed", function(.Object,
 #' @rdname clusterVisualization-method
 #' @export
 
-setGeneric("clusterVisualization", function(.Object,
+setGeneric("clusterVisualization", function(object,
     maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
-    port = 9091) standardGeneric("clusterVisualization"),
+    port = 9091, clusters = NULL) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
 
 # clusterEnrichment ####
@@ -545,14 +487,14 @@ setGeneric("clusterVisualization", function(.Object,
 #' instead.
 #' The gene2GO list will be used with the
 #' \pkg{topGO} package to detect the most significant terms of each cluster
-#' present in the DE slot of the \code{.Object}.
+#' present in the DE slot of the \code{object}.
 #'
-#' @param .Object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram
 #'
 #' @param universe A character vector containing ENSEMBL Peptide IDs, or NULL,
 #' if the universe
 #' is composed by all the proteins present in the transcriptogramS2 slot of
-#' \code{.Object}
+#' \code{object}
 #'
 #' @param species A character string specifying the species; or a data frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
@@ -592,7 +534,7 @@ setGeneric("clusterVisualization", function(.Object,
 #' @return A data frame containing the most significant terms of each cluster
 #'
 #' @examples
-#' transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -608,7 +550,7 @@ setGeneric("clusterVisualization", function(.Object,
 #'
 #' @seealso
 #' \link[transcriptogramer]{differentiallyExpressed-method},
-#' \link[transcriptogramer]{transcriptogram.preprocess},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
@@ -639,9 +581,75 @@ setGeneric("clusterVisualization", function(.Object,
 #' @importFrom snow makeSOCKcluster
 #' @importFrom parallel detectCores
 
-setGeneric("clusterEnrichment", function(.Object,
+setGeneric("clusterEnrichment", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher",
     pValue = 0.05, adjustMethod = "BH", nCores = 1L)
     standardGeneric("clusterEnrichment"),
+    package = "transcriptogramer")
+
+# radius ####
+
+#' Radius
+#'
+#' Retrieve or set the content of the radius slot of an object of class
+#' Transcriptogram.
+#'
+#' @param object An object of class Transcriptogram
+#'
+#' @param value An integer, non negative, number referring to the window
+#' radius required for some methods
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' radius(transcriptogram) <- 80
+#' radius(transcriptogram)
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
+#' \link[transcriptogramer]{transcriptogramStep2-method},
+#' \link[transcriptogramer]{orderingProperties}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname radius-method
+#' @export
+
+setGeneric("radius", function(object)
+    standardGeneric("radius"),
+    package = "transcriptogramer")
+
+# DE ####
+
+#' Get DE
+#'
+#' Gets the content of the DE slot of an object of class Transcriptogram.
+#'
+#' @param object An object of class Transcriptogram
+#'
+#' @return This method returns the content of the DE slot of an object of
+#' class Transcriptogram.
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' DE(transcriptogram)
+#'
+#' @seealso
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer]{transcriptogramPreprocess}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname DE-method
+#' @export
+
+setGeneric("DE", function(object)
+    standardGeneric("DE"),
     package = "transcriptogramer")

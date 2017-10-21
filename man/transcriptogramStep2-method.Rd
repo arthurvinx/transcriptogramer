@@ -6,12 +6,12 @@
 \alias{transcriptogramStep2,Transcriptogram-method}
 \title{Calculates the average of the expression values using a sliding window}
 \usage{
-transcriptogramStep2(.Object, nCores = 1L)
+transcriptogramStep2(object, nCores = 1L)
 
-\S4method{transcriptogramStep2}{Transcriptogram}(.Object, nCores = 1L)
+\S4method{transcriptogramStep2}{Transcriptogram}(object, nCores = 1L)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores
@@ -35,7 +35,7 @@ deal
 with proteins near the ends of the ordering.
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -54,7 +54,7 @@ the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
 PMID:21169199
 }
 \seealso{
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},

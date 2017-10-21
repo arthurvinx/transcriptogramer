@@ -6,14 +6,14 @@
 \alias{clusterVisualization,Transcriptogram-method}
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
-clusterVisualization(.Object, maincomp = FALSE, connected = FALSE,
-  host = "127.0.0.1", port = 9091)
+clusterVisualization(object, maincomp = FALSE, connected = FALSE,
+  host = "127.0.0.1", port = 9091, clusters = NULL)
 
-\S4method{clusterVisualization}{Transcriptogram}(.Object, maincomp = FALSE,
-  connected = FALSE, host = "127.0.0.1", port = 9091)
+\S4method{clusterVisualization}{Transcriptogram}(object, maincomp = FALSE,
+  connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL)
 }
 \arguments{
-\item{.Object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram}
 
 \item{maincomp}{Logical value, whether to display only the main component of
 each cluster}
@@ -25,6 +25,9 @@ server}
 
 \item{port}{An integer specifying the port on which the XML-RPC server should
 listen}
+
+\item{clusters}{An integer vector specifying the clusters to be
+displayed, if NULL, all clusters will be displayed}
 }
 \value{
 This function returns an object of the RedPort Class
@@ -38,7 +41,7 @@ its contents will be used as node alias.
 RedeR package requirements: Java Runtime Environment (>= 6)
 }
 \examples{
-transcriptogram <- transcriptogram.preprocess(association, Hs900, 50)
+transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
@@ -51,7 +54,7 @@ rdp <- clusterVisualization(transcriptogram)
 }
 \seealso{
 \link[transcriptogramer]{differentiallyExpressed-method},
-\link[transcriptogramer]{transcriptogram.preprocess},
+\link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},

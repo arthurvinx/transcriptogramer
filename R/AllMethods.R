@@ -10,39 +10,39 @@ setMethod("initialize", "Transcriptogram",
         .Object
     })
 
-# setRadius ####
+# radius<- ####
 
-#' @rdname setRadius-method
+#' @rdname radius-method
 
-setMethod("setRadius", "Transcriptogram",
-    function(.Object, radius) {
-        .Object@radius = transcriptogramer.check("radius",
-            radius)
-        message("done!")
-        .Object
-    })
+setReplaceMethod("radius", "Transcriptogram",
+    function(object, value) {
+        value <- check_radius(value)
+        object@radius <- value
+        object
+    }
+)
 
 # orderingProperties ####
 
 #' @rdname orderingProperties-method
 
 setMethod("orderingProperties", "Transcriptogram",
-    function(.Object, nCores = 1L) {
-        if (is.na(.Object@status)) {
+    function(object, nCores = 1L) {
+        if (is.na(object@status)) {
             stop("argument of class Transcriptogram - needs preprocessing!")
         }
-        nCores <- transcriptogramer.check("nCores", nCores)
+        nCores <- check_nCores(nCores)
         message("calculating node properties... step 1 of 2")
         message("** this may take some time...")
-        nodeDegrees <- table(.Object@association$p1)
+        nodeDegrees <- table(object@association$p1)
         nodeDegrees <- as.data.frame(nodeDegrees)
         colnames(nodeDegrees)[2] <- "nodeDegree"
-        ord <- merge(.Object@ordering, nodeDegrees,
+        ord <- merge(object@ordering, nodeDegrees,
             by.x = "Protein", by.y = "Var1")
         ord <- ord[order(ord$Position), ]
         rownames(ord) <- NULL
         rm(nodeDegrees)
-        g <- igraph::graph.data.frame(d = .Object@association,
+        g <- igraph::graph.data.frame(d = object@association,
             directed = FALSE)
         ord$nodeTriangles <- vapply(ord$Protein,
             function(x) {
@@ -64,8 +64,8 @@ setMethod("orderingProperties", "Transcriptogram",
         pb <- progress::progress_bar$new(format = "running [:bar] :percent elapsed time :elapsed",
             total = ntasks, clear = FALSE,
             width = 60)
-        adjlist <- tapply(.Object@association$p1,
-            .Object@association$p2, unique)
+        adjlist <- tapply(object@association$p1,
+            object@association$p2, unique)
         message("applying sliding window and mounting resulting ",
             "data... step 2 of 2")
         message("** this may take some time...")
@@ -81,8 +81,8 @@ setMethod("orderingProperties", "Transcriptogram",
             .combine = "rbind", .options.snow = opts) %dopar%
             {
                 pos <- ord[i, "Position"]
-                l1 <- pos - .Object@radius
-                l2 <- pos + .Object@radius
+                l1 <- pos - object@radius
+                l2 <- pos + object@radius
                 temp <- data.frame()
                 if (l1 >= min && l2 <= max) {
                   temp <- ord[which(ord$Position >=
@@ -123,15 +123,15 @@ setMethod("orderingProperties", "Transcriptogram",
 #' @rdname connectivityProperties-method
 
 setMethod("connectivityProperties", "Transcriptogram",
-    function(.Object) {
-        if (is.na(.Object@status)) {
+    function(object) {
+        if (is.na(object@status)) {
             stop("argument of class Transcriptogram - needs preprocessing!")
         }
         message("calculating graph properties... step 1 of 2")
-        nodes <- table(.Object@association$p1)
+        nodes <- table(object@association$p1)
         nodes <- as.data.frame(nodes)
         colnames(nodes) <- c("protein", "nodeDegree")
-        g <- igraph::graph.data.frame(d = .Object@association,
+        g <- igraph::graph.data.frame(d = object@association,
             directed = FALSE)
         nodes$nodeTriangles <- vapply(nodes$protein,
             function(x) {
@@ -147,8 +147,8 @@ setMethod("connectivityProperties", "Transcriptogram",
                 return(x/(y * (y - 1)/2))
             }
         }, nodes$nodeTriangles, nodes$nodeDegree)
-        adjlist <- tapply(.Object@association$p1,
-            .Object@association$p2, unique)
+        adjlist <- tapply(object@association$p1,
+            object@association$p2, unique)
         nodes$nodeAssortativity <- vapply(nodes$protein,
             function(x) {
                 return(mean(nodes[which(nodes$protein %in%
@@ -177,21 +177,19 @@ setMethod("connectivityProperties", "Transcriptogram",
 #' @rdname transcriptogramStep1-method
 
 setMethod("transcriptogramStep1", "Transcriptogram",
-    function(.Object, expression, dictionary, nCores = 1L) {
-        if (is.na(.Object@status)) {
+    function(object, expression, dictionary, nCores = 1L) {
+        if (is.na(object@status)) {
             stop("argument of class Transcriptogram - needs preprocessing!")
         }
-        nCores <- transcriptogramer.check("nCores", nCores)
-        dictionary <- transcriptogramer.check("dictionary",
-            dictionary)
-        expression <- transcriptogramer.check("expression",
-            expression)
+        nCores <- check_nCores(nCores)
+        dictionary <- check_dictionary(dictionary)
+        expression <- check_expression(expression)
         if (!(any(rownames(expression) %in%
             unique(dictionary$identifier)))) {
             stop("arguments expression and dictionary - does not match!")
         }
         dictionary <- dictionary[which(dictionary$protein %in%
-            .Object@ordering$Protein), ]
+            object@ordering$Protein), ]
         singletons <- names(which(table(dictionary$identifier) ==
             1))
         dictionary <- dictionary[which(dictionary$identifier %in%
@@ -202,7 +200,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         samples <- expression
         samples$identifier <- rownames(samples)
         message("mapping identifiers to ENSEMBL Peptide ID... step 1 of 2")
-        map <- merge(.Object@ordering, dictionary,
+        map <- merge(object@ordering, dictionary,
             by.x = "Protein", by.y = "protein")
         map <- merge(samples, map, by.x = "identifier",
             by.y = "identifier")
@@ -240,9 +238,9 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         rownames(result) <- NULL
         result <- result[, c(col, seq.int(1, nsamples))]
         message("done!")
-        .Object@transcriptogramS1 = result
-        .Object@status = 1L
-        return(.Object)
+        object@transcriptogramS1 = result
+        object@status = 1L
+        return(object)
     })
 
 # transcriptogramS2 ####
@@ -250,17 +248,17 @@ setMethod("transcriptogramStep1", "Transcriptogram",
 #' @rdname transcriptogramStep2-method
 
 setMethod("transcriptogramStep2", "Transcriptogram",
-    function(.Object, nCores = 1L) {
-        if (.Object@status < 1L) {
+    function(object, nCores = 1L) {
+        if (object@status < 1L) {
             stop("argument of class Transcriptogram - be sure ",
                 "to call the method transcriptogramStep1() before this one!")
         }
-        nCores <- transcriptogramer.check("nCores", nCores)
-        .Object@transcriptogramS1 = .Object@transcriptogramS1[order(.Object@transcriptogramS1$Position),
+        nCores <- check_nCores(nCores)
+        object@transcriptogramS1 = object@transcriptogramS1[order(object@transcriptogramS1$Position),
             ]
-        min <- min(.Object@transcriptogramS1$Position)
-        max <- max(.Object@transcriptogramS1$Position)
-        ntasks <- nrow(.Object@transcriptogramS1)
+        min <- min(object@transcriptogramS1$Position)
+        max <- max(object@transcriptogramS1$Position)
+        ntasks <- nrow(object@transcriptogramS1)
         pb <- progress::progress_bar$new(format = "running [:bar] :percent elapsed time :elapsed",
             total = ntasks, clear = FALSE,
             width = 60)
@@ -279,24 +277,24 @@ setMethod("transcriptogramStep2", "Transcriptogram",
         result <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
             {
-                pos <- .Object@transcriptogramS1[i,
+                pos <- object@transcriptogramS1[i,
                   "Position"]
-                l1 <- pos - .Object@radius
-                l2 <- pos + .Object@radius
+                l1 <- pos - object@radius
+                l2 <- pos + object@radius
                 if (l1 >= min && l2 <= max) {
-                  temp <- .Object@transcriptogramS1[which(.Object@transcriptogramS1$Position >=
-                    l1 & .Object@transcriptogramS1$Position <=
+                  temp <- object@transcriptogramS1[which(object@transcriptogramS1$Position >=
+                    l1 & object@transcriptogramS1$Position <=
                     l2), -col]
                 } else if (l1 < min) {
-                  temp <- .Object@transcriptogramS1[which(.Object@transcriptogramS1$Position <=
+                  temp <- object@transcriptogramS1[which(object@transcriptogramS1$Position <=
                     l2), -col]
-                  temp <- rbind(temp, .Object@transcriptogramS1[which(.Object@transcriptogramS1$Position >=
+                  temp <- rbind(temp, object@transcriptogramS1[which(object@transcriptogramS1$Position >=
                     (max + 1 + (l1 - min))),
                     -col])
                 } else if (l2 > max) {
-                  temp <- .Object@transcriptogramS1[which(.Object@transcriptogramS1$Position >=
+                  temp <- object@transcriptogramS1[which(object@transcriptogramS1$Position >=
                     l1), -col]
-                  temp <- rbind(temp, .Object@transcriptogramS1[which(.Object@transcriptogramS1$Position <=
+                  temp <- rbind(temp, object@transcriptogramS1[which(object@transcriptogramS1$Position <=
                     (l2%%max + min - 1)),
                     -col])
                 }
@@ -306,48 +304,48 @@ setMethod("transcriptogramStep2", "Transcriptogram",
             }
         rownames(result) <- NULL
         nsamples <- ncol(result)
-        result$Protein <- .Object@transcriptogramS1$Protein
-        result$Position <- .Object@transcriptogramS1$Position
+        result$Protein <- object@transcriptogramS1$Protein
+        result$Position <- object@transcriptogramS1$Position
         result <- result[, c(nsamples + 1,
             nsamples + 2, seq.int(1, nsamples))]
         message("done!")
-        .Object@transcriptogramS2 = result
-        .Object@status = 2L
-        return(.Object)
+        object@transcriptogramS2 = result
+        object@status = 2L
+        return(object)
     })
 
 # differentiallyExpressed ####
 
 #' @rdname differentiallyExpressed-method
 
-setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
+setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     levels, pValue = 0.05, species = NULL, adjustMethod = "BH") {
-    if (.Object@status < 2L) {
+    if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
             "transcriptogramStep2() before this one!")
     }
-    transcriptogramer.check("pValue", pValue)
+    check_pValue(pValue)
     aux <- species
     if (is.data.frame(aux)) {
-        species <- transcriptogramer.check("species1", species)
+        species <- check_species1(species)
     } else {
-        transcriptogramer.check("species1", species)
+        check_species(species)
     }
     rm(aux)
-    transcriptogramer.check("adjustMethod1", adjustMethod)
-    transcriptogramer.check("levels", levels)
-    if (length(levels) != (ncol(.Object@transcriptogramS2) -
+    check_adjustMethod1(adjustMethod)
+    check_levels(levels)
+    if (length(levels) != (ncol(object@transcriptogramS2) -
         2)) {
         stop("argument levels - does not have a valid length!")
     }
     levels <- as.factor(levels)
     design <- stats::model.matrix(~0 + levels)
     contrasts <- "levelsFALSE-levelsTRUE"
-    fit <- limma::lmFit(as.matrix(.Object@transcriptogramS2[,
+    fit <- limma::lmFit(as.matrix(object@transcriptogramS2[,
         -c(1, 2)]), design)
-    fit$Protein <- .Object@transcriptogramS2[, 1]
-    fit$Position <- .Object@transcriptogramS2[, 2]
+    fit$Protein <- object@transcriptogramS2[, 1]
+    fit$Position <- object@transcriptogramS2[, 2]
     contrasts <- limma::makeContrasts(contrasts = contrasts,
         levels = design)
     rm(design)
@@ -375,7 +373,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     nextIndex <- NULL
     invisible(sapply(seq.int(1, (length(positions) - 1)), function(i) {
         nextIndex <<- i + 1
-        if ((positions[nextIndex] - positions[i]) > .Object@radius) {
+        if ((positions[nextIndex] - positions[i]) > object@radius) {
             pBreaks[[clusterNumber]] <<- c(positions[clusterStartIndex],
                 positions[i])
             clusterStartIndex <<- nextIndex
@@ -394,7 +392,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
     }))
     DElimma <- DElimma[, c(1, 2, 6, 3, 4, 5)]
     message("generating plot... step 3 of 3")
-    case <- .Object@transcriptogramS2[, -c(1, 2)]
+    case <- object@transcriptogramS2[, -c(1, 2)]
     control <- case[, which(levels == TRUE)]
     case <- case[, which(levels == FALSE)]
     n <- nrow(control)
@@ -403,7 +401,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
             ]))
         return(result)
     }, numeric(1))
-    smoothedLine <- stats::smooth.spline(.Object@transcriptogramS2$Position,
+    smoothedLine <- stats::smooth.spline(object@transcriptogramS2$Position,
         caseValues, spar = 0.35)
     lim <- max(abs(min(caseValues)), abs(max(caseValues)))
     rm(case, control, n, caseValues)
@@ -466,10 +464,10 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
             return(NULL)
         }))
     }
-    .Object@status = 3L
-    .Object@DE = DElimma
+    object@status = 3L
+    object@DE = DElimma
     message("done!")
-    return(.Object)
+    return(object)
 })
 
 # clusterVisualization ####
@@ -477,63 +475,69 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(.Object,
 #' @rdname clusterVisualization-method
 
 setMethod("clusterVisualization", "Transcriptogram",
-    function(.Object,
+    function(object,
     maincomp = FALSE, connected = FALSE,
-    host = "127.0.0.1", port = 9091) {
-    if (.Object@status < 3L) {
+    host = "127.0.0.1", port = 9091, clusters = NULL) {
+    if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
-            "call the method differentiallyExpressed() ",
-            "before this one!")
+            "call the method differentiallyExpressed() before this one!")
     }
     symbolAsNodeAlias <- FALSE
-    transcriptogramer.check("maincomp",
-        maincomp)
-    transcriptogramer.check("connected",
-        connected)
-    transcriptogramer.check("host", host)
-    transcriptogramer.check("port", port)
-    if ("Symbol" %in% colnames(.Object@DE)) {
+    check_maincomp(maincomp)
+    check_connected(connected)
+    check_host(host)
+    check_port(port)
+    if ("Symbol" %in% colnames(object@DE)) {
         symbolAsNodeAlias <- TRUE
+    }
+    if(is.null(clusters)){
+        clusters  <- unique(object@DE$ClusterNumber)
+    }else{
+        if(is.numeric(clusters)){
+            clusters <- as.integer(clusters)
+        }
+        if(!is.integer(clusters) || !all(clusters %in%
+            unique(object@DE$ClusterNumber))){
+            error("clusters")
+        }
     }
     message("invoking RedeR... step 1 of 4")
     message("** this may take some time...")
     rdp <- RedeR::RedPort()
     RedeR::calld(rdp)
     message("generating the graphs... step 2 of 4")
-    g <- igraph::graph.data.frame(d = .Object@association,
+    g <- igraph::graph.data.frame(d = object@association,
         directed = FALSE)
-    n <- length(unique(.Object@DE$ClusterNumber))
+    n <- length(unique(object@DE$ClusterNumber))
     myColors <- grDevices::rainbow(n)
     sgList <- lapply(seq.int(1, n), function(i) {
-        RedeR::subg(g = g, dat = .Object@DE[
-            which(.Object@DE$ClusterNumber ==
+        RedeR::subg(g = g, dat = object@DE[
+            which(object@DE$ClusterNumber ==
             i), ], refcol = 1, maincomp = maincomp,
             connected = connected, transdat = TRUE)
     })
     rm(g)
-    dim <- ceiling(sqrt(n))
-    slice <- 100/dim
-    myTheme <- list(isNest = TRUE, theme = 3,
-        gscale = slice, nestFontSize = 50,
-        zoom = 40)
-    x <- y <- 0
     message("adding graphs into RedeR... step 3 of 4")
+    n <- length(clusters)
     if (n > 3) {
         message("** this may take some time...")
     }
-    invisible(sapply(seq.int(1, n), function(i) {
+    dim <- ceiling(sqrt(n))
+    slice <- 100/dim
+    myTheme <- list(isNest = TRUE, theme = 3, gscale = slice,
+        nestFontSize = 50, zoom = 40)
+    x <- y <- 0
+    invisible(sapply(clusters, function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
             cols = myColors[i])
         if (symbolAsNodeAlias) {
             sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
               from = "Symbol", to = "nodeAlias")
         }
-        message("** adding cluster ", i, " of ", n, "...")
-        suppressMessages(RedeR::addGraph(rdp,
-            sgList[[i]], theme = c(myTheme,
-              nestAlias = paste0("C",
-                i)), gcoord = c(x * slice,
-              y * slice)))
+        message("** adding cluster ", i, "...")
+        suppressMessages(RedeR::addGraph(rdp, sgList[[i]],
+            theme = c(myTheme, nestAlias = paste0("C", i)),
+            gcoord = c(x * slice, y * slice)))
         x <<- x + 1
         if (x == dim) {
             x <<- 0
@@ -552,32 +556,32 @@ setMethod("clusterVisualization", "Transcriptogram",
 
 #' @rdname clusterEnrichment-method
 
-setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
+setMethod("clusterEnrichment", "Transcriptogram", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher", pValue = 0.05,
     adjustMethod = "BH", nCores = 1L) {
-    if (.Object@status < 3L) {
+    if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
     }
-    nCores <- transcriptogramer.check("nCores", nCores)
-    transcriptogramer.check("universe", universe)
-    transcriptogramer.check("pValue", pValue)
+    nCores <- check_nCores(nCores)
+    check_universe(universe)
+    check_pValue(pValue)
     aux <- species
     if (is.data.frame(species)) {
-        species <- transcriptogramer.check("species2", species)
+        species <- check_species2(species)
     } else {
-        transcriptogramer.check("species2", species)
+        check_species2(species)
     }
     rm(aux)
-    transcriptogramer.check("statistic", statistic)
-    transcriptogramer.check("algorithm", algorithm)
-    transcriptogramer.check("ontology", ontology)
-    transcriptogramer.check("adjustMethod2", adjustMethod)
+    check_statistic(statistic)
+    check_algorithm(algorithm)
+    check_ontology(ontology)
+    check_adjustMethod2(adjustMethod)
     if (is.null(universe)) {
-        universe <- .Object@transcriptogramS2$Protein
+        universe <- object@transcriptogramS2$Protein
     }
-    if (!any(.Object@DE[, "Protein"] %in% universe)) {
+    if (!any(object@DE[, "Protein"] %in% universe)) {
         stop("argument of class Transcriptogram - none of ",
             "the Proteins of the DE slot are present in the argument universe!")
     }
@@ -611,7 +615,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     gene2GO <- split(GO$go_id, GO$ensembl_peptide_id)
     gene2GO <- lapply(gene2GO, unique)
     rm(species, GO)
-    n <- length(unique(.Object@DE$ClusterNumber))
+    n <- length(unique(object@DE$ClusterNumber))
     message("running topGO enrichment for each cluster... step 2 of 2")
     message("** this may take some time...")
     ontology <- toupper(gsub("^([[:alpha:]]).*\\_([[:alpha:]]).*$",
@@ -623,7 +627,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
         suppressMessages(topGO::groupGOTerms(e))
         attach(e)
         on.exit(detach(e))
-        genesOfInterest <- .Object@DE[which(.Object@DE$ClusterNumber ==
+        genesOfInterest <- object@DE[which(object@DE$ClusterNumber ==
             i), 1]
         if (grepl("\\.", genesOfInterest[1])) {
             genesOfInterest <- sapply(strsplit(genesOfInterest,
@@ -662,33 +666,38 @@ setMethod("clusterEnrichment", "Transcriptogram", function(.Object,
     return(df)
 })
 
-# getSlot ####
+# radius ####
 
-#' @rdname getSlot-method
+#' @rdname radius-method
 
-setMethod("getSlot", "Transcriptogram", function(.Object,
-    slot) {
-    opts <- c("DE", "association", "ordering",
-        "transcriptogramS1", "transcriptogramS2",
-        "radius", "status")
-    if (!is.character(slot) || length(slot) !=
-        1 || !(slot %in% opts)) {
-        stop("argument slot - should be any one of the options:\n",
-            paste0(opts, collapse = ", "), "!")
-    }
-    if (slot == "DE") {
-        return(.Object@DE)
-    } else if (slot == "association") {
-        return(.Object@association)
-    } else if (slot == "ordering") {
-        return(.Object@ordering)
-    } else if (slot == "radius") {
-        return(.Object@radius)
-    } else if (slot == "status") {
-        return(.Object@status)
-    } else if (slot == "transcriptogramS1") {
-        return(.Object@transcriptogramS1)
-    } else if (slot == "transcriptogramS2") {
-        return(.Object@transcriptogramS2)
-    }
-})
+setMethod("radius", "Transcriptogram",
+    function(object) {
+        object@radius
+    })
+
+# DE ####
+
+#' @rdname DE-method
+
+setMethod("DE", "Transcriptogram",
+    function(object) {
+        object@DE
+    })
+
+# show ####
+
+setMethod("show", "Transcriptogram",
+    function(object) {
+        cat('Slot "association":\n')
+        print(object@association)
+        cat('\nSlot "ordering":\n')
+        print(object@ordering)
+        cat('\nSlot "transcriptogramS1":\n')
+        print(object@transcriptogramS1)
+        cat('\nSlot "transcriptogramS2":\n')
+        print(object@transcriptogramS2)
+        cat('\nSlot "DE":\n')
+        print(object@DE)
+        cat('\nSlot "radius":\n', object@radius)
+        cat('\n\nSlot "status":\n', object@status, "\n")
+    })
