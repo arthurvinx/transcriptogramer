@@ -330,7 +330,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     if (is.data.frame(aux)) {
         species <- check_species1(species)
     } else {
-        check_species(species)
+        check_species1(species)
     }
     rm(aux)
     check_adjustMethod1(adjustMethod)
