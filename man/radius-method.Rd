@@ -41,7 +41,7 @@ radius(transcriptogram)
 \link[transcriptogramer]{association},
 \link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{transcriptogramStep2-method},
-\link[transcriptogramer]{orderingProperties}
+\link[transcriptogramer]{orderingProperties-method}
 }
 \author{
 Diego Morais
