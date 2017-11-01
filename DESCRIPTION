@@ -1,8 +1,8 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 1.1.0
-Date: 2017-10-23
+Version: 1.1.1
+Date: 2017-11-01
 Authors@R: c(
     person("Diego", "Morais", email = "arthur.vinx@gmail.com",
     role = c("aut", "cre")),
@@ -21,7 +21,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 biocViews: Software, Network, Visualization, SystemsBiology, GeneExpression,
-    GenomeWideAssociation, GeneSetEnrichment
+    GeneSetEnrichment
 Imports: biomaRt,
     data.table,
     doSNOW,
