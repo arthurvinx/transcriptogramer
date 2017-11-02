@@ -91,8 +91,8 @@ DEsymbols)
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
 \link[transcriptogramer]{DEsymbols},
-\link[transcriptogramer]{transcriptogramStep1-method},
-\link[transcriptogramer]{transcriptogramStep2-method}
+\link[transcriptogramer]{transcriptogramStep1},
+\link[transcriptogramer]{transcriptogramStep2}
 }
 \author{
 Diego Morais

@@ -1,9 +1,10 @@
 citEntry(entry = "Manual",
   author = "Diego AA Morais and Rodrigo JS Dalmolin",
   title = "Transcriptogramer: transcriptional analysis based on
-  transcriptograms.",
+  transcriptograms",
   year = "2017",
-  note = "R package version 1.0.0",
+  doi = "10.18129/B9.bioc.transcriptogramer",
+  note = "R package",
   textVersion = "Morais DAA, Dalmolin RJS. Transcriptogramer: transcriptional
   analysis based on transcriptograms. R package, 2017."
 )

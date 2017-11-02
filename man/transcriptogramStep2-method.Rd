@@ -59,7 +59,7 @@ PMID:21169199
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogramStep1-method}
+\link[transcriptogramer]{transcriptogramStep1}
 }
 \author{
 Diego Morais

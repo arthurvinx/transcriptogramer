@@ -40,8 +40,8 @@ radius(transcriptogram)
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
 \link[transcriptogramer]{transcriptogramPreprocess},
-\link[transcriptogramer]{transcriptogramStep2-method},
-\link[transcriptogramer]{orderingProperties-method}
+\link[transcriptogramer]{transcriptogramStep2},
+\link[transcriptogramer]{orderingProperties}
 }
 \author{
 Diego Morais

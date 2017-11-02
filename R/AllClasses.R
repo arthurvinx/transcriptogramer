@@ -26,15 +26,15 @@
 #'
 #' @seealso
 #' \link[transcriptogramer]{transcriptogramPreprocess},
-#' \link[transcriptogramer]{DE-method},
-#' \link[transcriptogramer]{radius-method},
-#' \link[transcriptogramer]{orderingProperties-method},
-#' \link[transcriptogramer]{connectivityProperties-method},
-#' \link[transcriptogramer]{transcriptogramStep1-method},
-#' \link[transcriptogramer]{transcriptogramStep2-method},
-#' \link[transcriptogramer]{differentiallyExpressed-method},
-#' \link[transcriptogramer]{clusterVisualization-method},
-#' \link[transcriptogramer]{clusterEnrichment-method}
+#' \link[transcriptogramer]{DE},
+#' \link[transcriptogramer]{radius},
+#' \link[transcriptogramer]{orderingProperties},
+#' \link[transcriptogramer]{connectivityProperties},
+#' \link[transcriptogramer]{transcriptogramStep1},
+#' \link[transcriptogramer]{transcriptogramStep2},
+#' \link[transcriptogramer]{differentiallyExpressed},
+#' \link[transcriptogramer]{clusterVisualization},
+#' \link[transcriptogramer]{clusterEnrichment}
 #'
 #'
 #' @author

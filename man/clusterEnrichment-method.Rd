@@ -85,15 +85,15 @@ pValue = 0.005)
 
 }
 \seealso{
-\link[transcriptogramer]{differentiallyExpressed-method},
+\link[transcriptogramer]{differentiallyExpressed},
 \link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{HsBPTerms},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogramStep1-method},
-\link[transcriptogramer]{transcriptogramStep2-method}
+\link[transcriptogramer]{transcriptogramStep1},
+\link[transcriptogramer]{transcriptogramStep2}
 }
 \author{
 Diego Morais
