@@ -2,7 +2,7 @@ check_ordering <- function(argument){
     name <- "ordering"
     if (is.character(argument) && length(argument) ==
         1 && file.exists(argument)) {
-        argument <- data.table::fread(argument)
+        argument <- data.table::fread(argument, stringsAsFactors = FALSE)
         argument <- as.data.frame(argument)
         colnames(argument) <- c("Protein", "Position")
         if (orderingCheck(argument)) {
@@ -39,8 +39,8 @@ check_association <- function(argument){
     name <- "association"
     if (is.character(argument) && length(argument) ==
         1 && file.exists(argument)) {
-        argument <- data.table::fread(argument,
-            header = FALSE)
+        argument <- data.table::fread(argument, header = FALSE,
+            stringsAsFactors = FALSE)
         argument <- as.data.frame(argument)
         colnames(argument) <- c("p1", "p2")
         if (associationCheck(argument)) {
