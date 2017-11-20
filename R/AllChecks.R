@@ -2,7 +2,8 @@ check_ordering <- function(argument){
     name <- "ordering"
     if (is.character(argument) && length(argument) ==
         1 && file.exists(argument)) {
-        argument <- data.table::fread(argument, stringsAsFactors = FALSE)
+        argument <- data.table::fread(argument, header = TRUE,
+            stringsAsFactors = FALSE)
         argument <- as.data.frame(argument)
         colnames(argument) <- c("Protein", "Position")
         if (orderingCheck(argument)) {
