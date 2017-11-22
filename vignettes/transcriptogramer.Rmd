@@ -72,7 +72,7 @@ t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 
 ## creating the object and setting the radius as 50
 t <- transcriptogramPreprocess(association = association, ordering = Hs900,
-                                radius = 50)
+                               radius = 50)
 ```
 ```{r message = FALSE}
 ## after the preprocessing
