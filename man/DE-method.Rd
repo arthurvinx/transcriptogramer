@@ -11,7 +11,7 @@ DE(object)
 \S4method{DE}{Transcriptogram}(object)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 }
 \value{
 This method returns the content of the DE slot of an object of

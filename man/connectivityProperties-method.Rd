@@ -11,14 +11,14 @@ connectivityProperties(object)
 \S4method{connectivityProperties}{Transcriptogram}(object)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 }
 \value{
 This method returns a data frame containing: unique degrees (k) of
 the nodes of the graph,
 probability (pk) of a node of the graph has degree k, average assortativity
 (ak) of the nodes of degree
-k, and the average clustering coefficient (ck) of the nodes of degree k
+k, and the average clustering coefficient (ck) of the nodes of degree k.
 }
 \description{
 Calculates protein (node) connectivity/degree (k) and network properties as
@@ -30,7 +30,7 @@ nodes of degree k.
 }
 \details{
 The assortativity of a node can be measured by the average degree of its
-neighbors
+neighbors.
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900)

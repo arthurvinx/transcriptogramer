@@ -17,10 +17,10 @@ radius(object)
 \S4method{radius}{Transcriptogram}(object)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{value}{An integer, non negative, number referring to the window
-radius required for some methods}
+radius required for some methods.}
 }
 \value{
 This method returns the content of the radius slot of an object of

@@ -13,24 +13,24 @@ proteins.
 \describe{
 \item{\code{association}}{A data frame containing two columns, and rows containing
 proteins names
-that are connected}
+that are connected.}
 
 \item{\code{ordering}}{A data frame containing two columns, the first one with
 proteins names,
-and the second containing its respective position}
+and the second containing its respective position.}
 
 \item{\code{transcriptogramS1}}{A data frame produced as the result of averaging
 over all identifiers
-related to the same protein}
+related to the same protein.}
 
 \item{\code{transcriptogramS2}}{A data frame produced as the result of averaging
-over the window}
+over the window.}
 
-\item{\code{radius}}{An integer, non negative, number referring to the window radius}
+\item{\code{radius}}{An integer, non negative, number referring to the window radius.}
 
-\item{\code{status}}{An integer used internally to check the status of the object}
+\item{\code{status}}{An integer used internally to check the status of the object.}
 
-\item{\code{DE}}{A data frame of differentially expressed proteins}
+\item{\code{DE}}{A data frame of differentially expressed proteins.}
 }}
 
 \seealso{

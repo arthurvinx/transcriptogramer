@@ -11,7 +11,7 @@ transcriptogramPreprocess(association, ordering, radius = 0L)
 ENSEMBL Peptide IDs (character);
 or the path for a file containing two columns, no header, with rows
 composed by the
-ENSEMBL Peptide IDs of two proteins that are connected}
+ENSEMBL Peptide IDs of two proteins that are connected.}
 
 \item{ordering}{A character vector containing ordered ENSEMBL Peptide IDs;
 a data frame containing
@@ -20,11 +20,11 @@ and the second containing
 its respective position (integer non negative); or the path for a file
 containing two columns,
 a row for the headers, with rows composed respectively, by a ENSEMBL Peptide
-ID and its respective position}
+ID and its respective position.}
 
 \item{radius}{An integer, non negative, number referring to the window
 radius required for some
-methods}
+methods.}
 }
 \value{
 A preprocessed object of class Transcriptogram.

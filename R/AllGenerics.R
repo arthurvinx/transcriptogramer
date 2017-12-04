@@ -32,7 +32,7 @@
 #' The window considers periodic boundary
 #' conditions to deal with proteins near the ends of the ordering.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -99,17 +99,17 @@ setGeneric("orderingProperties", function(object, nCores = 1L)
 #' of the nodes of degree k, and the average clustering coefficient of the
 #' nodes of degree k.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @details
 #' The assortativity of a node can be measured by the average degree of its
-#' neighbors
+#' neighbors.
 #'
 #' @return This method returns a data frame containing: unique degrees (k) of
 #' the nodes of the graph,
 #' probability (pk) of a node of the graph has degree k, average assortativity
 #' (ak) of the nodes of degree
-#' k, and the average clustering coefficient (ck) of the nodes of degree k
+#' k, and the average clustering coefficient (ck) of the nodes of degree k.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900)
@@ -144,17 +144,17 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' it. It is necessary a
 #' \code{dictionary} to map the identifiers to proteins.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param expression A matrix, or data frame, containing normalized expression
 #' values from samples of microarrays
-#' or RNA-Seq
+#' or RNA-Seq.
 #'
 #' @param dictionary A matrix, or data frame, containing two columns, the first
 #' column must contains the
 #' ENSEMBL Peptide ID, and the second column must contains values that appear
 #' as rownames in \code{expression},
-#' in order to recognize the ENSEMBL Peptide ID of the other column
+#' in order to recognize the ENSEMBL Peptide ID of the other column.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -225,7 +225,7 @@ setGeneric("transcriptogramStep1", function(object,
 #' deal
 #' with proteins near the ends of the ordering.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -318,27 +318,28 @@ setGeneric("radius<-", signature = "object",
 #' differentially expressed
 #' in clusters, and plots a graphical representation of the groupings.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param levels A logical vector that classify the columns, referring to
-#' samples, of the transcriptogramS2 slot of the \code{object}
+#' samples, of the transcriptogramS2 slot of the \code{object}. FALSE must
+#' be used to indicate case samples, and TRUE to indicate control samples.
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
 #' family-wise error rate
-#' or false discovery rate, the default value is 0.05
+#' or false discovery rate, the default value is 0.05.
 #'
 #' @param species If not NULL, a character string that will be used,
 #' ignoring case sensitivity,
 #' to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
-#' and the second containing its respective Symbol (character)
+#' and the second containing its respective Symbol (character).
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
 #' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
 #' for this argument is
-#' 'BH'
+#' 'BH'.
 #'
 #' @return This method creates a data frame to feed the DE slot of an object
 #' of class Transcriptogram. This data frame of differentially expressed
@@ -413,23 +414,23 @@ setGeneric("differentiallyExpressed", function(object,
 #' differentially expressed clusters. If the DE slot has a column named Symbol,
 #' its contents will be used as node alias.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param maincomp Logical value, whether to display only the main component of
-#' each cluster
+#' each cluster.
 #'
-#' @param connected Logical value, whether to display only connected nodes
+#' @param connected Logical value, whether to display only connected nodes.
 #'
 #' @param host The domain name of the machine that is running the RedeR XML-RPC
-#' server
+#' server.
 #'
 #' @param port An integer specifying the port on which the XML-RPC server should
-#' listen
+#' listen.
 #'
 #' @param clusters An integer vector specifying the clusters to be
-#' displayed, if NULL, all clusters will be displayed
+#' displayed, if NULL, all clusters will be displayed.
 #'
-#' @return This function returns an object of the RedPort Class
+#' @return This function returns an object of the RedPort Class.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -457,7 +458,7 @@ setGeneric("differentiallyExpressed", function(object,
 #' Diego Morais
 #'
 #' @details
-#' RedeR package requirements: Java Runtime Environment (>= 6)
+#' RedeR package requirements: Java Runtime Environment (>= 6).
 #'
 #' @importFrom RedeR RedPort
 #' @importFrom RedeR calld
@@ -490,49 +491,49 @@ setGeneric("clusterVisualization", function(object,
 #' \pkg{topGO} package to detect the most significant terms of each cluster
 #' present in the DE slot of the \code{object}.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param universe A character vector containing ENSEMBL Peptide IDs, or NULL,
 #' if the universe
 #' is composed by all the proteins present in the transcriptogramS2 slot of
-#' \code{object}
+#' \code{object}.
 #'
 #' @param species A character string specifying the species; or a data frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
-#' and the second containing its respective Gene Ontology term (character)
+#' and the second containing its respective Gene Ontology term (character).
 #'
 #' @param ontology A character string specifying the Gene Ontology domain,
 #' ignoring case sensitivity,
 #' the possible values are 'biological process', 'cellular component' and
 #' 'molecular function',
-#' the default value for this argument is 'biological process'
+#' the default value for this argument is 'biological process'.
 #'
 #' @param algorithm Character string specifying which algorithm to use, the
 #' possible values are
 #' 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-#' the default value for this argument is 'classic'
+#' the default value for this argument is 'classic'.
 #'
 #' @param statistic Character string specifying which test to use, the possible
 #' values are
 #' 'fisher', 'ks', 't', 'sum' and 'globaltest',
-#' the default value for this argument is 'fisher'
+#' the default value for this argument is 'fisher'.
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
-#' family-wise error rate or false discovery rate, the default value is 0.05
+#' family-wise error rate or false discovery rate, the default value is 0.05.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
 #' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
 #' 'bonferroni', and 'holm',
-#' the default value for this argument is 'BH'
+#' the default value for this argument is 'BH'.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
-#' @return A data frame containing the most significant terms of each cluster
+#' @return A data frame containing the most significant terms of each cluster.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -596,10 +597,10 @@ setGeneric("clusterEnrichment", function(object,
 #' Retrieve or set the content of the radius slot of an object of class
 #' Transcriptogram.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @param value An integer, non negative, number referring to the window
-#' radius required for some methods
+#' radius required for some methods.
 #'
 #' @return This method returns the content of the radius slot of an object of
 #' class Transcriptogram.
@@ -633,7 +634,7 @@ setGeneric("radius", function(object)
 #'
 #' Gets the content of the DE slot of an object of class Transcriptogram.
 #'
-#' @param object An object of class Transcriptogram
+#' @param object An object of class Transcriptogram.
 #'
 #' @return This method returns the content of the DE slot of an object of
 #' class Transcriptogram.
