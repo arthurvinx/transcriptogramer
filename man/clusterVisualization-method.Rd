@@ -13,24 +13,24 @@ clusterVisualization(object, maincomp = FALSE, connected = FALSE,
   connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{maincomp}{Logical value, whether to display only the main component of
-each cluster}
+each cluster.}
 
-\item{connected}{Logical value, whether to display only connected nodes}
+\item{connected}{Logical value, whether to display only connected nodes.}
 
 \item{host}{The domain name of the machine that is running the RedeR XML-RPC
-server}
+server.}
 
 \item{port}{An integer specifying the port on which the XML-RPC server should
-listen}
+listen.}
 
 \item{clusters}{An integer vector specifying the clusters to be
-displayed, if NULL, all clusters will be displayed}
+displayed, if NULL, all clusters will be displayed.}
 }
 \value{
-This function returns an object of the RedPort Class
+This function returns an object of the RedPort Class.
 }
 \description{
 This method uses the \pkg{RedeR} package to display graphs of the
@@ -38,7 +38,7 @@ differentially expressed clusters. If the DE slot has a column named Symbol,
 its contents will be used as node alias.
 }
 \details{
-RedeR package requirements: Java Runtime Environment (>= 6)
+RedeR package requirements: Java Runtime Environment (>= 6).
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)

@@ -11,7 +11,7 @@ orderingProperties(object, nCores = 1L)
 \S4method{orderingProperties}{Transcriptogram}(object, nCores = 1L)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores

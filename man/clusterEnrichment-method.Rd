@@ -15,42 +15,42 @@ clusterEnrichment(object, universe = NULL, species,
   statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{universe}{A character vector containing ENSEMBL Peptide IDs, or NULL,
 if the universe
 is composed by all the proteins present in the transcriptogramS2 slot of
-\code{object}}
+\code{object}.}
 
 \item{species}{A character string specifying the species; or a data frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
-and the second containing its respective Gene Ontology term (character)}
+and the second containing its respective Gene Ontology term (character).}
 
 \item{ontology}{A character string specifying the Gene Ontology domain,
 ignoring case sensitivity,
 the possible values are 'biological process', 'cellular component' and
 'molecular function',
-the default value for this argument is 'biological process'}
+the default value for this argument is 'biological process'.}
 
 \item{algorithm}{Character string specifying which algorithm to use, the
 possible values are
 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-the default value for this argument is 'classic'}
+the default value for this argument is 'classic'.}
 
 \item{statistic}{Character string specifying which test to use, the possible
 values are
 'fisher', 'ks', 't', 'sum' and 'globaltest',
-the default value for this argument is 'fisher'}
+the default value for this argument is 'fisher'.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
-family-wise error rate or false discovery rate, the default value is 0.05}
+family-wise error rate or false discovery rate, the default value is 0.05.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
 'bonferroni', and 'holm',
-the default value for this argument is 'BH'}
+the default value for this argument is 'BH'.}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores
@@ -58,7 +58,7 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 }
 \value{
-A data frame containing the most significant terms of each cluster
+A data frame containing the most significant terms of each cluster.
 }
 \description{
 If \code{species} is a character, this method uses the \pkg{biomaRt} package

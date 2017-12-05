@@ -12,17 +12,17 @@ transcriptogramStep1(object, expression, dictionary, nCores = 1L)
   nCores = 1L)
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{expression}{A matrix, or data frame, containing normalized expression
 values from samples of microarrays
-or RNA-Seq}
+or RNA-Seq.}
 
 \item{dictionary}{A matrix, or data frame, containing two columns, the first
 column must contains the
 ENSEMBL Peptide ID, and the second column must contains values that appear
 as rownames in \code{expression},
-in order to recognize the ENSEMBL Peptide ID of the other column}
+in order to recognize the ENSEMBL Peptide ID of the other column.}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores

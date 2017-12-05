@@ -13,27 +13,28 @@ differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
   pValue = 0.05, species = NULL, adjustMethod = "BH")
 }
 \arguments{
-\item{object}{An object of class Transcriptogram}
+\item{object}{An object of class Transcriptogram.}
 
 \item{levels}{A logical vector that classify the columns, referring to
-samples, of the transcriptogramS2 slot of the \code{object}}
+samples, of the transcriptogramS2 slot of the \code{object}. FALSE must
+be used to indicate case samples, and TRUE to indicate control samples.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
 family-wise error rate
-or false discovery rate, the default value is 0.05}
+or false discovery rate, the default value is 0.05.}
 
 \item{species}{If not NULL, a character string that will be used,
 ignoring case sensitivity,
 to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
-and the second containing its respective Symbol (character)}
+and the second containing its respective Symbol (character).}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
 for this argument is
-'BH'}
+'BH'.}
 }
 \value{
 This method creates a data frame to feed the DE slot of an object

@@ -5,24 +5,24 @@
 #'
 #' @slot association A data frame containing two columns, and rows containing
 #' proteins names
-#' that are connected
+#' that are connected.
 #'
 #' @slot ordering A data frame containing two columns, the first one with
 #' proteins names,
-#' and the second containing its respective position
+#' and the second containing its respective position.
 #'
 #' @slot transcriptogramS1 A data frame produced as the result of averaging
 #' over all identifiers
-#' related to the same protein
+#' related to the same protein.
 #'
 #' @slot transcriptogramS2 A data frame produced as the result of averaging
-#' over the window
+#' over the window.
 #'
-#' @slot radius An integer, non negative, number referring to the window radius
+#' @slot radius An integer, non negative, number referring to the window radius.
 #'
-#' @slot status An integer used internally to check the status of the object
+#' @slot status An integer used internally to check the status of the object.
 #'
-#' @slot DE A data frame of differentially expressed proteins
+#' @slot DE A data frame of differentially expressed proteins.
 #'
 #' @seealso
 #' \link[transcriptogramer]{transcriptogramPreprocess},
