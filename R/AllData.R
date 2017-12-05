@@ -329,6 +329,12 @@
 #' A mapping between ENSEMBL Peptide ID and Symbol (Gene Name) of a reduced set
 #' of proteins.
 #'
+#' @format Each row of the data frame contains two variables:
+#' \describe{
+#'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
+#'  \item{external_gene_name}{The Gene Name}
+#' }
+#'
 #' @examples
 #' DEsymbols
 #'
@@ -341,6 +347,12 @@
 #'
 #' A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
 #' terms of a set of proteins.
+#'
+#' @format Each row of the data frame contains two variables:
+#' \describe{
+#'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
+#'  \item{go_id}{The Gene Ontology ID}
+#' }
 #'
 #' @examples
 #' HsBPTerms

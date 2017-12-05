@@ -3,7 +3,7 @@ testData <- function(){
         nrow(association) == 547620 && ncol(association) ==
         2, "association")
     checkTrue(is.data.frame(GPL570) &&
-        nrow(GPL570) == 32754 && ncol(GPL570) ==
+        nrow(GPL570) == 30546 && ncol(GPL570) ==
         2, "GPL570")
     checkTrue(is.data.frame(GSE9988) &&
         nrow(GSE9988) == 32754 && ncol(GSE9988) ==
@@ -33,7 +33,7 @@ testTranscriptogramStep2 <- function(){
         t <- transcriptogramStep2(t, nCores = TRUE)
         checkTrue(class(t) == "Transcriptogram" &&
             is.data.frame(t@transcriptogramS2) &&
-            nrow(t@transcriptogramS2) == 691 && ncol(t@transcriptogramS2) == 8)
+            nrow(t@transcriptogramS2) == 781 && ncol(t@transcriptogramS2) == 8)
         checkTrue(t@transcriptogramS2[3,
             3] == mean(c(t@transcriptogramS1[2, 3], t@transcriptogramS1[3, 3],
             t@transcriptogramS1[4, 3], t@transcriptogramS1[5, 3])))

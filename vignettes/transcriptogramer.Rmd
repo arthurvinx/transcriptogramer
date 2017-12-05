@@ -138,7 +138,7 @@ methods are affected by the content of the transcriptogramS2 slot, it can be
 recalculated using the content of the transcriptogramS1 slot.
 
 ```{r message = FALSE}
-radius(object = t) <- 50
+radius(object = t) <- 80
 t <- transcriptogramStep2(object = t, nCores = 1)
 ```
 
@@ -152,7 +152,7 @@ a set of genes which positions are within a radius range specified by the
 content of the radius slot.
 
 For this example, the p-value threshold for false
-discovery rate will be setted as 0.005. If the name of a species is provided
+discovery rate will be set to 0.005. If the name of a species is provided
 on the input, the `r Biocpkg("biomaRt")` package will be used to translate the
 ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data frame can be
 provided and used instead.
@@ -178,7 +178,7 @@ t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005,
 ```
 
 This method also produces a plot referring to its output. In this case,
-four clusters were detected, and each one is represented by a color. It is
+ten clusters were detected, and each one is represented by a color. It is
 important to mention that not all the colored genes were detected as
 differentially expressed, but, as they were within the radius specified by
 the content of the radius slot, they were included in a cluster. The genes that
@@ -217,7 +217,7 @@ all the proteins present in the transcriptogramS2 slot, the ontology is setted
 to biological process, the algorithm is setted to classic, the statistic is
 setted to fisher, and the p-values are adjusted by the Benjamini-Hochberg
 procedure. For this example, the p-value threshold for false
-discovery rate will be setted as 0.005. This method uses the biomaRt package to
+discovery rate will be set to 0.005. This method uses the biomaRt package to
 build a gene2GO list if the name of a species is provided on the input,
 alternatively, a data frame can be provided and used instead.
 

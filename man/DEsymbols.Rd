@@ -4,7 +4,11 @@
 \name{DEsymbols}
 \alias{DEsymbols}
 \title{Dictionary Gene2Symbol}
-\format{An object of class \code{data.frame} with 129 rows and 2 columns.}
+\format{Each row of the data frame contains two variables:
+\describe{
+ \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
+ \item{external_gene_name}{The Gene Name}
+}}
 \usage{
 DEsymbols
 }
