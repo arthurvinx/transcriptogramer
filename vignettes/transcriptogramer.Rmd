@@ -209,7 +209,7 @@ its contents will be used as node alias.
 rdp <- clusterVisualization(object = t)
 ```
 
-![](RedeR.png)
+![](RedeR.PNG)
 
 The **clusterEnrichment()** method perform a functional enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by
