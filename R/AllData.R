@@ -43,6 +43,10 @@
 #'  \item{Probe}{The probe identifier}
 #' }
 #'
+#' @details
+#' This dataset was created to map the Homo sapiens proteins, from STRINGdb
+#' release 10.5, of combined score greater than or equal to 700.
+#'
 #' @examples
 #' GPL570
 #'
@@ -335,6 +339,10 @@
 #'  \item{external_gene_name}{The Gene Name}
 #' }
 #'
+#' @details
+#' This dataset was created to map the differentially expressed
+#' proteins of the vignette example.
+#'
 #' @examples
 #' DEsymbols
 #'
@@ -353,6 +361,11 @@
 #'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
 #'  \item{go_id}{The Gene Ontology ID}
 #' }
+#'
+#' @details
+#' This dataset was created to map the Homo sapiens proteins
+#' that appear in the slot transcriptogramS2
+#' of the vignette example.
 #'
 #' @examples
 #' HsBPTerms

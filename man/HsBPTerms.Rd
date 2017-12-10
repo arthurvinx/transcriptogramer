@@ -16,6 +16,11 @@ HsBPTerms
 A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
 terms of a set of proteins.
 }
+\details{
+This dataset was created to map the Homo sapiens proteins
+that appear in the slot transcriptogramS2
+of the vignette example.
+}
 \examples{
 HsBPTerms
 

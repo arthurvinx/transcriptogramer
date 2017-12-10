@@ -68,6 +68,9 @@ The gene2GO list will be used with the
 \pkg{topGO} package to detect the most significant terms of each cluster
 present in the DE slot of the \code{object}.
 }
+\details{
+This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
+}
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{

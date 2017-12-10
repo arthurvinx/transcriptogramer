@@ -16,6 +16,10 @@ DEsymbols
 A mapping between ENSEMBL Peptide ID and Symbol (Gene Name) of a reduced set
 of proteins.
 }
+\details{
+This dataset was created to map the differentially expressed
+proteins of the vignette example.
+}
 \examples{
 DEsymbols
 

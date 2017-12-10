@@ -347,6 +347,9 @@ setGeneric("radius<-", signature = "object",
 #' contains the log Fold Change, the p-values and an
 #' integer number that indicates if the protein is downregulated or upregulated.
 #'
+#' @details
+#' This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
+#'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
@@ -534,6 +537,9 @@ setGeneric("clusterVisualization", function(object,
 #' The default value of this argument is 1.
 #'
 #' @return A data frame containing the most significant terms of each cluster.
+#'
+#' @details
+#' This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)

@@ -64,6 +64,9 @@ into the Symbol column. This method also groups the proteins detected as
 differentially expressed
 in clusters, and plots a graphical representation of the groupings.
 }
+\details{
+This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
+}
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
