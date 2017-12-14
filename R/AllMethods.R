@@ -355,7 +355,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         adjust.method = adjustMethod, p.value = pValue)
     temp <- data.frame(Protein = ct.fit$Protein, Position = ct.fit$Position,
         logFC = ct.fit$coef, pValue = ct.fit$p.value,
-        degenes = unclass(res.fit), stringsAsFactors = FALSE)
+        degenes = as.integer(unclass(res.fit)), stringsAsFactors = FALSE)
     rm(contrasts)
     features <- rowSums(res.fit != 0) > 0
     DElimma <- temp[features, ]
@@ -645,7 +645,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
             topNodes = length(result@score))
         colnames(result)[6] <- "pValue"
         result <- result[which(suppressWarnings(stats::p.adjust(result[,
-            "pValue"], method = adjustMethod)) <= pValue),
+            "pValue"], method = adjustMethod)) < pValue),
             ]
         if (nrow(result) == 0) {
             return(NULL)
@@ -663,6 +663,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
     }))
     rm(enrichment)
     message("done!")
+    df$pValue <- as.numeric(df$pValue)
     return(df)
 })
 
