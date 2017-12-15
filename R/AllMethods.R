@@ -644,9 +644,12 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         result <- topGO::GenTable(myGOdata, result,
             topNodes = length(result@score))
         colnames(result)[6] <- "pValue"
-        result <- result[which(suppressWarnings(stats::p.adjust(result[,
-            "pValue"], method = adjustMethod)) < pValue),
-            ]
+        if(any(TRUE %in% grepl("<", result[, "pValue"]))){
+            result$pValue <- gsub("<", "", result$pValue)
+        }
+        result$pValue <- as.numeric(result$pValue)
+        result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
+        result <- result[result$pValue <= pValue, ]
         if (nrow(result) == 0) {
             return(NULL)
         }
@@ -663,7 +666,6 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
     }))
     rm(enrichment)
     message("done!")
-    df$pValue <- as.numeric(df$pValue)
     return(df)
 })
 
