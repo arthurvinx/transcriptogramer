@@ -152,7 +152,7 @@ a set of genes which positions are within a radius range specified by the
 content of the radius slot.
 
 For this example, the p-value threshold for false
-discovery rate will be set to 0.005. If the name of a species is provided
+discovery rate will be set to 0.01. If the name of a species is provided
 on the input, the `r Biocpkg("biomaRt")` package will be used to translate the
 ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data frame can be
 provided and used instead.
@@ -164,16 +164,16 @@ columns referring to case samples.
 
 ```{r message = FALSE, fig.show = "hide"}
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005)
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01)
 ```
 ```{r eval = FALSE}
 ## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
 ## Internet connection is required for this command
-t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005,
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
                              species = "Homo sapiens")
 
 ## translating ENSEMBL Peptide IDs to Symbols using the DEsymbols dataset
-t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.005,
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
                              species = DEsymbols)
 ```
 
