@@ -156,7 +156,7 @@ a set of genes which positions are within a radius range specified by the
 content of the radius slot.
 
 For this example, the p-value threshold for false
-discovery rate will be set to 0.01. If the name of a species is provided
+discovery rate will be set as 0.01. If the name of a species is provided
 on the input, the `r Biocpkg("biomaRt")` package will be used to translate the
 ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data frame can be
 provided and used instead.
@@ -221,7 +221,7 @@ all the proteins present in the transcriptogramS2 slot, the ontology is setted
 to biological process, the algorithm is setted to classic, the statistic is
 setted to fisher, and the p-values are adjusted by the Benjamini-Hochberg
 procedure. For this example, the p-value threshold for false
-discovery rate will be set to 0.005. This method uses the biomaRt package to
+discovery rate will be set as 0.005. This method uses the biomaRt package to
 build a gene2GO list if the name of a species is provided on the input,
 alternatively, a data frame can be provided and used instead.
 

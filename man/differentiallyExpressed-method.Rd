@@ -7,10 +7,11 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH", trend = FALSE)
+  adjustMethod = "BH", trend = FALSE, hideLegend = FALSE)
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
-  pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE)
+  pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE,
+  hideLegend = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -36,7 +37,10 @@ the possible values are
 for this argument is
 'BH'.}
 
-\item{trend}{Logical value, set to TRUE if you are using logCPM values of RNA-Seq data,
+\item{trend}{Logical value, set as TRUE if you are using logCPM values of RNA-Seq data,
+the default value for this argument is FALSE.}
+
+\item{hideLegend}{Logical value, set as TRUE to hide legend,
 the default value for this argument is FALSE.}
 }
 \value{
