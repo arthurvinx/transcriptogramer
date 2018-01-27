@@ -4,7 +4,7 @@
 \name{GSE9988}
 \alias{GSE9988}
 \title{Data frame containing expression values}
-\format{An object of class \code{data.frame} with 32754 rows and 6 columns.}
+\format{An object of class \code{data.frame} with 24804 rows and 6 columns.}
 \source{
 \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE9988}{GSE9988}
 }
@@ -13,12 +13,12 @@ GSE9988
 }
 \description{
 Expression values, obtained by microarray, of 3 cases and 3 controls
-referring to the innate immune responses to TREM-1 activation.
+referring to the Gene Expression Omnibus accession number GSE9988.
 The data frame has 6 columns, each one contains expression values of a
 sample,
 the first 3 columns are case samples, and the last 3 are control samples.
 Each row
-contain expression values obtained by the probe mentioned in its respective
+contains expression values obtained by the probe mentioned in its respective
 rowname.
 The expression values were normalized using the affy package and, to reduce
 the
@@ -26,8 +26,9 @@ storage space required for the data, this data frame is a subset from the
 original
 samples (GSM252443, GSM252444, GSM252445, GSM252465, GSM252466, GSM252467),
 containing
-only the rows on which the probes are mapped by the platform GPL570
-dictionary.
+only the rows on which the probes are mapped by the GPL570
+dictionary to proteins, from STRINGdb release 10.5,
+of combined score greater than or equal to 900.
 }
 \examples{
 GSE9988

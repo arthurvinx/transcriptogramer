@@ -6,7 +6,7 @@ testData <- function(){
         nrow(GPL570) == 33031 && ncol(GPL570) ==
         2, "GPL570")
     checkTrue(is.data.frame(GSE9988) &&
-        nrow(GSE9988) == 32754 && ncol(GSE9988) ==
+        nrow(GSE9988) == 24804 && ncol(GSE9988) ==
         6, "GSE9988")
     checkTrue(is.character(Hs900) && length(Hs900) ==
         11030, "Hs900")

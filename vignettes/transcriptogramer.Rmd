@@ -109,10 +109,10 @@ cProperties <- connectivityProperties(object = t)
 
 ## Transcriptogram
 A transcriptogram is generated in two steps and requires expression values,
-from microarray or RNA-Seq assays^[logCPM values], and a dictionary. This example uses the
+from microarray or RNA-Seq assays^[using logCPM values], and a dictionary. This example uses the
 datasets **GSE9988**,
-which contains normalized expression values of 3 cases and 3 controls referring
-to the innate immune responses to TREM-1 activation, and **GPL570**, a mapping
+which contains normalized expression values of 3 cases and 3 controls^[GSM252443, GSM252444, GSM252445, GSM252465, GSM252466 and GSM252467 respectively],
+and **GPL570**, a mapping
 between ENSEMBL Peptide ID and Affymetrix Human Genome U133 Plus 2.0 Array
 probe identifier.
 
@@ -167,8 +167,11 @@ columns referring to controls samples, and FALSE to label the
 columns referring to case samples.
 
 ```{r message = FALSE, fig.show = "hide"}
+## trend = FALSE for microarray data
+## the default value for trend is FALSE
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01)
+t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
+                             trend = FALSE)
 ```
 ```{r eval = FALSE}
 ## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
@@ -182,7 +185,7 @@ t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
 ```
 
 This method also produces a plot referring to its output. In this case,
-ten clusters were detected, and each one is represented by a color. It is
+eleven clusters were detected, and each one is represented by a color. It is
 important to mention that not all the colored genes were detected as
 differentially expressed, but, as they were within the radius specified by
 the content of the radius slot, they were included in a cluster. The genes that
