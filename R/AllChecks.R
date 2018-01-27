@@ -216,6 +216,13 @@ check_trend <- function(argument){
   }
 }
 
+check_hideLegend <- function(argument){
+  name <- "hideLegend"
+  if (!is.logical(argument) || length(argument) != 1) {
+    error(name)
+  }
+}
+
 check_port <- function(argument){
     name <- "port"
     if (is.numeric(argument)) {

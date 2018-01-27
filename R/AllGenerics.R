@@ -340,7 +340,10 @@ setGeneric("radius<-", signature = "object",
 #' for this argument is
 #' 'BH'.
 #'
-#' @param trend Logical value, set to TRUE if you are using logCPM values of RNA-Seq data,
+#' @param trend Logical value, set as TRUE if you are using logCPM values of RNA-Seq data,
+#' the default value for this argument is FALSE.
+#'
+#' @param hideLegend Logical value, set as TRUE to hide legend,
 #' the default value for this argument is FALSE.
 #'
 #' @return This method creates a data frame to feed the DE slot of an object
@@ -408,7 +411,7 @@ setGeneric("radius<-", signature = "object",
 
 setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
-    adjustMethod = "BH", trend = FALSE) standardGeneric("differentiallyExpressed"),
+    adjustMethod = "BH", trend = FALSE, hideLegend = FALSE) standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####
@@ -421,10 +424,10 @@ setGeneric("differentiallyExpressed", function(object,
 #'
 #' @param object An object of class Transcriptogram.
 #'
-#' @param maincomp Logical value, set to TRUE if you want to display only the main component of
+#' @param maincomp Logical value, set as TRUE if you want to display only the main component of
 #' each cluster, the default value for this argument is FALSE.
 #'
-#' @param connected Logical value, set to TRUE if you want to display only connected nodes,
+#' @param connected Logical value, set as TRUE if you want to display only connected nodes,
 #' the default value for this argument is FALSE.
 #'
 #' @param host The domain name of the machine that is running the RedeR XML-RPC

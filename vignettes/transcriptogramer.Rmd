@@ -1,5 +1,10 @@
 ---
 title: "The transcriptogramer user's guide"
+author:
+- name: Diego Morais
+  affiliation: Bioinformatics Multidisciplinary Environment, Natal, Brazil
+- name: Rodrigo Dalmolin
+  affiliation: Bioinformatics Multidisciplinary Environment, Natal, Brazil
 output: 
   BiocStyle::html_document
 bibliography: cite.bib
@@ -9,7 +14,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-**Authors**: Diego Morais [aut, cre], Rodrigo Dalmolin [aut]<br />
 **Version**: `r packageDescription("transcriptogramer")[["Version"]]`<br />
 
 # Overview
@@ -43,7 +47,7 @@ on Windows.
 
 # Quick start
 The first step is to create a Transcriptogram object by running the
-**transcriptogramPreprocess()** function. This example uses a subset of the
+`transcriptogramPreprocess()` function. This example uses a subset of the
 *Homo sapiens* protein network data, from STRINGdb release 10.5, containing only
 associations of proteins of combined score greater than or equal to 900
 (see **Hs900** and **association** datasets).
@@ -55,8 +59,8 @@ t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 
 ## Topological analysis
 There are two methods to perform topological analysis,
-**connectivityProperties()** calculates average graph properties as a function
-of the node connectivity, and **orderingProperties()** calculates graph
+`connectivityProperties()` calculates average graph properties as a function
+of the node connectivity, and `orderingProperties()` calculates graph
 properties projected on the ordered proteins. Some methods, such as
 orderingProperties(), uses a window, region of n (radius * 2 + 1) proteins
 centered at a protein, whose radius changes the output. The Transcriptogram
@@ -112,8 +116,8 @@ to the innate immune responses to TREM-1 activation, and **GPL570**, a mapping
 between ENSEMBL Peptide ID and Affymetrix Human Genome U133 Plus 2.0 Array
 probe identifier.
 
-The methods to generate a transcriptogram are **transcriptogramStep1()** and
-**transcriptogramStep2()**. The transcriptogramStep1() assigns to each protein,
+The methods to generate a transcriptogram are `transcriptogramStep1()` and
+`transcriptogramStep2()`. The transcriptogramStep1() assigns to each protein,
 of each transcriptome sample, the average of the expression values of all the
 identifiers related to it.
 
@@ -145,7 +149,7 @@ t <- transcriptogramStep2(object = t, nCores = 1)
 ## Functional enrichment analysis
 As nearby genes of a transcriptogram have a high probability to interact with
 each other, gene sets whose expression are altered can be identified using the
-`r Biocpkg("limma")` package. The **differentiallyExpressed()** method uses the
+`r Biocpkg("limma")` package. The `differentiallyExpressed()` method uses the
 limma package to identify differentially expressed genes, for the contrast
 "case-control", grouping as a cluster
 a set of genes which positions are within a radius range specified by the
@@ -196,7 +200,7 @@ procedure.
 DE <- DE(object = t)
 ```
 
-The **clusterVisualization()** method uses the `r Biocpkg("RedeR")` package to
+The `clusterVisualization()` method uses the `r Biocpkg("RedeR")` package to
 display graphs of the differentially expressed clusters and returns an
 object of the RedPort Class, allowing interactions through functions
 of the RedeR package. This method may take some time depending on the number of
@@ -211,7 +215,7 @@ rdp <- clusterVisualization(object = t)
 
 ![](RedeR.PNG)
 
-The **clusterEnrichment()** method perform a functional enrichment analysis
+The `clusterEnrichment()` method perform a functional enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by
 all the proteins present in the transcriptogramS2 slot, the ontology is setted
 to biological process, the algorithm is setted to classic, the statistic is

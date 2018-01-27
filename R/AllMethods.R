@@ -319,13 +319,14 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 #' @rdname differentiallyExpressed-method
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
-    levels, pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE) {
+    levels, pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE, hideLegend = FALSE) {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
             "transcriptogramStep2() before this one!")
     }
     check_pValue(pValue)
+    check_hideLegend(hideLegend)
     aux <- species
     if (is.data.frame(aux)) {
         species <- check_species1(species)
@@ -420,9 +421,11 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             lwd = 4, col = myColors[i])
         return(NULL)
     }))
-    graphics::legend(x = "topright", legend = c("Case", "Control"),
-        bty = "n", col = c("black", "blue"), lwd = 2, xpd = TRUE,
-        inset = c(0, -0.15))
+    if(!hideLegend){
+      graphics::legend(x = "topright", legend = c("Case", "Control"),
+          bty = "n", col = c("black", "blue"), lwd = 2, xpd = TRUE,
+          inset = c(0, -0.15))
+    }
     if (!is.null(species)) {
         symbols <- NULL
         message("translating ENSEMBL Peptide ID to SYMBOL... extra step")
