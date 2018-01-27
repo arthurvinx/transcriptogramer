@@ -105,7 +105,7 @@ cProperties <- connectivityProperties(object = t)
 
 ## Transcriptogram
 A transcriptogram is generated in two steps and requires expression values,
-from microarray or RNA-Seq assays, and a dictionary. This example uses the
+from microarray or RNA-Seq assays^[logCPM values], and a dictionary. This example uses the
 datasets **GSE9988**,
 which contains normalized expression values of 3 cases and 3 controls referring
 to the innate immune responses to TREM-1 activation, and **GPL570**, a mapping

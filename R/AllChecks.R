@@ -209,6 +209,13 @@ check_connected <- function(argument){
     }
 }
 
+check_trend <- function(argument){
+  name <- "trend"
+  if (!is.logical(argument) || length(argument) != 1) {
+    error(name)
+  }
+}
+
 check_port <- function(argument){
     name <- "port"
     if (is.numeric(argument)) {

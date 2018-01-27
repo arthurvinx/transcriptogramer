@@ -7,10 +7,10 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH")
+  adjustMethod = "BH", trend = FALSE)
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
-  pValue = 0.05, species = NULL, adjustMethod = "BH")
+  pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -35,6 +35,9 @@ the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
 for this argument is
 'BH'.}
+
+\item{trend}{Logical value, set to TRUE if you are using logCPM values of RNA-Seq data,
+the default value for this argument is FALSE.}
 }
 \value{
 This method creates a data frame to feed the DE slot of an object

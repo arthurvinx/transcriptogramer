@@ -319,7 +319,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 #' @rdname differentiallyExpressed-method
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
-    levels, pValue = 0.05, species = NULL, adjustMethod = "BH") {
+    levels, pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE) {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
@@ -334,6 +334,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     rm(aux)
     check_adjustMethod1(adjustMethod)
+    check_trend(trend)
     check_levels(levels)
     if (length(levels) != (ncol(object@transcriptogramS2) -
         2)) {
@@ -350,7 +351,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         levels = design)
     rm(design)
     message("calculating statistics... step 1 of 3")
-    ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts))
+    ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts), trend = trend)
     res.fit <- limma::decideTests(ct.fit, method = "global",
         adjust.method = adjustMethod, p.value = pValue)
     temp <- data.frame(Protein = ct.fit$Protein, Position = ct.fit$Position,

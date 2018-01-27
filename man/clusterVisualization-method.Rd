@@ -15,10 +15,11 @@ clusterVisualization(object, maincomp = FALSE, connected = FALSE,
 \arguments{
 \item{object}{An object of class Transcriptogram.}
 
-\item{maincomp}{Logical value, whether to display only the main component of
-each cluster.}
+\item{maincomp}{Logical value, set to TRUE if you want to display only the main component of
+each cluster, the default value for this argument is FALSE.}
 
-\item{connected}{Logical value, whether to display only connected nodes.}
+\item{connected}{Logical value, set to TRUE if you want to display only connected nodes,
+the default value for this argument is FALSE.}
 
 \item{host}{The domain name of the machine that is running the RedeR XML-RPC
 server.}

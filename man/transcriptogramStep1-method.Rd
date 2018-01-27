@@ -15,8 +15,7 @@ transcriptogramStep1(object, expression, dictionary, nCores = 1L)
 \item{object}{An object of class Transcriptogram.}
 
 \item{expression}{A matrix, or data frame, containing normalized expression
-values from samples of microarrays
-or RNA-Seq.}
+values from samples of microarrays or RNA-Seq (logCPM values).}
 
 \item{dictionary}{A matrix, or data frame, containing two columns, the first
 column must contains the

@@ -147,8 +147,7 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' @param object An object of class Transcriptogram.
 #'
 #' @param expression A matrix, or data frame, containing normalized expression
-#' values from samples of microarrays
-#' or RNA-Seq.
+#' values from samples of microarrays or RNA-Seq (logCPM values).
 #'
 #' @param dictionary A matrix, or data frame, containing two columns, the first
 #' column must contains the
@@ -341,6 +340,9 @@ setGeneric("radius<-", signature = "object",
 #' for this argument is
 #' 'BH'.
 #'
+#' @param trend Logical value, set to TRUE if you are using logCPM values of RNA-Seq data,
+#' the default value for this argument is FALSE.
+#'
 #' @return This method creates a data frame to feed the DE slot of an object
 #' of class Transcriptogram. This data frame of differentially expressed
 #' proteins
@@ -406,7 +408,7 @@ setGeneric("radius<-", signature = "object",
 
 setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
-    adjustMethod = "BH") standardGeneric("differentiallyExpressed"),
+    adjustMethod = "BH", trend = FALSE) standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####
@@ -419,10 +421,11 @@ setGeneric("differentiallyExpressed", function(object,
 #'
 #' @param object An object of class Transcriptogram.
 #'
-#' @param maincomp Logical value, whether to display only the main component of
-#' each cluster.
+#' @param maincomp Logical value, set to TRUE if you want to display only the main component of
+#' each cluster, the default value for this argument is FALSE.
 #'
-#' @param connected Logical value, whether to display only connected nodes.
+#' @param connected Logical value, set to TRUE if you want to display only connected nodes,
+#' the default value for this argument is FALSE.
 #'
 #' @param host The domain name of the machine that is running the RedeR XML-RPC
 #' server.
