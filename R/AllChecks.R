@@ -255,7 +255,7 @@ check_ontology <- function(argument){
     opts <- c("biological process", "cellular component", "molecular function")
     if (!is.character(argument) || length(argument) != 1 ||
         !(argument %in% opts) || length(strsplit(argument, " ")[[1]]) != 2) {
-            stop("argument ", name, " - should be any one of the options:\n",
+            stop("argument ontology - should be any one of the options:\n",
                 paste0(opts, collapse = ", "), "!", call. = FALSE)
         }
 }
@@ -264,7 +264,7 @@ check_algorithm <- function(argument){
     opts <- c("classic", "weight01", "lea", "parentchild", "elim", "weight")
     if (!is.character(argument) || length(argument) !=
         1 || !(argument %in% opts)) {
-        stop("argument ", name, " - should be any one of the options:\n",
+        stop("argument algorithm - should be any one of the options:\n",
             paste0(opts, collapse = ", "), "!", call. = FALSE)
     }
 }
@@ -273,7 +273,7 @@ check_statistic <- function(argument){
     opts <- c("fisher", "ks", "t", "sum", "globaltest")
     if (!is.character(argument) || length(argument) != 1 ||
         !(argument %in% opts)) {
-            stop("argument ", name, " - should be any one of the options:\n",
+            stop("argument statistic - should be any one of the options:\n",
                 paste0(opts, collapse = ", "), "!", call. = FALSE)
     }
 }
