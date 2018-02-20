@@ -4,6 +4,7 @@
 \name{transcriptogramStep1}
 \alias{transcriptogramStep1}
 \alias{transcriptogramStep1,Transcriptogram-method}
+\alias{transcriptogramStep1-method,transcriptogramStep1}
 \title{Calculates the average of the expression values related to the same protein}
 \usage{
 transcriptogramStep1(object, expression, dictionary, nCores = 1L)

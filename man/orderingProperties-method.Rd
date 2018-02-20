@@ -4,6 +4,7 @@
 \name{orderingProperties}
 \alias{orderingProperties}
 \alias{orderingProperties,Transcriptogram-method}
+\alias{orderingProperties-method,orderingProperties}
 \title{Calculates graph properties projected on the ordered proteins}
 \usage{
 orderingProperties(object, nCores = 1L)

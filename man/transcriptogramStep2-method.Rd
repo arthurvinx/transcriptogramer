@@ -4,6 +4,7 @@
 \name{transcriptogramStep2}
 \alias{transcriptogramStep2}
 \alias{transcriptogramStep2,Transcriptogram-method}
+\alias{transcriptogramStep2-method,transcriptogramStep2}
 \title{Calculates the average of the expression values using a sliding window}
 \usage{
 transcriptogramStep2(object, nCores = 1L)

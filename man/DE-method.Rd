@@ -4,6 +4,7 @@
 \name{DE}
 \alias{DE}
 \alias{DE,Transcriptogram-method}
+\alias{DE-method,DE}
 \title{Get DE}
 \usage{
 DE(object)

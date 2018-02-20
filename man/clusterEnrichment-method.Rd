@@ -4,6 +4,7 @@
 \name{clusterEnrichment}
 \alias{clusterEnrichment}
 \alias{clusterEnrichment,Transcriptogram-method}
+\alias{clusterEnrichment-method,clusterEnrichment}
 \title{Term enrichment}
 \usage{
 clusterEnrichment(object, universe = NULL, species,

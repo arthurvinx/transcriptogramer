@@ -4,6 +4,7 @@
 \name{connectivityProperties}
 \alias{connectivityProperties}
 \alias{connectivityProperties,Transcriptogram-method}
+\alias{connectivityProperties-method,connectivityProperties}
 \title{Calculates average graph properties as a function of the node connectivity}
 \usage{
 connectivityProperties(object)

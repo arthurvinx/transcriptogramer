@@ -5,7 +5,9 @@
 \alias{radius<-}
 \alias{radius}
 \alias{radius<-,Transcriptogram-method}
+\alias{radius,radius-method}
 \alias{radius,Transcriptogram-method}
+\alias{radius-method,radius}
 \title{Radius}
 \usage{
 radius(object) <- value

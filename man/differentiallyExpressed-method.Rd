@@ -4,6 +4,7 @@
 \name{differentiallyExpressed}
 \alias{differentiallyExpressed}
 \alias{differentiallyExpressed,Transcriptogram-method}
+\alias{differentiallyExpressed-method,differentiallyExpressed}
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,

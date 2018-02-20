@@ -4,6 +4,7 @@
 \name{clusterVisualization}
 \alias{clusterVisualization}
 \alias{clusterVisualization,Transcriptogram-method}
+\alias{clusterVisualization-method,clusterVisualization}
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
 clusterVisualization(object, maincomp = FALSE, connected = FALSE,
