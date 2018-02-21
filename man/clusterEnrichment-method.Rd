@@ -4,7 +4,7 @@
 \name{clusterEnrichment}
 \alias{clusterEnrichment}
 \alias{clusterEnrichment,Transcriptogram-method}
-\alias{clusterEnrichment-method,clusterEnrichment}
+\alias{clusterEnrichment-method}
 \title{Term enrichment}
 \usage{
 clusterEnrichment(object, universe = NULL, species,
@@ -89,15 +89,15 @@ pValue = 0.005)
 
 }
 \seealso{
-\link[transcriptogramer]{differentiallyExpressed},
+\link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
 \link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{HsBPTerms},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogramStep1},
-\link[transcriptogramer]{transcriptogramStep2}
+\link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+\link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2}
 }
 \author{
 Diego Morais

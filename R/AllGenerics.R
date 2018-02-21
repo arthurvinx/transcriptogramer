@@ -259,7 +259,7 @@ setGeneric("transcriptogramStep1", function(object,
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogramStep1}
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1}
 #'
 #' @author
 #' Diego Morais
@@ -382,8 +382,8 @@ setGeneric("radius<-", signature = "object",
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association},
 #' \link[transcriptogramer]{DEsymbols},
-#' \link[transcriptogramer]{transcriptogramStep1},
-#' \link[transcriptogramer]{transcriptogramStep2}
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2}
 #'
 #' @author
 #' Diego Morais
@@ -453,14 +453,14 @@ setGeneric("differentiallyExpressed", function(object,
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{differentiallyExpressed},
+#' \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
 #' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogramStep1},
-#' \link[transcriptogramer]{transcriptogramStep2},
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
 #' \link[RedeR]{RedPort}
 #'
 #' @author
@@ -563,15 +563,15 @@ setGeneric("clusterVisualization", function(object,
 #' }
 #'
 #' @seealso
-#' \link[transcriptogramer]{differentiallyExpressed},
+#' \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
 #' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer]{GSE9988},
 #' \link[transcriptogramer]{GPL570},
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{HsBPTerms},
 #' \link[transcriptogramer]{association},
-#' \link[transcriptogramer]{transcriptogramStep1},
-#' \link[transcriptogramer]{transcriptogramStep2}
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2}
 #'
 #' @author
 #' Diego Morais
@@ -626,8 +626,8 @@ setGeneric("clusterEnrichment", function(object,
 #' \link[transcriptogramer]{Hs900},
 #' \link[transcriptogramer]{association},
 #' \link[transcriptogramer]{transcriptogramPreprocess},
-#' \link[transcriptogramer]{transcriptogramStep2},
-#' \link[transcriptogramer]{orderingProperties}
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
+#' \link[transcriptogramer:orderingProperties-method]{orderingProperties}
 #'
 #' @author
 #' Diego Morais

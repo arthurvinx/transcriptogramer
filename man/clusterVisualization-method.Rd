@@ -4,7 +4,7 @@
 \name{clusterVisualization}
 \alias{clusterVisualization}
 \alias{clusterVisualization,Transcriptogram-method}
-\alias{clusterVisualization-method,clusterVisualization}
+\alias{clusterVisualization-method}
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
 clusterVisualization(object, maincomp = FALSE, connected = FALSE,
@@ -55,14 +55,14 @@ rdp <- clusterVisualization(transcriptogram)
 
 }
 \seealso{
-\link[transcriptogramer]{differentiallyExpressed},
+\link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
 \link[transcriptogramer]{transcriptogramPreprocess},
 \link[transcriptogramer]{GSE9988},
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogramStep1},
-\link[transcriptogramer]{transcriptogramStep2},
+\link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+\link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
 \link[RedeR]{RedPort}
 }
 \author{

@@ -4,7 +4,7 @@
 \name{transcriptogramStep2}
 \alias{transcriptogramStep2}
 \alias{transcriptogramStep2,Transcriptogram-method}
-\alias{transcriptogramStep2-method,transcriptogramStep2}
+\alias{transcriptogramStep2-method}
 \title{Calculates the average of the expression values using a sliding window}
 \usage{
 transcriptogramStep2(object, nCores = 1L)
@@ -60,7 +60,7 @@ PMID:21169199
 \link[transcriptogramer]{GPL570},
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
-\link[transcriptogramer]{transcriptogramStep1}
+\link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1}
 }
 \author{
 Diego Morais

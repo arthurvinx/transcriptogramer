@@ -13,7 +13,7 @@ setMethod("initialize", "Transcriptogram",
 # radius<- ####
 
 #' @rdname radius-method
-#' @aliases radius,radius-method
+#' @aliases radius-method
 
 setReplaceMethod("radius", "Transcriptogram",
     function(object, value) {
@@ -26,7 +26,7 @@ setReplaceMethod("radius", "Transcriptogram",
 # orderingProperties ####
 
 #' @rdname orderingProperties-method
-#' @aliases orderingProperties-method,orderingProperties
+#' @aliases orderingProperties-method
 
 setMethod("orderingProperties", "Transcriptogram",
     function(object, nCores = 1L) {
@@ -123,7 +123,7 @@ setMethod("orderingProperties", "Transcriptogram",
 # connectivityProperties ####
 
 #' @rdname connectivityProperties-method
-#' @aliases connectivityProperties-method,connectivityProperties
+#' @aliases connectivityProperties-method
 
 setMethod("connectivityProperties", "Transcriptogram",
     function(object) {
@@ -178,7 +178,7 @@ setMethod("connectivityProperties", "Transcriptogram",
 # transcriptogramS1 ####
 
 #' @rdname transcriptogramStep1-method
-#' @aliases transcriptogramStep1-method,transcriptogramStep1
+#' @aliases transcriptogramStep1-method
 
 setMethod("transcriptogramStep1", "Transcriptogram",
     function(object, expression, dictionary, nCores = 1L) {
@@ -250,7 +250,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
 # transcriptogramS2 ####
 
 #' @rdname transcriptogramStep2-method
-#' @aliases transcriptogramStep2-method,transcriptogramStep2
+#' @aliases transcriptogramStep2-method
 
 setMethod("transcriptogramStep2", "Transcriptogram",
     function(object, nCores = 1L) {
@@ -322,7 +322,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 # differentiallyExpressed ####
 
 #' @rdname differentiallyExpressed-method
-#' @aliases differentiallyExpressed-method,differentiallyExpressed
+#' @aliases differentiallyExpressed-method
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     levels, pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE, hideLegend = FALSE) {
@@ -483,7 +483,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
 # clusterVisualization ####
 
 #' @rdname clusterVisualization-method
-#' @aliases clusterVisualization-method,clusterVisualization
+#' @aliases clusterVisualization-method
 
 setMethod("clusterVisualization", "Transcriptogram",
     function(object,
@@ -566,7 +566,7 @@ setMethod("clusterVisualization", "Transcriptogram",
 # clusterEnrichment ####
 
 #' @rdname clusterEnrichment-method
-#' @aliases clusterEnrichment-method,clusterEnrichment
+#' @aliases clusterEnrichment-method
 
 setMethod("clusterEnrichment", "Transcriptogram", function(object,
     universe = NULL, species, ontology = "biological process",
@@ -684,7 +684,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
 # radius ####
 
 #' @rdname radius-method
-#' @aliases radius-method,radius
+#' @aliases radius-method
 
 setMethod("radius", "Transcriptogram",
     function(object) {
@@ -694,7 +694,7 @@ setMethod("radius", "Transcriptogram",
 # DE ####
 
 #' @rdname DE-method
-#' @aliases DE-method,DE
+#' @aliases DE-method
 
 setMethod("DE", "Transcriptogram",
     function(object) {

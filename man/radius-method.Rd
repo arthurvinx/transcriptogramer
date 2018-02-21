@@ -5,9 +5,9 @@
 \alias{radius<-}
 \alias{radius}
 \alias{radius<-,Transcriptogram-method}
-\alias{radius,radius-method}
+\alias{radius-method}
 \alias{radius,Transcriptogram-method}
-\alias{radius-method,radius}
+\alias{radius-method}
 \title{Radius}
 \usage{
 radius(object) <- value
@@ -42,8 +42,8 @@ radius(transcriptogram)
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
 \link[transcriptogramer]{transcriptogramPreprocess},
-\link[transcriptogramer]{transcriptogramStep2},
-\link[transcriptogramer]{orderingProperties}
+\link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
+\link[transcriptogramer:orderingProperties-method]{orderingProperties}
 }
 \author{
 Diego Morais

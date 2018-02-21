@@ -4,7 +4,7 @@
 \name{differentiallyExpressed}
 \alias{differentiallyExpressed}
 \alias{differentiallyExpressed,Transcriptogram-method}
-\alias{differentiallyExpressed-method,differentiallyExpressed}
+\alias{differentiallyExpressed-method}
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
@@ -103,8 +103,8 @@ DEsymbols)
 \link[transcriptogramer]{Hs900},
 \link[transcriptogramer]{association},
 \link[transcriptogramer]{DEsymbols},
-\link[transcriptogramer]{transcriptogramStep1},
-\link[transcriptogramer]{transcriptogramStep2}
+\link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+\link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2}
 }
 \author{
 Diego Morais
