@@ -32,17 +32,17 @@ and the second containing its respective Gene Ontology term (character).}
 ignoring case sensitivity,
 the possible values are 'biological process', 'cellular component' and
 'molecular function',
-the default value for this argument is 'biological process'.}
+the default value of this argument is 'biological process'.}
 
 \item{algorithm}{Character string specifying which algorithm to use, the
 possible values are
 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-the default value for this argument is 'classic'.}
+the default value of this argument is 'classic'.}
 
 \item{statistic}{Character string specifying which test to use, the possible
 values are
 'fisher', 'ks', 't', 'sum' and 'globaltest',
-the default value for this argument is 'fisher'.}
+the default value of this argument is 'fisher'.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
 family-wise error rate or false discovery rate, the default value is 0.05.}
@@ -51,7 +51,7 @@ family-wise error rate or false discovery rate, the default value is 0.05.}
 the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
 'bonferroni', and 'holm',
-the default value for this argument is 'BH'.}
+the default value of this argument is 'BH'.}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores
@@ -69,16 +69,13 @@ The gene2GO list will be used with the
 \pkg{topGO} package to detect the most significant terms of each cluster
 present in the DE slot of the \code{object}.
 }
-\details{
-This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
-}
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 terms <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 pValue = 0.005)
 

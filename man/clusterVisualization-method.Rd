@@ -17,10 +17,10 @@ clusterVisualization(object, maincomp = FALSE, connected = FALSE,
 \item{object}{An object of class Transcriptogram.}
 
 \item{maincomp}{Logical value, set as TRUE if you want to display only the main component of
-each cluster, the default value for this argument is FALSE.}
+each cluster, the default value of this argument is FALSE.}
 
 \item{connected}{Logical value, set as TRUE if you want to display only connected nodes,
-the default value for this argument is FALSE.}
+the default value of this argument is FALSE.}
 
 \item{host}{The domain name of the machine that is running the RedeR XML-RPC
 server.}
@@ -48,7 +48,7 @@ transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 DEsymbols)
 rdp <- clusterVisualization(transcriptogram)
 }

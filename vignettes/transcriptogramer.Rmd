@@ -109,7 +109,7 @@ cProperties <- connectivityProperties(object = t)
 
 ## Transcriptogram
 A transcriptogram is generated in two steps and requires expression values,
-from microarray or RNA-Seq assays^[log2-counts per million], and a dictionary. This example uses the
+from microarray or RNA-Seq assays^[log2-counts-per-million], and a dictionary. This example uses the
 datasets **GSE9988**,
 which contains normalized expression values of 3 cases and 3 controls^[GSM252443, GSM252444, GSM252445, GSM252465, GSM252466 and GSM252467 respectively],
 and **GPL570**, a mapping
@@ -167,7 +167,7 @@ columns referring to controls samples, and FALSE to label the
 columns referring to case samples.
 
 ```{r message = FALSE, fig.show = "hide"}
-## trend = FALSE for microarray data or voom log2-counts per million
+## trend = FALSE for microarray data or voom log2-counts-per-million
 ## the default value for trend is FALSE
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,

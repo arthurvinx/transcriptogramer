@@ -8,11 +8,12 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH", trend = FALSE, hideLegend = FALSE)
+  adjustMethod = "BH", trend = FALSE, hideLegend = FALSE,
+  title = "Differential expression")
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
   pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE,
-  hideLegend = FALSE)
+  hideLegend = FALSE, title = "Differential expression")
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -38,17 +39,19 @@ the possible values are
 for this argument is
 'BH'.}
 
-\item{trend}{Logical value, set as TRUE if you are using logCPM values of RNA-Seq data,
-the default value for this argument is FALSE.}
+\item{trend}{Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
+the default value of this argument is FALSE.}
 
 \item{hideLegend}{Logical value, set as TRUE to hide legend,
-the default value for this argument is FALSE.}
+the default value of this argument is FALSE.}
+
+\item{title}{An overall title for the plot, the default value of this argument is "Differential expression"}
 }
 \value{
 This method creates a data frame to feed the DE slot of an object
 of class Transcriptogram. This data frame of differentially expressed
 proteins
-contains the log Fold Change, the p-values and an
+contains the log2-fold-change, the p-values and an
 integer number that indicates if the protein is downregulated or upregulated.
 }
 \description{
@@ -72,26 +75,23 @@ into the Symbol column. This method also groups the proteins detected as
 differentially expressed
 in clusters, and plots a graphical representation of the groupings.
 }
-\details{
-This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
-}
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 \dontrun{
 transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 
 ## translating ENSEMBL Peptide IDs to Symbols
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 "Homo sapiens")
 
 ## these calls also works
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 "H sapiens")
 
-transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 DEsymbols)
 }
 

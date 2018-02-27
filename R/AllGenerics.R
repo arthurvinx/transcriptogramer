@@ -147,7 +147,7 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' @param object An object of class Transcriptogram.
 #'
 #' @param expression A matrix, or data frame, containing normalized expression
-#' values from samples of microarrays or RNA-Seq (log2-counts per million).
+#' values from samples of microarrays or RNA-Seq (log2-counts-per-million).
 #'
 #' @param dictionary A matrix, or data frame, containing two columns, the first
 #' column must contains the
@@ -351,7 +351,7 @@ setGeneric("radius<-", signature = "object",
 #' @return This method creates a data frame to feed the DE slot of an object
 #' of class Transcriptogram. This data frame of differentially expressed
 #' proteins
-#' contains the log Fold Change, the p-values and an
+#' contains the log2-fold-change, the p-values and an
 #' integer number that indicates if the protein is downregulated or upregulated.
 #'
 #' @examples
