@@ -147,7 +147,7 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' @param object An object of class Transcriptogram.
 #'
 #' @param expression A matrix, or data frame, containing normalized expression
-#' values from samples of microarrays or RNA-Seq (logCPM values).
+#' values from samples of microarrays or RNA-Seq (log2-counts per million).
 #'
 #' @param dictionary A matrix, or data frame, containing two columns, the first
 #' column must contains the
@@ -340,11 +340,13 @@ setGeneric("radius<-", signature = "object",
 #' for this argument is
 #' 'BH'.
 #'
-#' @param trend Logical value, set as TRUE if you are using logCPM values of RNA-Seq data,
-#' the default value for this argument is FALSE.
+#' @param trend Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
+#' the default value of this argument is FALSE.
 #'
 #' @param hideLegend Logical value, set as TRUE to hide legend,
-#' the default value for this argument is FALSE.
+#' the default value of this argument is FALSE.
+#'
+#' @param title An overall title for the plot, the default value of this argument is "Differential expression"
 #'
 #' @return This method creates a data frame to feed the DE slot of an object
 #' of class Transcriptogram. This data frame of differentially expressed
@@ -352,26 +354,23 @@ setGeneric("radius<-", signature = "object",
 #' contains the log Fold Change, the p-values and an
 #' integer number that indicates if the protein is downregulated or upregulated.
 #'
-#' @details
-#' This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
-#'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
 #' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 #'
 #' ## translating ENSEMBL Peptide IDs to Symbols
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 #' "Homo sapiens")
 #'
 #' ## these calls also works
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 #' "H sapiens")
 #'
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 #' DEsymbols)
 #' }
 #'
@@ -411,7 +410,8 @@ setGeneric("radius<-", signature = "object",
 
 setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
-    adjustMethod = "BH", trend = FALSE, hideLegend = FALSE) standardGeneric("differentiallyExpressed"),
+    adjustMethod = "BH", trend = FALSE, hideLegend = FALSE,
+    title = "Differential expression") standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####
@@ -425,10 +425,10 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param object An object of class Transcriptogram.
 #'
 #' @param maincomp Logical value, set as TRUE if you want to display only the main component of
-#' each cluster, the default value for this argument is FALSE.
+#' each cluster, the default value of this argument is FALSE.
 #'
 #' @param connected Logical value, set as TRUE if you want to display only connected nodes,
-#' the default value for this argument is FALSE.
+#' the default value of this argument is FALSE.
 #'
 #' @param host The domain name of the machine that is running the RedeR XML-RPC
 #' server.
@@ -447,7 +447,7 @@ setGeneric("differentiallyExpressed", function(object,
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
 #' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005,
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01,
 #' DEsymbols)
 #' rdp <- clusterVisualization(transcriptogram)
 #' }
@@ -516,17 +516,17 @@ setGeneric("clusterVisualization", function(object,
 #' ignoring case sensitivity,
 #' the possible values are 'biological process', 'cellular component' and
 #' 'molecular function',
-#' the default value for this argument is 'biological process'.
+#' the default value of this argument is 'biological process'.
 #'
 #' @param algorithm Character string specifying which algorithm to use, the
 #' possible values are
 #' 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-#' the default value for this argument is 'classic'.
+#' the default value of this argument is 'classic'.
 #'
 #' @param statistic Character string specifying which test to use, the possible
 #' values are
 #' 'fisher', 'ks', 't', 'sum' and 'globaltest',
-#' the default value for this argument is 'fisher'.
+#' the default value of this argument is 'fisher'.
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
 #' family-wise error rate or false discovery rate, the default value is 0.05.
@@ -535,7 +535,7 @@ setGeneric("clusterVisualization", function(object,
 #' the possible values are
 #' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
 #' 'bonferroni', and 'holm',
-#' the default value for this argument is 'BH'.
+#' the default value of this argument is 'BH'.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -544,16 +544,13 @@ setGeneric("clusterVisualization", function(object,
 #'
 #' @return A data frame containing the most significant terms of each cluster.
 #'
-#' @details
-#' This method uses the ENSEMBL_MART_ENSEMBL (Ensembl Genes 90) database.
-#'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
 #' \dontrun{
 #' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
 #' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
-#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.005)
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 #' terms <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 #' pValue = 0.005)
 #'

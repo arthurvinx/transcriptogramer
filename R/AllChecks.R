@@ -223,6 +223,13 @@ check_hideLegend <- function(argument){
   }
 }
 
+check_title <- function(argument){
+  name <- "title"
+  if (!is.character(argument) || length(argument) != 1) {
+    error(name)
+  }
+}
+
 check_port <- function(argument){
     name <- "port"
     if (is.numeric(argument)) {

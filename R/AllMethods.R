@@ -325,7 +325,8 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 #' @aliases differentiallyExpressed-method
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
-    levels, pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE, hideLegend = FALSE) {
+    levels, pValue = 0.05, species = NULL, adjustMethod = "BH",
+    trend = FALSE, hideLegend = FALSE, title = "Differential expression") {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
@@ -333,6 +334,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     check_pValue(pValue)
     check_hideLegend(hideLegend)
+    check_title(title)
     aux <- species
     if (is.data.frame(aux)) {
         species <- check_species1(species)
@@ -415,7 +417,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     rm(case, control, n, caseValues)
     graphics::plot(smoothedLine, type = "l",
         ylab = "Difference of means (case - control)",
-        xlab = "Gene position", main = "Differential expression",
+        xlab = "Gene position", main = title,
         col = "black", lwd = 2, ylim = c(-lim, lim))
     graphics::grid(NULL, NULL, lwd = 1, lty = 1, col = "gray")
     graphics::abline(h = 0, col = "blue", lwd = 2)
