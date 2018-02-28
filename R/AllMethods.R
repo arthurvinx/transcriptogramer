@@ -374,7 +374,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             "meeting the p-value requirement, was detected!")
     }
     rm(temp)
-    colnames(DElimma)[c(3, 4, 5)] <- c("logFC", "pValue", "degenes")
+    colnames(DElimma)[c(3, 4, 5)] <- c("logFC", "pValue", "DEgenes")
     rownames(DElimma) <- NULL
     message("identifying clusters... step 2 of 3")
     pBreaks <- list()
@@ -658,8 +658,8 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         result <- topGO::GenTable(myGOdata, result,
             topNodes = length(result@score))
         colnames(result)[6] <- "pValue"
-        if(any(TRUE %in% grepl("<", result[, "pValue"]))){
-            result$pValue <- gsub("<", "", result$pValue)
+        if(any(TRUE %in% grepl("^<", result[, "pValue"]))){
+            result$pValue <- gsub("^<", "", result$pValue)
         }
         result$pValue <- as.numeric(result$pValue)
         result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
