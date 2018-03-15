@@ -16,6 +16,8 @@ vignette: >
 ---
 **Version**: `r packageDescription("transcriptogramer")[["Version"]]`<br />
 
+![](logo.png)
+
 # Overview
 The transcriptogramer package is designed for transcriptional analysis
 based on transcriptograms,
