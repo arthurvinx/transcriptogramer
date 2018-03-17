@@ -2,9 +2,9 @@
 title: "The transcriptogramer user's guide"
 author:
 - name: Diego Morais
-  affiliation: Bioinformatics Multidisciplinary Environment, Natal, Brazil
+  affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
 - name: Rodrigo Dalmolin
-  affiliation: Bioinformatics Multidisciplinary Environment, Natal, Brazil
+  affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
 output: 
   BiocStyle::html_document
 bibliography: cite.bib
