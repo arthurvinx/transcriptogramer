@@ -28,7 +28,7 @@ or false discovery rate, the default value is 0.05.}
 
 \item{species}{If not NULL, a character string that will be used,
 ignoring case sensitivity,
-to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data frame
+to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data.frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
 and the second containing its respective Symbol (character).}
@@ -48,8 +48,8 @@ the default value of this argument is FALSE.}
 \item{title}{An overall title for the plot, the default value of this argument is "Differential expression"}
 }
 \value{
-This method creates a data frame to feed the DE slot of an object
-of class Transcriptogram. This data frame of differentially expressed
+This method creates a data.frame to feed the DE slot of an object
+of class Transcriptogram. This data.frame of differentially expressed
 proteins
 contains the log2-fold-change, the p-values and an
 integer number that indicates if the protein is downregulated or upregulated.
@@ -67,7 +67,7 @@ and TRUE to indicate control samples. If \code{species} is NULL, no
 translation will be done, if \code{species} is a character,
 the \pkg{biomaRt} package will be used to translate the ENSEMBL
 Peptide ID to Symbol
-(Gene Name), and if \code{species} is a data frame, it will be used
+(Gene Name), and if \code{species} is a data.frame, it will be used
 instead.
 If the translation fail for some protein, its ENSEMBL
 Peptide ID will be present

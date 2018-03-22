@@ -39,7 +39,7 @@
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
-#' @return This method returns a data frame containing: ENSEMBL Peptide ID,
+#' @return This method returns a data.frame containing: ENSEMBL Peptide ID,
 #' its position on the ordering,
 #' node degree, number of triangles and clustering coefficient, and window
 #' connectivity,
@@ -105,7 +105,7 @@ setGeneric("orderingProperties", function(object, nCores = 1L)
 #' The assortativity of a node can be measured by the average degree of its
 #' neighbors.
 #'
-#' @return This method returns a data frame containing: unique degrees (k) of
+#' @return This method returns a data.frame containing: unique degrees (k) of
 #' the nodes of the graph,
 #' probability (pk) of a node of the graph has degree k, average assortativity
 #' (ak) of the nodes of degree
@@ -146,10 +146,10 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #'
 #' @param object An object of class Transcriptogram.
 #'
-#' @param expression A matrix, or data frame, containing normalized expression
+#' @param expression A matrix, or data.frame, containing normalized expression
 #' values from samples of microarrays or RNA-Seq (log2-counts-per-million).
 #'
-#' @param dictionary A matrix, or data frame, containing two columns, the first
+#' @param dictionary A matrix, or data.frame, containing two columns, the first
 #' column must contains the
 #' ENSEMBL Peptide ID, and the second column must contains values that appear
 #' as rownames in \code{expression},
@@ -160,9 +160,9 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
-#' @return This method creates a data frame to feed the transcriptogramS1
+#' @return This method creates a data.frame to feed the transcriptogramS1
 #' slot of an object
-#' of class Transcriptogram. Each row of the data frame contains: an ENSEMBL
+#' of class Transcriptogram. Each row of the data.frame contains: an ENSEMBL
 #' Peptide ID, its
 #' respective position in the ordering and the mean of the expression values
 #' of the identifiers
@@ -231,9 +231,9 @@ setGeneric("transcriptogramStep1", function(object,
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
-#' @return This method creates a data frame to feed the transcriptogramS2
+#' @return This method creates a data.frame to feed the transcriptogramS2
 #' slot of an object
-#' of class Transcriptogram. Each row of the data frame contains: the ENSEMBL
+#' of class Transcriptogram. Each row of the data.frame contains: the ENSEMBL
 #' Peptide ID used as center of the
 #' window, its position on the ordering, and the mean of the expression values
 #' of the window.
@@ -309,7 +309,7 @@ setGeneric("radius<-", signature = "object",
 #' translation will be done, if \code{species} is a character,
 #' the \pkg{biomaRt} package will be used to translate the ENSEMBL
 #' Peptide ID to Symbol
-#' (Gene Name), and if \code{species} is a data frame, it will be used
+#' (Gene Name), and if \code{species} is a data.frame, it will be used
 #' instead.
 #' If the translation fail for some protein, its ENSEMBL
 #' Peptide ID will be present
@@ -329,7 +329,7 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param species If not NULL, a character string that will be used,
 #' ignoring case sensitivity,
-#' to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data frame
+#' to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data.frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
 #' and the second containing its respective Symbol (character).
@@ -348,8 +348,8 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param title An overall title for the plot, the default value of this argument is "Differential expression"
 #'
-#' @return This method creates a data frame to feed the DE slot of an object
-#' of class Transcriptogram. This data frame of differentially expressed
+#' @return This method creates a data.frame to feed the DE slot of an object
+#' of class Transcriptogram. This data.frame of differentially expressed
 #' proteins
 #' contains the log2-fold-change, the p-values and an
 #' integer number that indicates if the protein is downregulated or upregulated.
@@ -494,7 +494,7 @@ setGeneric("clusterVisualization", function(object,
 #' Term enrichment
 #'
 #' If \code{species} is a character, this method uses the \pkg{biomaRt} package
-#' to build a gene2GO list, if \code{species} is a data frame, it will be used
+#' to build a gene2GO list, if \code{species} is a data.frame, it will be used
 #' instead.
 #' The gene2GO list will be used with the
 #' \pkg{topGO} package to detect the most significant terms of each cluster
@@ -507,7 +507,7 @@ setGeneric("clusterVisualization", function(object,
 #' is composed by all the proteins present in the transcriptogramS2 slot of
 #' \code{object}.
 #'
-#' @param species A character string specifying the species; or a data frame
+#' @param species A character string specifying the species; or a data.frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
 #' and the second containing its respective Gene Ontology term (character).
@@ -542,7 +542,7 @@ setGeneric("clusterVisualization", function(object,
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
-#' @return A data frame containing the most significant terms of each cluster.
+#' @return A data.frame containing the most significant terms of each cluster.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)

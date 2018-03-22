@@ -15,10 +15,10 @@ transcriptogramStep1(object, expression, dictionary, nCores = 1L)
 \arguments{
 \item{object}{An object of class Transcriptogram.}
 
-\item{expression}{A matrix, or data frame, containing normalized expression
+\item{expression}{A matrix, or data.frame, containing normalized expression
 values from samples of microarrays or RNA-Seq (log2-counts-per-million).}
 
-\item{dictionary}{A matrix, or data frame, containing two columns, the first
+\item{dictionary}{A matrix, or data.frame, containing two columns, the first
 column must contains the
 ENSEMBL Peptide ID, and the second column must contains values that appear
 as rownames in \code{expression},
@@ -30,9 +30,9 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 }
 \value{
-This method creates a data frame to feed the transcriptogramS1
+This method creates a data.frame to feed the transcriptogramS1
 slot of an object
-of class Transcriptogram. Each row of the data frame contains: an ENSEMBL
+of class Transcriptogram. Each row of the data.frame contains: an ENSEMBL
 Peptide ID, its
 respective position in the ordering and the mean of the expression values
 of the identifiers

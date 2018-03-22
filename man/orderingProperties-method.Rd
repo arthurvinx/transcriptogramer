@@ -20,7 +20,7 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 }
 \value{
-This method returns a data frame containing: ENSEMBL Peptide ID,
+This method returns a data.frame containing: ENSEMBL Peptide ID,
 its position on the ordering,
 node degree, number of triangles and clustering coefficient, and window
 connectivity,

@@ -20,9 +20,9 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 }
 \value{
-This method creates a data frame to feed the transcriptogramS2
+This method creates a data.frame to feed the transcriptogramS2
 slot of an object
-of class Transcriptogram. Each row of the data frame contains: the ENSEMBL
+of class Transcriptogram. Each row of the data.frame contains: the ENSEMBL
 Peptide ID used as center of the
 window, its position on the ordering, and the mean of the expression values
 of the window.

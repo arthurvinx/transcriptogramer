@@ -15,7 +15,7 @@ connectivityProperties(object)
 \item{object}{An object of class Transcriptogram.}
 }
 \value{
-This method returns a data frame containing: unique degrees (k) of
+This method returns a data.frame containing: unique degrees (k) of
 the nodes of the graph,
 probability (pk) of a node of the graph has degree k, average assortativity
 (ak) of the nodes of degree

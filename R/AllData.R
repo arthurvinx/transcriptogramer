@@ -1,8 +1,8 @@
-#' Data frame containing expression values
+#' Dataset containing expression values
 #'
 #' Expression values, obtained by microarray, of 3 cases and 3 controls
 #' referring to the Gene Expression Omnibus accession number GSE9988.
-#' The data frame has 6 columns, each one contains expression values of a
+#' The data.frame has 6 columns, each one contains expression values of a
 #' sample,
 #' the first 3 columns are case samples, and the last 3 are control samples.
 #' Each row
@@ -10,7 +10,7 @@
 #' rowname.
 #' The expression values were normalized using the affy package and, to reduce
 #' the
-#' storage space required for the data, this data frame is a subset from the
+#' storage space required for the data, this data.frame is a subset from the
 #' original
 #' samples (GSM252443, GSM252444, GSM252445, GSM252465, GSM252466, GSM252467),
 #' containing
@@ -38,7 +38,7 @@
 #' and the platform GPL570, [HG-U133_Plus_2] Affymetrix Human Genome U133
 #' Plus 2.0 Array.
 #'
-#' @format Each row of the data frame contains two variables:
+#' @format Each row of the data.frame contains two variables:
 #' \describe{
 #'  \item{ENSP}{The ENSEMBL Peptide ID}
 #'  \item{Probe}{The probe identifier}
@@ -66,7 +66,7 @@
 #' contains only associations of proteins of combined score greater than or
 #' equal to 900.
 #'
-#' @format Each row of the data frame contains two variables:
+#' @format Each row of the data.frame contains two variables:
 #' \describe{
 #'  \item{V1}{The ENSEMBL Peptide ID of the first protein}
 #'  \item{V2}{The ENSEMBL Peptide ID of the second protein}
@@ -334,7 +334,7 @@
 #' A mapping between ENSEMBL Peptide ID and Symbol (Gene Name) of a reduced set
 #' of proteins.
 #'
-#' @format Each row of the data frame contains two variables:
+#' @format Each row of the data.frame contains two variables:
 #' \describe{
 #'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
 #'  \item{external_gene_name}{The Gene Name}
@@ -357,7 +357,7 @@
 #' A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
 #' terms of a set of proteins.
 #'
-#' @format Each row of the data frame contains two variables:
+#' @format Each row of the data.frame contains two variables:
 #' \describe{
 #'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
 #'  \item{go_id}{The Gene Ontology ID}

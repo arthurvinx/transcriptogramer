@@ -23,7 +23,7 @@ if the universe
 is composed by all the proteins present in the transcriptogramS2 slot of
 \code{object}.}
 
-\item{species}{A character string specifying the species; or a data frame
+\item{species}{A character string specifying the species; or a data.frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
 and the second containing its respective Gene Ontology term (character).}
@@ -59,11 +59,11 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 }
 \value{
-A data frame containing the most significant terms of each cluster.
+A data.frame containing the most significant terms of each cluster.
 }
 \description{
 If \code{species} is a character, this method uses the \pkg{biomaRt} package
-to build a gene2GO list, if \code{species} is a data frame, it will be used
+to build a gene2GO list, if \code{species} is a data.frame, it will be used
 instead.
 The gene2GO list will be used with the
 \pkg{topGO} package to detect the most significant terms of each cluster

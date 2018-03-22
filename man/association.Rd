@@ -4,7 +4,7 @@
 \name{association}
 \alias{association}
 \title{Association}
-\format{Each row of the data frame contains two variables:
+\format{Each row of the data.frame contains two variables:
 \describe{
  \item{V1}{The ENSEMBL Peptide ID of the first protein}
  \item{V2}{The ENSEMBL Peptide ID of the second protein}

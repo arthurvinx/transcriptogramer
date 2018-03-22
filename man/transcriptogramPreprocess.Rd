@@ -7,14 +7,14 @@
 transcriptogramPreprocess(association, ordering, radius = 0L)
 }
 \arguments{
-\item{association}{A matrix, or data frame, containing two columns of
+\item{association}{A matrix, or data.frame, containing two columns of
 ENSEMBL Peptide IDs (character);
 or the path for a file containing two columns, no header, with rows
 composed by the
 ENSEMBL Peptide IDs of two proteins that are connected.}
 
 \item{ordering}{A character vector containing ordered ENSEMBL Peptide IDs;
-a data frame containing
+a data.frame containing
 two columns, the first one with ENSEMBL Peptide IDs (character),
 and the second containing
 its respective position (integer non negative); or the path for a file

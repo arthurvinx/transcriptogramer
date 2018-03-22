@@ -1,8 +1,8 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 1.1.15
-Date: 2018-03-17
+Version: 1.1.16
+Date: 2018-03-22
 Authors@R: c(
     person("Diego", "Morais", email = "vinx@ufrn.edu.br",
     role = c("aut", "cre")),

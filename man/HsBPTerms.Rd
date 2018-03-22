@@ -4,7 +4,7 @@
 \name{HsBPTerms}
 \alias{HsBPTerms}
 \title{Dictionary Gene2GO}
-\format{Each row of the data frame contains two variables:
+\format{Each row of the data.frame contains two variables:
 \describe{
  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
  \item{go_id}{The Gene Ontology ID}

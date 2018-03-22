@@ -4,7 +4,7 @@
 \name{GPL570}
 \alias{GPL570}
 \title{Dictionary Gene2Probe}
-\format{Each row of the data frame contains two variables:
+\format{Each row of the data.frame contains two variables:
 \describe{
  \item{ENSP}{The ENSEMBL Peptide ID}
  \item{Probe}{The probe identifier}

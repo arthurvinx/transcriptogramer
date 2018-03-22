@@ -3,7 +3,7 @@
 \docType{data}
 \name{GSE9988}
 \alias{GSE9988}
-\title{Data frame containing expression values}
+\title{Dataset containing expression values}
 \format{An object of class \code{data.frame} with 24804 rows and 6 columns.}
 \source{
 \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE9988}{GSE9988}
@@ -14,7 +14,7 @@ GSE9988
 \description{
 Expression values, obtained by microarray, of 3 cases and 3 controls
 referring to the Gene Expression Omnibus accession number GSE9988.
-The data frame has 6 columns, each one contains expression values of a
+The data.frame has 6 columns, each one contains expression values of a
 sample,
 the first 3 columns are case samples, and the last 3 are control samples.
 Each row
@@ -22,7 +22,7 @@ contains expression values obtained by the probe mentioned in its respective
 rowname.
 The expression values were normalized using the affy package and, to reduce
 the
-storage space required for the data, this data frame is a subset from the
+storage space required for the data, this data.frame is a subset from the
 original
 samples (GSM252443, GSM252444, GSM252445, GSM252465, GSM252466, GSM252467),
 containing
