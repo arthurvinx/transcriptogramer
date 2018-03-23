@@ -67,15 +67,9 @@
 #' \link[transcriptogramer]{association}
 #'
 #' @references
-#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
-#' Transcriptograms: Reproducibility enhancement and differential expression
-#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
-#' 1181 (2014).
+#' da Silva, S. R. M., Perrone, G. C., Dinis, J. M., and de Almeida, R. M. C. (2014). Reproducibility enhancement and differential expression of non predefined functional gene sets in human genome. BMC Genomics.
 #'
-#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
-#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
-#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
-#' PMID:21169199
+#' Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide tran-scriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
 #'
 #' @author
 #' Diego Morais
@@ -194,15 +188,9 @@ setGeneric("connectivityProperties", function(object) standardGeneric("connectiv
 #' Diego Morais
 #'
 #' @references
-#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
-#' Transcriptograms: Reproducibility enhancement and differential expression
-#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
-#' 1181 (2014).
+#' da Silva, S. R. M., Perrone, G. C., Dinis, J. M., and de Almeida, R. M. C. (2014). Reproducibility enhancement and differential expression of non predefined functional gene sets in human genome. BMC Genomics.
 #'
-#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
-#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
-#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
-#' PMID:21169199
+#' Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide tran-scriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
 #'
 #' @docType methods
 #' @rdname transcriptogramStep1-method
@@ -265,15 +253,9 @@ setGeneric("transcriptogramStep1", function(object,
 #' Diego Morais
 #'
 #' @references
-#' da Silva, S.R.M., Perrone, G.C., Dinis, J.M. and de Almeida, R.M.C.,
-#' Transcriptograms: Reproducibility enhancement and differential expression
-#' of non predefined functional gene sets in human genome. BMC Genomics, 15,
-#' 1181 (2014).
+#' da Silva, S. R. M., Perrone, G. C., Dinis, J. M., and de Almeida, R. M. C. (2014). Reproducibility enhancement and differential expression of non predefined functional gene sets in human genome. BMC Genomics.
 #'
-#' Rybarczyk-Filho, J.L., Castro, M.A.A., Dalmolin, R.J, Moreira, J.C.F.,
-#' Brunnet, L.G. and de Almeida, R.M.C., Towards a genome-wide transcriptogram:
-#' the Saccharomyces cerevisiae case. Nucleic Acids Res., 39, 3005-3016 (2011).
-#' PMID:21169199
+#' Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide tran-scriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
 #'
 #' @docType methods
 #' @rdname transcriptogramStep2-method
