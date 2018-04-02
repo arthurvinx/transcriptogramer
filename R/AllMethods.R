@@ -326,14 +326,13 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     levels, pValue = 0.05, species = NULL, adjustMethod = "BH",
-    trend = FALSE, hideLegend = FALSE, title = "Differential expression") {
+    trend = FALSE, title = "Differential expression") {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
             "transcriptogramStep2() before this one!")
     }
     check_pValue(pValue)
-    check_hideLegend(hideLegend)
     check_title(title)
     aux <- species
     if (is.data.frame(aux)) {
@@ -412,28 +411,34 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         return(result)
     }, numeric(1))
     smoothedLine <- stats::smooth.spline(object@transcriptogramS2$Position,
-        caseValues, spar = 0.35)
+                                         caseValues, spar = 0.35)
     lim <- max(abs(min(caseValues)), abs(max(caseValues)))
     rm(case, control, n, caseValues)
-    graphics::plot(smoothedLine, type = "l",
-        ylab = "Difference of means (case - control)",
-        xlab = "Gene position", main = title,
-        col = "black", lwd = 2, ylim = c(-lim, lim))
-    graphics::grid(NULL, NULL, lwd = 1, lty = 1, col = "gray")
-    graphics::abline(h = 0, col = "blue", lwd = 2)
+    lim <- round(lim, digits = 1)
     myColors <- grDevices::rainbow(length(pBreaks))
+    df <- data.frame(x = smoothedLine$x, y = smoothedLine$y)
+    rm(smoothedLine)
+    p <- ggplot2::ggplot(df, ggplot2::aes(x, y)) +
+      ggplot2::geom_line(lwd = 1, ggplot2::aes(y = 0, colour = "c1")) +
+      ggplot2::geom_line(lwd = 1, ggplot2::aes(y = y, colour = "c2")) +
+      ggplot2::scale_y_continuous(limits = c(-lim, lim), breaks = round(seq(-lim, lim, 0.1), digits = 1)) +
+      ggplot2::scale_x_continuous(limits = c(0, length(object@ordering$Position) - 1),
+                                  breaks = seq.int(0, length(object@ordering$Position) - 1, 1000)) +
+      ggplot2::scale_colour_manual(values = c("black", "snow3"), name = "Conditions",
+                                   labels =  c("Control", "Case")) +
+      ggplot2::scale_linetype_manual(values = "blank", name = "Number of clusters",
+                                     labels = length(myColors)) +
+      ggplot2::labs(x = "Gene position", y = "Difference of means (case - control)", title = title) +
+      ggplot2::theme_bw() + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
     invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
-        idx <- which(smoothedLine$x >= pBreaks[[i]][1] & smoothedLine$x <=
-            pBreaks[[i]][2])
-        graphics::lines(x = smoothedLine$x[idx], y = smoothedLine$y[idx],
-            lwd = 4, col = myColors[i])
-        return(NULL)
+      idx <- which(df$x >= pBreaks[[i]][1] & df$x <= pBreaks[[i]][2])
+      aux <- data.frame(x = df$x[idx], y = df$y[idx])
+      p <<- p + ggplot2::geom_line(data = aux, lwd = 1.4, col = myColors[i],
+                                   ggplot2::aes(x = x, y = y)) +
+        ggplot2::geom_line(ggplot2::aes(linetype = "lines"))
+      return(NULL)
     }))
-    if(!hideLegend){
-      graphics::legend(x = "topright", legend = c("Case", "Control"),
-          bty = "n", col = c("black", "blue"), lwd = 2, xpd = TRUE,
-          inset = c(0, -0.15))
-    }
+    suppressMessages(graphics::plot(p))
     if (!is.null(species)) {
         symbols <- NULL
         message("translating ENSEMBL Peptide ID to SYMBOL... extra step")

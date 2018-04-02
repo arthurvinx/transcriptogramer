@@ -191,7 +191,7 @@ eleven clusters were detected, and each one is represented by a color. It is
 important to mention that not all the colored genes were detected as
 differentially expressed, but, as they were within the radius specified by
 the content of the radius slot, they were included in a cluster. The genes that
-are above the horizontal blue line are upregulated, and the genes that
+are above the horizontal black line are upregulated, and the genes that
 are below are downregulated.
 
 ![](Rplot.png)
@@ -218,7 +218,7 @@ its contents will be used as node alias.
 rdp <- clusterVisualization(object = t)
 ```
 
-![](RedeR.PNG)
+![](RedeR.png)
 
 The `clusterEnrichment()` method perform a functional enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by

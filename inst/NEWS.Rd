@@ -2,6 +2,18 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.1.18}{
+  \itemize{
+    \item The plot of the differentiallyExpressed() method shows the number of clusters detected and is created by the ggplot2 package.
+  }
+}
+
+\section{Version 1.1.17}{
+  \itemize{
+    \item Improved documentation.
+  }
+}
+
 \section{Version 1.1.7}{
   \itemize{
     \item Added a new argument to the differentiallyExpressed() method, supporting the limma-trend approach for RNA-Seq.

@@ -8,12 +8,11 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH", trend = FALSE, hideLegend = FALSE,
-  title = "Differential expression")
+  adjustMethod = "BH", trend = FALSE, title = "Differential expression")
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
   pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE,
-  hideLegend = FALSE, title = "Differential expression")
+  title = "Differential expression")
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -40,9 +39,6 @@ for this argument is
 'BH'.}
 
 \item{trend}{Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
-the default value of this argument is FALSE.}
-
-\item{hideLegend}{Logical value, set as TRUE to hide legend,
 the default value of this argument is FALSE.}
 
 \item{title}{An overall title for the plot, the default value of this argument is "Differential expression"}

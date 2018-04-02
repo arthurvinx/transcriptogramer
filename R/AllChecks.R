@@ -216,13 +216,6 @@ check_trend <- function(argument){
   }
 }
 
-check_hideLegend <- function(argument){
-  name <- "hideLegend"
-  if (!is.logical(argument) || length(argument) != 1) {
-    error(name)
-  }
-}
-
 check_title <- function(argument){
   name <- "title"
   if (!is.character(argument) || length(argument) != 1) {

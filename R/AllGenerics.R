@@ -325,9 +325,6 @@ setGeneric("radius<-", signature = "object",
 #' @param trend Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
 #' the default value of this argument is FALSE.
 #'
-#' @param hideLegend Logical value, set as TRUE to hide legend,
-#' the default value of this argument is FALSE.
-#'
 #' @param title An overall title for the plot, the default value of this argument is "Differential expression"
 #'
 #' @return This method creates a data.frame to feed the DE slot of an object
@@ -375,10 +372,17 @@ setGeneric("radius<-", signature = "object",
 #' @importFrom limma decideTests
 #' @importFrom limma contrasts.fit
 #' @importFrom graphics plot
-#' @importFrom graphics grid
-#' @importFrom graphics abline
-#' @importFrom graphics lines
-#' @importFrom graphics legend
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 geom_line
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 scale_linetype_manual
+#' @importFrom ggplot2 scale_colour_manual
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 element_text
 #' @importFrom grDevices rainbow
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
@@ -392,7 +396,7 @@ setGeneric("radius<-", signature = "object",
 
 setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
-    adjustMethod = "BH", trend = FALSE, hideLegend = FALSE,
+    adjustMethod = "BH", trend = FALSE,
     title = "Differential expression") standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
