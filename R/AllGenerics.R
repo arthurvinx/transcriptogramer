@@ -464,6 +464,8 @@ setGeneric("differentiallyExpressed", function(object,
 #' @importFrom RedeR relax
 #' @importFrom grDevices rainbow
 #' @importFrom igraph graph.data.frame
+#' @importFrom igraph E
+#' @importFrom igraph V
 #'
 #' @docType methods
 #' @rdname clusterVisualization-method

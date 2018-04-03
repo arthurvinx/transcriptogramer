@@ -424,7 +424,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       ggplot2::scale_y_continuous(limits = c(-lim, lim), breaks = round(seq(-lim, lim, 0.1), digits = 1)) +
       ggplot2::scale_x_continuous(limits = c(0, length(object@ordering$Position) - 1),
                                   breaks = seq.int(0, length(object@ordering$Position) - 1, 1000)) +
-      ggplot2::scale_colour_manual(values = c("black", "snow3"), name = "Conditions",
+      ggplot2::scale_colour_manual(values = c("black", "grey80"), name = "Conditions",
                                    labels =  c("Control", "Case")) +
       ggplot2::scale_linetype_manual(values = "blank", name = "Number of clusters",
                                      labels = length(myColors)) +
@@ -548,6 +548,8 @@ setMethod("clusterVisualization", "Transcriptogram",
     invisible(sapply(clusters, function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
             cols = myColors[i])
+        igraph::E(sgList[[i]])$edgeColor <- "grey80"
+        igraph::V(sgList[[i]])$nodeLineColor <- "grey80"
         if (symbolAsNodeAlias) {
             sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
               from = "Symbol", to = "nodeAlias")
