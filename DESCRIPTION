@@ -1,12 +1,12 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 1.1.19
-Date: 2018-04-03
+Version: 1.1.20
+Date: 2018-04-04
 Authors@R: c(
     person("Diego", "Morais", email = "vinx@ufrn.edu.br",
     role = c("aut", "cre")),
-    person("Rodrigo", "Dalmolin", email = "rodrigo.dalmolin@imt.ufrn.br",
+    person("Rodrigo", "Dalmolin", email = "rodrigo.dalmolin@imd.ufrn.br",
     role = "aut"))
 Description: R package for transcriptional analysis based on transcriptograms,
     a method to analyze transcriptomes that projects expression values on a
