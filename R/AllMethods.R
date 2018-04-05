@@ -548,8 +548,8 @@ setMethod("clusterVisualization", "Transcriptogram",
     invisible(sapply(clusters, function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
             cols = myColors[i])
-        igraph::E(sgList[[i]])$edgeColor <- "grey80"
-        igraph::V(sgList[[i]])$nodeLineColor <- "grey80"
+        igraph::E(sgList[[i]])$edgeColor <<- "grey80"
+        igraph::V(sgList[[i]])$nodeLineColor <<- "grey80"
         if (symbolAsNodeAlias) {
             sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
               from = "Symbol", to = "nodeAlias")
