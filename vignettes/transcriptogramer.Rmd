@@ -5,6 +5,7 @@ author:
   affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
 - name: Rodrigo Dalmolin
   affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
+  affiliation: Department of Biochemistry, Federal University of Rio Grande do Norte, Natal, RN,
 output: 
   BiocStyle::html_document
 bibliography: cite.bib
@@ -61,8 +62,8 @@ t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 
 ## Topological analysis
 There are two methods to perform topological analysis,
-`connectivityProperties()` calculates average graph properties as a function
-of the node connectivity, and `orderingProperties()` calculates graph
+`connectivityProperties()` calculates average graph properties as function
+of node connectivity, and `orderingProperties()` calculates graph
 properties projected on the ordered proteins. Some methods, such as
 orderingProperties(), uses a window, region of n (radius * 2 + 1) proteins
 centered at a protein, whose radius changes the output. The Transcriptogram
@@ -111,9 +112,9 @@ cProperties <- connectivityProperties(object = t)
 
 ## Transcriptogram
 A transcriptogram is generated in two steps and requires expression values,
-from microarray or RNA-Seq assays^[log2-counts-per-million], and a dictionary. This example uses the
+from microarray or RNA-Seq assays (log2-counts-per-million), and a dictionary. This example uses the
 datasets **GSE9988**,
-which contains normalized expression values of 3 cases and 3 controls^[GSM252443, GSM252444, GSM252445, GSM252465, GSM252466 and GSM252467 respectively],
+which contains normalized expression values of 3 cases and 3 controls (GSM252443, GSM252444, GSM252445, GSM252465, GSM252466 and GSM252467 respectively),
 and **GPL570**, a mapping
 between ENSEMBL Peptide ID and Affymetrix Human Genome U133 Plus 2.0 Array
 probe identifier.
@@ -152,7 +153,7 @@ t <- transcriptogramStep2(object = t, nCores = 1)
 As nearby genes of a transcriptogram have a high probability to interact with
 each other, gene sets whose expression are altered can be identified using the
 `r Biocpkg("limma")` package. The `differentiallyExpressed()` method uses the
-limma package to identify differentially expressed genes^[the approaches voom and limma-trend are supported for RNA-Seq], for the contrast
+limma package to identify differentially expressed genes (the approaches voom and trend are supported for RNA-Seq), for the contrast
 "case-control", grouping as a cluster
 a set of genes which positions are within a radius range specified by the
 content of the radius slot.

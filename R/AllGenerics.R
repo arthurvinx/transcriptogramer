@@ -84,14 +84,12 @@ setGeneric("orderingProperties", function(object, nCores = 1L)
 
 # connectivityProperties ####
 
-#' Calculates average graph properties as a function of the node connectivity
+#' Calculates average graph properties as function of node connectivity
 #'
-#' Calculates protein (node) connectivity/degree (k) and network properties as
-#' a function of this connectivity,
+#' Calculates network properties as function of node connectivity/degree (k),
 #' such as: probability of a protein of the graph has degree k, average
-#' assortativity
-#' of the nodes of degree k, and the average clustering coefficient of the
-#' nodes of degree k.
+#' assortativity of the nodes of degree k, and the average clustering
+#' coefficient of the nodes of degree k.
 #'
 #' @param object An object of class Transcriptogram.
 #'

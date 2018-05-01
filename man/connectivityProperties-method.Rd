@@ -5,7 +5,7 @@
 \alias{connectivityProperties}
 \alias{connectivityProperties,Transcriptogram-method}
 \alias{connectivityProperties-method}
-\title{Calculates average graph properties as a function of the node connectivity}
+\title{Calculates average graph properties as function of node connectivity}
 \usage{
 connectivityProperties(object)
 
@@ -22,12 +22,10 @@ probability (pk) of a node of the graph has degree k, average assortativity
 k, and the average clustering coefficient (ck) of the nodes of degree k.
 }
 \description{
-Calculates protein (node) connectivity/degree (k) and network properties as
-a function of this connectivity,
+Calculates network properties as function of node connectivity/degree (k),
 such as: probability of a protein of the graph has degree k, average
-assortativity
-of the nodes of degree k, and the average clustering coefficient of the
-nodes of degree k.
+assortativity of the nodes of degree k, and the average clustering
+coefficient of the nodes of degree k.
 }
 \details{
 The assortativity of a node can be measured by the average degree of its
