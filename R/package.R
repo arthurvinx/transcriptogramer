@@ -9,10 +9,21 @@
 #' provide a global view for the cellular metabolism, while indicating gene
 #' sets whose expression are altered.
 #'
-#' @details
-#' Performs  topological  analysis,  differential  expression,  and  Gene
-#' Ontology enrichment analysis.
+#' @references
+#' da Silva, S. R. M., Perrone, G. C., Dinis, J. M., and de Almeida, R. M. C. (2014). Reproducibility enhancement and differential expression of non predefined functional gene sets in human genome. BMC Genomics.
 #'
-#' See the package at \url{https://doi.org/doi:10.18129/B9.bioc.transcriptogramer}
-#' for complete documentation.
+#' Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide tran-scriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
+#'
+#' @seealso
+#' Bioconductor release: \url{https://doi.org/doi:10.18129/B9.bioc.transcriptogramer}
+#'
+#' Github: \url{https://github.com/arthurvinx/transcriptogramer}
+#'
+#' References: \url{https://doi.org/10.1186/1471-2164-15-1181}, \url{https://doi.org/10.1093/nar/gkq1269}
+#'
+#' @author
+#' Diego Morais [author, maintainer]
+#'
+#' Rodrigo Dalmolin [author]
+#'
 "_PACKAGE"
