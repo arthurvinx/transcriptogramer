@@ -3,7 +3,7 @@
 #' This S4 class includes methods to use expression values with ordered
 #' proteins.
 #'
-#' @slot association A data.frame containing two columns, whith rows containing
+#' @slot association A data.frame containing two columns, with rows containing
 #' ENSEMBL Peptide IDs that are connected.
 #'
 #' @slot ordering A data.frame containing two columns, the first one with
