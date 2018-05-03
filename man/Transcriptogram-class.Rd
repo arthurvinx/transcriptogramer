@@ -11,7 +11,7 @@ proteins.
 \section{Slots}{
 
 \describe{
-\item{\code{association}}{A data.frame containing two columns, whith rows containing
+\item{\code{association}}{A data.frame containing two columns, with rows containing
 ENSEMBL Peptide IDs that are connected.}
 
 \item{\code{ordering}}{A data.frame containing two columns, the first one with

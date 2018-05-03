@@ -393,13 +393,6 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     pBreaks[[clusterNumber]] <- c(positions[clusterStartIndex],
         positions[nextIndex])
     rm(nextIndex, clusterNumber, clusterStartIndex, positions)
-    DElimma$ClusterNumber <- NA
-    invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
-        DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
-            pBreaks[[i]][2]), "ClusterNumber"] <<- i
-        return(NULL)
-    }))
-    # mod
     aux <- c()
     min <- object@ordering$Position[1]
     max <- object@ordering$Position[nrow(object@ordering)]
@@ -419,9 +412,39 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       return(NULL)
     }))
     aux <- aux[!elim]
-    # if(){
-    #
-    # }
+    if(aux[[1]][1] < min){
+      object@pbc = TRUE
+      x <- max + 1 + aux[[1]][1] - min
+      if(x <= aux[[length(aux)]][2]){
+        aux[[1]][1] <- min
+        aux[[length(aux)]][2] <- max
+      }else{
+        aux[[1]][1] <- min
+        aux <- append(aux, list(c(x, max)))
+      }
+    }else if(aux[[length(aux)]][2] > max){
+      object@pbc = TRUE
+      x <- aux[[length(aux)]][2] %% max + min - 1
+      if(x >= aux[[1]][1]){
+        aux[[1]][1] <- min
+        aux[[length(aux)]][2] <- max
+      }else{
+        aux[[length(aux)]][2] <- max
+        aux <- append(list(c(min, x)), aux)
+      }
+    }
+    pBreaks <- aux
+    DElimma$ClusterNumber <- NA
+    invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
+      if(i == length(pBreaks) && object@pbc){
+        DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
+                        pBreaks[[i]][2]), "ClusterNumber"] <<- i - 1
+      }else{
+        DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
+                        pBreaks[[i]][2]), "ClusterNumber"] <<- i
+      }
+        return(NULL)
+    }))
     DElimma <- DElimma[, c(1, 2, 6, 3, 4, 5)]
     message("generating plot... step 3 of 3")
     case <- object@transcriptogramS2[, -c(1, 2)]
@@ -438,7 +461,12 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     lim <- max(abs(min(caseValues)), abs(max(caseValues)))
     rm(case, control, n, caseValues)
     lim <- round(lim, digits = 1)
-    myColors <- grDevices::rainbow(length(pBreaks))
+    if(object@pbc){
+      myColors <- grDevices::rainbow(length(pBreaks) - 1)
+      myColors <- c(myColors, myColors[1])
+    }else{
+      myColors <- grDevices::rainbow(length(pBreaks))
+    }
     df <- data.frame(x = smoothedLine$x, y = smoothedLine$y)
     rm(smoothedLine)
     p <- ggplot2::ggplot(df, ggplot2::aes(x, y)) +
@@ -450,7 +478,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       ggplot2::scale_colour_manual(values = c("black", "grey80"), name = "Conditions",
                                    labels =  c("Control", "Case")) +
       ggplot2::scale_linetype_manual(values = "blank", name = "Number of clusters",
-                                     labels = length(myColors)) +
+                                     labels = ifelse(object@pbc, length(myColors) - 1, length(myColors))) +
       ggplot2::labs(x = "Gene position", y = "Difference of means (case - control)", title = title) +
       ggplot2::theme_bw() + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
     invisible(sapply(seq.int(1, length(pBreaks)), function(i) {

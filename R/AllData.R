@@ -6,7 +6,7 @@
 #' sample, the first 3 columns are case samples, and the last 3 are control
 #' samples. Each row contains expression values obtained by the probe mentioned
 #' in its respective rowname. The expression values were normalized using the
-#' \pfk{affy} package and, to reduce the storage space required for the data,
+#' \pkg{affy} package and, to reduce the storage space required for the data,
 #' this data.frame is a subset from the original samples (GSM252443, GSM252444,
 #' GSM252445, GSM252465, GSM252466, GSM252467), containing
 #' only the rows on which the probes are mapped by the GPL570
