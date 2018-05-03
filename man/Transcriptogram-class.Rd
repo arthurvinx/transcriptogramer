@@ -11,26 +11,32 @@ proteins.
 \section{Slots}{
 
 \describe{
-\item{\code{association}}{A data.frame containing two columns, and rows containing
-proteins names
-that are connected.}
+\item{\code{association}}{A data.frame containing two columns, whith rows containing
+ENSEMBL Peptide IDs that are connected.}
 
 \item{\code{ordering}}{A data.frame containing two columns, the first one with
-proteins names,
-and the second containing its respective position.}
+ENSEMBL Peptide IDs, and the second containing its respective position.}
 
 \item{\code{transcriptogramS1}}{A data.frame produced as the result of averaging
-over all identifiers
-related to the same protein.}
+over all identifiers related to the same protein.}
 
 \item{\code{transcriptogramS2}}{A data.frame produced as the result of averaging
 over the window.}
 
-\item{\code{radius}}{An integer, non negative, number referring to the window radius.}
+\item{\code{radius}}{An non-negative integer referring to the window radius.}
 
 \item{\code{status}}{An integer used internally to check the status of the object.}
 
 \item{\code{DE}}{A data.frame of differentially expressed proteins.}
+
+\item{\code{clusters}}{A list indicating the first and the last position belonging to
+each cluster.}
+
+\item{\code{pbc}}{Logical value used internally to indicate the overlapping of the
+first and the last cluster.}
+
+\item{\code{ENSP2GENE}}{A data.frame containing two columns, the first one with
+ENSEMBL Peptide IDs, and the second containing its respective Symbol.}
 }}
 
 \seealso{

@@ -28,7 +28,7 @@ Github: \url{https://github.com/arthurvinx/transcriptogramer}
 References: \url{https://doi.org/10.1186/1471-2164-15-1181}, \url{https://doi.org/10.1093/nar/gkq1269}
 }
 \author{
-Diego Morais [author, maintainer]
+Diego Morais <vinx@ufrn.edu.br> [maintainer]
 
-Rodrigo Dalmolin [author]
+Rodrigo Dalmolin <rodrigo.dalmolin@imd.ufrn.br>
 }

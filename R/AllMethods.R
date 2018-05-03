@@ -94,13 +94,13 @@ setMethod("orderingProperties", "Transcriptogram",
                   temp <- ord[which(ord$Position <=
                     l2), -c(2, 4)]
                   temp <- rbind(temp, ord[which(ord$Position >=
-                    (max + 1 + (l1 - min))),
+                    (max + 1 + l1 - min)),
                     -c(2, 4)])
                 } else if (l2 > max) {
                   temp <- ord[which(ord$Position >=
                     l1), -c(2, 4)]
                   temp <- rbind(temp, ord[which(ord$Position <=
-                    (l2%%max + min - 1)),
+                    (l2 %% max + min - 1)),
                     -c(2, 4)])
                 }
                 resultConnectivity <- mean(temp$nodeDegree)
@@ -294,13 +294,13 @@ setMethod("transcriptogramStep2", "Transcriptogram",
                   temp <- object@transcriptogramS1[which(object@transcriptogramS1$Position <=
                     l2), -col]
                   temp <- rbind(temp, object@transcriptogramS1[which(object@transcriptogramS1$Position >=
-                    (max + 1 + (l1 - min))),
+                    (max + 1 + l1 - min)),
                     -col])
                 } else if (l2 > max) {
                   temp <- object@transcriptogramS1[which(object@transcriptogramS1$Position >=
                     l1), -col]
                   temp <- rbind(temp, object@transcriptogramS1[which(object@transcriptogramS1$Position <=
-                    (l2%%max + min - 1)),
+                    (l2 %% max + min - 1)),
                     -col])
                 }
                 temp[1, ] <- t(apply(temp,
@@ -399,6 +399,29 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             pBreaks[[i]][2]), "ClusterNumber"] <<- i
         return(NULL)
     }))
+    # mod
+    aux <- c()
+    min <- object@ordering$Position[1]
+    max <- object@ordering$Position[nrow(object@ordering)]
+    aux <- invisible(lapply(seq.int(1, length(pBreaks)), function(i) {
+      l1 <- pBreaks[[i]][1] - object@radius
+      l2 <- pBreaks[[i]][2] + object@radius
+      return(c(l1,l2))
+    }))
+    elim <- c(FALSE)
+    invisible(lapply(seq.int(1, length(aux) - 1), function(i) {
+      if(aux[[i]][2] >= aux[[i + 1]][1]){
+        aux[[i]] <<- c(aux[[i]][1], aux[[i + 1]][2])
+        elim <<- c(elim, TRUE)
+      }else{
+        elim <<- c(elim, FALSE)
+      }
+      return(NULL)
+    }))
+    aux <- aux[!elim]
+    # if(){
+    #
+    # }
     DElimma <- DElimma[, c(1, 2, 6, 3, 4, 5)]
     message("generating plot... step 3 of 3")
     case <- object@transcriptogramS2[, -c(1, 2)]
@@ -483,6 +506,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     object@status = 3L
     object@DE = DElimma
+    object@clusters = pBreaks
     message("done!")
     return(object)
 })

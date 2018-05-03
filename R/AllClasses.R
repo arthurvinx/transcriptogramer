@@ -3,26 +3,32 @@
 #' This S4 class includes methods to use expression values with ordered
 #' proteins.
 #'
-#' @slot association A data.frame containing two columns, and rows containing
-#' proteins names
-#' that are connected.
+#' @slot association A data.frame containing two columns, whith rows containing
+#' ENSEMBL Peptide IDs that are connected.
 #'
 #' @slot ordering A data.frame containing two columns, the first one with
-#' proteins names,
-#' and the second containing its respective position.
+#' ENSEMBL Peptide IDs, and the second containing its respective position.
 #'
 #' @slot transcriptogramS1 A data.frame produced as the result of averaging
-#' over all identifiers
-#' related to the same protein.
+#' over all identifiers related to the same protein.
 #'
 #' @slot transcriptogramS2 A data.frame produced as the result of averaging
 #' over the window.
 #'
-#' @slot radius An integer, non negative, number referring to the window radius.
+#' @slot radius An non-negative integer referring to the window radius.
 #'
 #' @slot status An integer used internally to check the status of the object.
 #'
 #' @slot DE A data.frame of differentially expressed proteins.
+#'
+#' @slot clusters A list indicating the first and the last position belonging to
+#' each cluster.
+#'
+#' @slot pbc Logical value used internally to indicate the overlapping of the
+#' first and the last cluster.
+#'
+#' @slot ENSP2GENE A data.frame containing two columns, the first one with
+#' ENSEMBL Peptide IDs, and the second containing its respective Symbol.
 #'
 #' @seealso
 #' \link[transcriptogramer]{transcriptogramPreprocess},
@@ -45,8 +51,10 @@
 setClass("Transcriptogram", representation(association = "data.frame",
     ordering = "data.frame", transcriptogramS1 = "data.frame",
     transcriptogramS2 = "data.frame", DE = "data.frame",
-    radius = "integer", status = "integer"),
+    radius = "integer", status = "integer", clusters = "list", pbc = "logical",
+    ENSP2GENE = "data.frame"),
     prototype = list(association = data.frame(),
         ordering = data.frame(), transcriptogramS1 = data.frame(),
         transcriptogramS2 = data.frame(),
-        DE = data.frame(), radius = 0L, status = NA_integer_))
+        DE = data.frame(), radius = 0L, status = NA_integer_, clusters = list(),
+        pbc = FALSE, ENSP2GENE = data.frame()))
