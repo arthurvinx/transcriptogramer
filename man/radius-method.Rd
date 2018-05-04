@@ -21,7 +21,7 @@ radius(object)
 \arguments{
 \item{object}{An object of class Transcriptogram.}
 
-\item{value}{An integer, non negative, number referring to the window
+\item{value}{An non-negative integer referring to the window
 radius required for some methods.}
 }
 \value{

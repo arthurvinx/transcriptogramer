@@ -594,7 +594,7 @@ setGeneric("clusterEnrichment", function(object,
 #'
 #' @param object An object of class Transcriptogram.
 #'
-#' @param value An integer, non negative, number referring to the window
+#' @param value An non-negative integer referring to the window
 #' radius required for some methods.
 #'
 #' @return This method returns the content of the radius slot of an object of
