@@ -4,6 +4,7 @@ author:
 - name: Diego Morais
   affiliation: 
   - Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
+  email: vinx@ufrn.edu.br
 - name: Rodrigo Dalmolin
   affiliation:
   - Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil

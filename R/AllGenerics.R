@@ -337,6 +337,9 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param title An overall title for the plot, the default value of this argument is "Differential expression"
 #'
+#' @param boundaryConditions Logical value, set as TRUE to check if nearby clusters could be merged,
+#' the default value of this argument is FALSE.
+#'
 #' @return This method creates a data.frame to feed the DE slot of an object
 #' of class Transcriptogram. This data.frame of differentially expressed
 #' proteins
@@ -407,7 +410,7 @@ setGeneric("radius<-", signature = "object",
 setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = NULL,
     adjustMethod = "BH", trend = FALSE,
-    title = "Differential expression") standardGeneric("differentiallyExpressed"),
+    title = "Differential expression", boundaryConditions = FALSE) standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####

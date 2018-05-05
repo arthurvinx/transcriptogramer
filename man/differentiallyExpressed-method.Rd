@@ -8,11 +8,12 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH", trend = FALSE, title = "Differential expression")
+  adjustMethod = "BH", trend = FALSE, title = "Differential expression",
+  boundaryConditions = FALSE)
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
   pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE,
-  title = "Differential expression")
+  title = "Differential expression", boundaryConditions = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -42,6 +43,9 @@ for this argument is
 the default value of this argument is FALSE.}
 
 \item{title}{An overall title for the plot, the default value of this argument is "Differential expression"}
+
+\item{boundaryConditions}{Logical value, set as TRUE to check if nearby clusters could be merged,
+the default value of this argument is FALSE.}
 }
 \value{
 This method creates a data.frame to feed the DE slot of an object

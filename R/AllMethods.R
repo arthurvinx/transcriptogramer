@@ -326,7 +326,8 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     levels, pValue = 0.05, species = NULL, adjustMethod = "BH",
-    trend = FALSE, title = "Differential expression") {
+    trend = FALSE, title = "Differential expression",
+    boundaryConditions = FALSE) {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
@@ -394,52 +395,54 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     pBreaks[[clusterNumber]] <- c(positions[clusterStartIndex],
         positions[nextIndex])
     rm(nextIndex, clusterNumber, clusterStartIndex, positions)
-    aux <- c()
-    min <- object@ordering$Position[1]
-    max <- object@ordering$Position[nrow(object@ordering)]
-    aux <- invisible(lapply(seq.int(1, length(pBreaks)), function(i) {
-      l1 <- pBreaks[[i]][1] - object@radius
-      l2 <- pBreaks[[i]][2] + object@radius
-      return(c(l1,l2))
-    }))
-    elim <- c(FALSE)
-    invisible(lapply(seq.int(1, length(aux) - 1), function(i) {
-      if(aux[[i]][2] >= aux[[i + 1]][1]){
-        aux[[i]] <<- c(aux[[i]][1], aux[[i + 1]][2])
-        elim <<- c(elim, TRUE)
-      }else{
-        elim <<- c(elim, FALSE)
+    if(boundaryConditions){
+      aux <- c()
+      min <- object@ordering$Position[1]
+      max <- object@ordering$Position[nrow(object@ordering)]
+      aux <- invisible(lapply(seq.int(1, length(pBreaks)), function(i) {
+        l1 <- pBreaks[[i]][1] - object@radius
+        l2 <- pBreaks[[i]][2] + object@radius
+        return(c(l1,l2))
+      }))
+      elim <- c(FALSE)
+      invisible(lapply(seq.int(1, length(aux) - 1), function(i) {
+        if(aux[[i]][2] >= aux[[i + 1]][1]){
+          aux[[i]] <<- c(aux[[i]][1], aux[[i + 1]][2])
+          elim <<- c(elim, TRUE)
+        }else{
+          elim <<- c(elim, FALSE)
+        }
+        return(NULL)
+      }))
+      aux <- aux[!elim]
+      if(aux[[1]][1] < min){
+        object@pbc = TRUE
+        x <- max + 1 + aux[[1]][1] - min
+        if(x <= aux[[length(aux)]][2]){
+          aux[[1]][1] <- min
+          aux[[length(aux)]][2] <- max
+        }else{
+          aux[[1]][1] <- min
+          aux <- append(aux, list(c(x, max)))
+        }
+      }else if(aux[[length(aux)]][2] > max){
+        object@pbc = TRUE
+        x <- aux[[length(aux)]][2] %% max + min - 1
+        if(x >= aux[[1]][1]){
+          aux[[1]][1] <- min
+          aux[[length(aux)]][2] <- max
+        }else{
+          aux[[length(aux)]][2] <- max
+          aux <- append(list(c(min, x)), aux)
+        }
       }
-      return(NULL)
-    }))
-    aux <- aux[!elim]
-    if(aux[[1]][1] < min){
-      object@pbc = TRUE
-      x <- max + 1 + aux[[1]][1] - min
-      if(x <= aux[[length(aux)]][2]){
-        aux[[1]][1] <- min
-        aux[[length(aux)]][2] <- max
-      }else{
-        aux[[1]][1] <- min
-        aux <- append(aux, list(c(x, max)))
-      }
-    }else if(aux[[length(aux)]][2] > max){
-      object@pbc = TRUE
-      x <- aux[[length(aux)]][2] %% max + min - 1
-      if(x >= aux[[1]][1]){
-        aux[[1]][1] <- min
-        aux[[length(aux)]][2] <- max
-      }else{
-        aux[[length(aux)]][2] <- max
-        aux <- append(list(c(min, x)), aux)
-      }
+      pBreaks <- aux
     }
-    pBreaks <- aux
     DElimma$ClusterNumber <- NA
     invisible(sapply(seq.int(1, length(pBreaks)), function(i) {
       if(i == length(pBreaks) && object@pbc){
         DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
-                        pBreaks[[i]][2]), "ClusterNumber"] <<- i - 1
+                        pBreaks[[i]][2]), "ClusterNumber"] <<- 1
       }else{
         DElimma[which(DElimma$Position >= pBreaks[[i]][1] & DElimma$Position <=
                         pBreaks[[i]][2]), "ClusterNumber"] <<- i
