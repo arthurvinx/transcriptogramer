@@ -3,7 +3,7 @@
 \docType{data}
 \name{GPL570}
 \alias{GPL570}
-\title{Dictionary Gene2Probe}
+\title{Dictionary Protein2Probe}
 \format{Each row of the data.frame contains two variables:
 \describe{
  \item{ENSP}{The ENSEMBL Peptide ID}

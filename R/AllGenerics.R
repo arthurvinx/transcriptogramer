@@ -495,9 +495,9 @@ setGeneric("clusterVisualization", function(object,
 #' Term enrichment
 #'
 #' If \code{species} is a character, this method uses the \pkg{biomaRt} package
-#' to build a gene2GO list, if \code{species} is a data.frame, it will be used
+#' to build a Protein2GO list, if \code{species} is a data.frame, it will be used
 #' instead.
-#' The gene2GO list will be used with the
+#' The Protein2GO list will be used with the
 #' \pkg{topGO} package to detect the most significant terms of each cluster
 #' present in the DE slot of the \code{object}.
 #'

@@ -26,7 +26,7 @@
 
 "GSE9988"
 
-#' Dictionary Gene2Probe
+#' Dictionary Protein2Probe
 #'
 #' A mapping between ENSEMBL Peptide ID and probe identifier, for the Homo
 #' sapiens
@@ -324,7 +324,7 @@
 
 "Sc900"
 
-#' Dictionary Gene2Symbol
+#' Dictionary Protein2Symbol
 #'
 #' A mapping between ENSEMBL Peptide ID and Symbol (Gene Name) of a reduced set
 #' of proteins.
@@ -347,7 +347,7 @@
 
 "DEsymbols"
 
-#' Dictionary Gene2GO
+#' Dictionary Protein2GO
 #'
 #' A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
 #' terms of a set of proteins.

@@ -335,7 +335,17 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     check_pValue(pValue)
     check_title(title)
-    aux <- species
+    aux <- NULL
+    input <- FALSE
+    if(nrow(object@Protein2Symbol) > 0){
+      input <- as.logical(readline(message("Do you want to use the Protein2Symbol slot contents? [T/F]: ")))
+    }
+    if(is.na(input)){stop("Wrong input! The answer should be a logical value!", call. = FALSE)}
+    if(input){
+      aux <- object@Protein2Symbol
+    } else {
+      aux <- species
+    }
     if (is.data.frame(aux)) {
         species <- check_species1(species)
     } else {
@@ -494,12 +504,13 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       return(NULL)
     }))
     suppressMessages(graphics::plot(p))
+    # mod
     if (!is.null(species)) {
         symbols <- NULL
         message("translating ENSEMBL Peptide ID to SYMBOL... extra step")
         taxonomyID <- NULL
-        if (grepl("\\.", DElimma[1, 1])) {
-            taxonomyID <- strsplit(DElimma[1, 1], "\\.")[[1]][1]
+        if (grepl("\\.", object@ordering[1, 1])) {
+            taxonomyID <- strsplit(object@ordering[1, 1], "\\.")[[1]][1]
             taxonomyID <- paste0(taxonomyID, ".")
         }
         if (is.character(species)) {
@@ -510,11 +521,11 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             ensembl <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
                 dataset = species)
             proteins <- NULL
-            if (grepl("\\.", DElimma[1, 1])) {
-                proteins <- sapply(strsplit(DElimma[, 1], "\\."),
+            if (grepl("\\.", object@ordering[1, 1])) {
+                proteins <- sapply(strsplit(object@ordering[, 1], "\\."),
                     "[", 2)
             } else {
-                proteins <- DElimma[, 1]
+                proteins <- object@ordering[, 1]
             }
             symbols <- biomaRt::getBM(filters = "ensembl_peptide_id",
                 attributes = c("ensembl_peptide_id", "external_gene_name"),
@@ -528,14 +539,22 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         }
         symbols[symbols == ""] <- NA
         symbols <- stats::na.omit(symbols)
-        DElimma$Symbol <- DElimma$Protein
-        invisible(sapply(seq.int(1, nrow(symbols)), function(i) {
-            DElimma[which(DElimma$Protein == paste0(taxonomyID,
-                symbols[i, "ensembl_peptide_id"])), "Symbol"] <<- symbols[i,
-                "external_gene_name"]
+        symbols$ensembl_peptide_id <- paste0(taxonomyID,
+                                             symbols$ensembl_peptide_id)
+        DElimma$Symbol <- NA_character_
+        object@Protein2Symbol = symbols
+        invisible(sapply(seq.int(1, nrow(DElimma)), function(i) {
+            DElimma$Symbol <<- symbols[match(DElimma[, "Protein"],
+                                             symbols[,"ensembl_peptide_id"]),
+                                       "external_gene_name"]
             return(NULL)
         }))
+        if(any(is.na(DElimma$Symbol))){
+          idx <- which(is.na(DElimma$Symbol))
+          DElimma[idx, "Symbol"] <- DElimma[idx, "Protein"]
+        }
     }
+    # mod
     object@status = 3L
     object@DE = DElimma
     object@clusters = pBreaks
