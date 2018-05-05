@@ -348,6 +348,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         2)) {
         stop("argument levels - does not have a valid length!")
     }
+    object@pbc = FALSE
     levels <- as.factor(levels)
     design <- stats::model.matrix(~0 + levels)
     contrasts <- "levelsFALSE-levelsTRUE"

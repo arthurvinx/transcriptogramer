@@ -2,10 +2,13 @@
 title: "The transcriptogramer user's guide"
 author:
 - name: Diego Morais
-  affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
+  affiliation: 
+  - Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
 - name: Rodrigo Dalmolin
-  affiliation: Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
-  affiliation: Department of Biochemistry, Federal University of Rio Grande do Norte, Natal, RN,
+  affiliation:
+  - Bioinformatics Multidisciplinary Environment, Federal University of Rio Grande do Norte, Natal, RN, Brazil
+  - Department of Biochemistry, Federal University of Rio Grande do Norte, Natal, RN, Brazil
+  email: rodrigo.dalmolin@imd.ufrn.br
 output: 
   BiocStyle::html_document
 bibliography: cite.bib
@@ -30,11 +33,11 @@ in the same metabolic pathway exponentially decreases with the increase of
 the distance between two proteins of the ordering. Transcriptograms are,
 hence, genome wide gene expression profiles that provide a global view for
 the cellular metabolism, while indicating gene sets whose expression are
-altered [@Silva2014; @Filho2011].
+altered [@Silva2014; @Filho2011; @Almeida2016; @Ferrareze2017].
 
 Methods are provided to analyze topological properties of an
 interactome, to generate transcriptograms, to detect and to display
-differentially expressed gene clusters, and to perform a functional 
+differentially expressed gene clusters, and to perform a Gene Ontology 
 enrichment analysis on these clusters.
 
 As a set of ordered proteins is required in order to run the methods,
@@ -149,7 +152,7 @@ radius(object = t) <- 80
 t <- transcriptogramStep2(object = t, nCores = 1)
 ```
 
-## Functional enrichment analysis
+## Gene Ontology enrichment analysis
 As nearby genes of a transcriptogram have a high probability to interact with
 each other, gene sets whose expression are altered can be identified using the
 `r Biocpkg("limma")` package. The `differentiallyExpressed()` method uses the
@@ -221,7 +224,7 @@ rdp <- clusterVisualization(object = t)
 
 ![](RedeR.png)
 
-The `clusterEnrichment()` method perform a functional enrichment analysis
+The `clusterEnrichment()` method performs a Gene Ontology enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by
 all the proteins present in the transcriptogramS2 slot, the ontology is setted
 to biological process, the algorithm is setted to classic, the statistic is
