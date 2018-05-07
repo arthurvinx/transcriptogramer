@@ -36,8 +36,7 @@ This function returns an object of the RedPort Class.
 }
 \description{
 This method uses the \pkg{RedeR} package to display graphs of the
-differentially expressed clusters. If the DE slot has a column named Symbol,
-its contents will be used as node alias.
+differentially expressed clusters.
 }
 \details{
 RedeR package requirements: Java Runtime Environment (>= 6).

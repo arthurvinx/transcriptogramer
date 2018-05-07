@@ -35,7 +35,7 @@ each cluster.}
 \item{\code{pbc}}{Logical value used internally to indicate the overlapping of the
 first and the last cluster.}
 
-\item{\code{ENSP2GENE}}{A data.frame containing two columns, the first one with
+\item{\code{Protein2Symbol}}{A data.frame containing two columns, the first one with
 ENSEMBL Peptide IDs, and the second containing its respective Symbol.}
 }}
 

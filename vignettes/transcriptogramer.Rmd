@@ -163,10 +163,10 @@ a set of genes which positions are within a radius range specified by the
 content of the radius slot.
 
 For this example, the p-value threshold for false
-discovery rate will be set as 0.01. If the name of a species is provided
-on the input, the `r Biocpkg("biomaRt")` package will be used to translate the
-ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data.frame can be
-provided and used instead.
+discovery rate will be set as 0.01. If a species name is provided, the
+`r Biocpkg("biomaRt")` package is used to translate the
+ENSEMBL Peptide ID to Symbol (Gene Name), alternatively, a data.frame with such
+content can be provided.
 The levels argument classify the columns of
 the transcriptogramS2 slot referring to samples, as there are 6 columns (see
 dataset **GSE9988**), is created a logical vector that uses TRUE to label the
@@ -192,11 +192,8 @@ t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
 ```
 
 This method also produces a plot referring to its output. In this case,
-eleven clusters were detected, and each one is represented by a color. It is
-important to mention that not all the colored genes were detected as
-differentially expressed, but, as they were within the radius specified by
-the content of the radius slot, they were included in a cluster. The genes that
-are above the horizontal black line are upregulated, and the genes that
+eleven clusters were detected, and each one is represented by a color. The genes
+that are above the horizontal black line are upregulated, and the genes that
 are below are downregulated.
 
 ![](Rplot.png)
@@ -213,10 +210,8 @@ DE <- DE(object = t)
 The `clusterVisualization()` method uses the `r Biocpkg("RedeR")` package to
 display graphs of the differentially expressed clusters and returns an
 object of the RedPort Class, allowing interactions through functions
-of the RedeR package. This method may take some time depending on the number of
-clusters, and nodes per cluster, and requires the Java Runtime Environment
-(>= 6). If the DE slot of the Transcriptogram object has a column named Symbol,
-its contents will be used as node alias.
+of the RedeR package. This method requires the Java Runtime Environment
+(>= 6).
 
 
 ```{r eval = FALSE}
@@ -232,16 +227,15 @@ to biological process, the algorithm is setted to classic, the statistic is
 setted to fisher, and the p-values are adjusted by the Benjamini-Hochberg
 procedure. For this example, the p-value threshold for false
 discovery rate will be set as 0.005. This method uses the biomaRt package to
-build a gene2GO list if the name of a species is provided on the input,
-alternatively, a data.frame can be provided and used instead.
+build a Protein2GO data.frame using the given species name, or data.frame.
 
 ```{r message = FALSE}
-## using the HsBPTerms dataset to create the gene2GO list
+## using the HsBPTerms dataset to create the Protein2GO data.frame
 terms <- clusterEnrichment(object = t, species = HsBPTerms,
                            pValue = 0.005, nCores = 1)
 ```
 ```{r eval = FALSE}
-## using the biomaRt package to create the gene2GO list
+## using the biomaRt package to create the Protein2GO data.frame
 ## Internet connection is required for this command
 terms <- clusterEnrichment(object = t, species = "Homo sapiens",
                            pValue = 0.005, nCores = 1)

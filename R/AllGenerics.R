@@ -319,18 +319,18 @@ setGeneric("radius<-", signature = "object",
 #' family-wise error rate
 #' or false discovery rate, the default value is 0.05.
 #'
-#' @param species If not NULL, a character string that will be used,
+#' @param species A character string that will be used,
 #' ignoring case sensitivity,
 #' to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data.frame
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
-#' and the second containing its respective Symbol (character).
+#' and the second containing its respective Symbol (character). The default
+#' value for this argument is the content of the object Protein2Symbol slot.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
 #' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
-#' for this argument is
-#' 'BH'.
+#' for this argument is 'BH'.
 #'
 #' @param trend Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
 #' the default value of this argument is FALSE.
@@ -408,9 +408,10 @@ setGeneric("radius<-", signature = "object",
 #' @export
 
 setGeneric("differentiallyExpressed", function(object,
-    levels, pValue = 0.05, species = NULL,
+    levels, pValue = 0.05, species = object@Protein2Symbol,
     adjustMethod = "BH", trend = FALSE,
-    title = "Differential expression", boundaryConditions = FALSE) standardGeneric("differentiallyExpressed"),
+    title = "Differential expression",
+    boundaryConditions = FALSE) standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####
@@ -418,8 +419,7 @@ setGeneric("differentiallyExpressed", function(object,
 #' Displays graphs of the differentially expressed clusters
 #'
 #' This method uses the \pkg{RedeR} package to display graphs of the
-#' differentially expressed clusters. If the DE slot has a column named Symbol,
-#' its contents will be used as node alias.
+#' differentially expressed clusters.
 #'
 #' @param object An object of class Transcriptogram.
 #'
@@ -495,9 +495,9 @@ setGeneric("clusterVisualization", function(object,
 #' Term enrichment
 #'
 #' If \code{species} is a character, this method uses the \pkg{biomaRt} package
-#' to build a gene2GO list, if \code{species} is a data.frame, it will be used
+#' to build a Protein2GO list, if \code{species} is a data.frame, it will be used
 #' instead.
-#' The gene2GO list will be used with the
+#' The Protein2GO list will be used with the
 #' \pkg{topGO} package to detect the most significant terms of each cluster
 #' present in the DE slot of the \code{object}.
 #'

@@ -27,7 +27,7 @@
 #' @slot pbc Logical value used internally to indicate the overlapping of the
 #' first and the last cluster.
 #'
-#' @slot ENSP2GENE A data.frame containing two columns, the first one with
+#' @slot Protein2Symbol A data.frame containing two columns, the first one with
 #' ENSEMBL Peptide IDs, and the second containing its respective Symbol.
 #'
 #' @seealso
@@ -52,9 +52,9 @@ setClass("Transcriptogram", representation(association = "data.frame",
     ordering = "data.frame", transcriptogramS1 = "data.frame",
     transcriptogramS2 = "data.frame", DE = "data.frame",
     radius = "integer", status = "integer", clusters = "list", pbc = "logical",
-    ENSP2GENE = "data.frame"),
+    Protein2Symbol = "data.frame"),
     prototype = list(association = data.frame(),
         ordering = data.frame(), transcriptogramS1 = data.frame(),
         transcriptogramS2 = data.frame(),
         DE = data.frame(), radius = 0L, status = NA_integer_, clusters = list(),
-        pbc = FALSE, ENSP2GENE = data.frame()))
+        pbc = FALSE, Protein2Symbol = data.frame()))

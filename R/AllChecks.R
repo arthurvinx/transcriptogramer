@@ -148,7 +148,7 @@ check_species1 <- function(argument){
             stop("argument species - does not have a valid value!",
                 call. = FALSE)
         }
-    } else if (!(is.null(argument) || (is.character(argument) &&
+    } else if (!((is.character(argument) &&
         length(strsplit(argument, " ")[[1]]) ==
         2 && length(argument) ==
         1))) {
@@ -211,6 +211,13 @@ check_connected <- function(argument){
 
 check_trend <- function(argument){
   name <- "trend"
+  if (!is.logical(argument) || length(argument) != 1) {
+    error(name)
+  }
+}
+
+check_boundaryConditions <- function(argument){
+  name <- "boundaryConditions"
   if (!is.logical(argument) || length(argument) != 1) {
     error(name)
   }

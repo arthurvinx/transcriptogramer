@@ -2,33 +2,34 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
-\section{Version 1.1.18}{
+\section{Version 1.3.1}{
   \itemize{
-    \item The plot of the differentiallyExpressed() method shows the number of clusters detected and is created by the ggplot2 package.
+    \item Argument boundaryConditions added to the differentiallyExpressed() method.
+    \item Slot Protein2Symbol added to the Transcriptogram class.
   }
 }
 
-\section{Version 1.1.17}{
+\section{Version 1.1.18}{
   \itemize{
-    \item Improved documentation.
+    \item The differentiallyExpressed() method plot now uses the ggplot2 package and shows the number of clusters detected.
   }
 }
 
 \section{Version 1.1.7}{
   \itemize{
-    \item Added a new argument to the differentiallyExpressed() method, supporting the limma-trend approach for RNA-Seq.
+    \item Argument trend added to the differentiallyExpressed() method to support limma-trend.
   }
 }
 
 \section{Version 1.1.6}{
   \itemize{
-    \item Updated GPL570 dataset.
+    \item GPL570 dataset updated.
   }
 }
 
 \section{Version 1.1.3}{
   \itemize{
-    \item The datasets of the four species were improved to obtain a better clustering.
+    \item All species (Homo sapiens, Mus musculus, Saccharomyces cerevisiae and Rattus norvegicus) datasets were updated to obtain a better clustering.
   }
 }
 

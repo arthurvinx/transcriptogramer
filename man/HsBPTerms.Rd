@@ -3,7 +3,7 @@
 \docType{data}
 \name{HsBPTerms}
 \alias{HsBPTerms}
-\title{Dictionary Gene2GO}
+\title{Dictionary Protein2GO}
 \format{Each row of the data.frame contains two variables:
 \describe{
  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
