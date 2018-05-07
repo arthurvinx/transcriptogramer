@@ -565,14 +565,10 @@ setMethod("clusterVisualization", "Transcriptogram",
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
     }
-    symbolAsNodeAlias <- FALSE
     check_maincomp(maincomp)
     check_connected(connected)
     check_host(host)
     check_port(port)
-    if ("Symbol" %in% colnames(object@DE)) {
-        symbolAsNodeAlias <- TRUE
-    }
     if(is.null(clusters)){
         clusters  <- unique(object@DE$ClusterNumber)
     }else{
@@ -615,10 +611,8 @@ setMethod("clusterVisualization", "Transcriptogram",
             cols = myColors[i])
         igraph::E(sgList[[i]])$edgeColor <<- "grey80"
         igraph::V(sgList[[i]])$nodeLineColor <<- "grey80"
-        if (symbolAsNodeAlias) {
-            sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
-              from = "Symbol", to = "nodeAlias")
-        }
+        sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
+                                        from = "Symbol", to = "nodeAlias")
         message("** adding cluster ", i, "...")
         suppressMessages(RedeR::addGraph(rdp, sgList[[i]],
             theme = c(myTheme, nestAlias = paste0("C", i)),
