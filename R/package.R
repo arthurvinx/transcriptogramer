@@ -22,7 +22,8 @@
 #' Bioconductor : \href{https://doi.org/doi:10.18129/B9.bioc.transcriptogramer}{release},
 #' \href{https://bioconductor.org/packages/devel/bioc/html/transcriptogramer.html}{devel}
 #'
-#' Github repository: \href{https://github.com/arthurvinx/transcriptogramer}{source code}
+#' Github repository: \href{https://github.com/arthurvinx/transcriptogramer}{source code},
+#' \href{https://github.com/arthurvinx/transcriptogramer/issues}{bug reports}
 #'
 #' References: (\href{https://doi.org/10.1186/1471-2164-15-1181}{da Silva et al., 2014};
 #' \href{https://doi.org/10.1186/s40246-016-0095-x}{de Almeida et al., 2016};
