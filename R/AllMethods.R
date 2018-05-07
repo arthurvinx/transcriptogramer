@@ -225,7 +225,7 @@ setMethod("transcriptogramStep1", "Transcriptogram",
             pb$tick()
         }
         opts <- list(progress = progress)
-        message("calculating average over all identifiers ",
+        message("averaging over all identifiers ",
             "related to the same protein... step 2 of 2")
         i <- NULL
         result <- foreach::foreach(i = seq.int(1, ntasks),
@@ -408,17 +408,18 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         l2 <- pBreaks[[i]][2] + object@radius
         return(c(l1,l2))
       }))
-      elim <- c(FALSE)
-      invisible(lapply(seq.int(1, length(aux) - 1), function(i) {
-        if(aux[[i]][2] >= aux[[i + 1]][1]){
-          aux[[i]] <<- c(aux[[i]][1], aux[[i + 1]][2])
-          elim <<- c(elim, TRUE)
+      elim <- list()
+      invisible(lapply(seq.int(1, length(aux)), function(i) {
+        if(i == length(aux)){
+          elim <<- append(elim, list(c(aux[[i]][1], aux[[i]][2])))
+        }else if(aux[[i]][2] >= aux[[i + 1]][1]){
+          aux[[i + 1]] <<- c(aux[[i]][1], aux[[i + 1]][2])
         }else{
-          elim <<- c(elim, FALSE)
+          elim <<- append(elim, list(c(aux[[i]][1], aux[[i]][2])))
         }
         return(NULL)
       }))
-      aux <- aux[!elim]
+      aux <- elim
       if(aux[[1]][1] < min){
         object@pbc = TRUE
         x <- max + 1 + aux[[1]][1] - min
@@ -573,7 +574,7 @@ setMethod("clusterVisualization", "Transcriptogram",
         clusters  <- unique(object@DE$ClusterNumber)
     }else{
         if(is.numeric(clusters)){
-            clusters <- as.integer(clusters)
+            clusters <- as.integer(unique(clusters))
         }
         if(!is.integer(clusters) || !all(clusters %in%
             unique(object@DE$ClusterNumber))){
@@ -587,7 +588,7 @@ setMethod("clusterVisualization", "Transcriptogram",
     message("generating the graphs... step 2 of 4")
     g <- igraph::graph.data.frame(d = object@association,
         directed = FALSE)
-    n <- length(unique(object@DE$ClusterNumber))
+    n <- length(clusters)
     myColors <- grDevices::rainbow(n)
     sgList <- lapply(seq.int(1, n), function(i) {
         RedeR::subg(g = g, dat = object@DE[
@@ -597,7 +598,6 @@ setMethod("clusterVisualization", "Transcriptogram",
     })
     rm(g)
     message("adding graphs into RedeR... step 3 of 4")
-    n <- length(clusters)
     if (n > 3) {
         message("** this may take some time...")
     }
