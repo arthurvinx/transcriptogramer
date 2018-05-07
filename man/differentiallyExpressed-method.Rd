@@ -7,13 +7,14 @@
 \alias{differentiallyExpressed-method}
 \title{Identify which genes are differentially expressed}
 \usage{
-differentiallyExpressed(object, levels, pValue = 0.05, species = NULL,
-  adjustMethod = "BH", trend = FALSE, title = "Differential expression",
-  boundaryConditions = FALSE)
+differentiallyExpressed(object, levels, pValue = 0.05,
+  species = object@Protein2Symbol, adjustMethod = "BH", trend = FALSE,
+  title = "Differential expression", boundaryConditions = FALSE)
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
-  pValue = 0.05, species = NULL, adjustMethod = "BH", trend = FALSE,
-  title = "Differential expression", boundaryConditions = FALSE)
+  pValue = 0.05, species = object@Protein2Symbol, adjustMethod = "BH",
+  trend = FALSE, title = "Differential expression",
+  boundaryConditions = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -26,18 +27,18 @@ be used to indicate case samples, and TRUE to indicate control samples.}
 family-wise error rate
 or false discovery rate, the default value is 0.05.}
 
-\item{species}{If not NULL, a character string that will be used,
+\item{species}{A character string that will be used,
 ignoring case sensitivity,
 to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data.frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
-and the second containing its respective Symbol (character).}
+and the second containing its respective Symbol (character). The default
+value for this argument is the content of the object Protein2Symbol slot.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
-for this argument is
-'BH'.}
+for this argument is 'BH'.}
 
 \item{trend}{Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
 the default value of this argument is FALSE.}

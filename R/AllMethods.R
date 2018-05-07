@@ -244,6 +244,9 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         message("done!")
         object@transcriptogramS1 = result
         object@status = 1L
+        object@Protein2Symbol = data.frame(ensembl_peptide_id = object@ordering$Protein,
+                                           external_gene_name = object@ordering$Protein,
+                                           stringsAsFactors = FALSE)
         return(object)
     })
 
@@ -325,7 +328,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 #' @aliases differentiallyExpressed-method
 
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
-    levels, pValue = 0.05, species = NULL, adjustMethod = "BH",
+    levels, pValue = 0.05, species = object@Protein2Symbol, adjustMethod = "BH",
     trend = FALSE, title = "Differential expression",
     boundaryConditions = FALSE) {
     if (object@status < 2L) {
@@ -335,25 +338,16 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     check_pValue(pValue)
     check_title(title)
-    aux <- NULL
-    input <- FALSE
-    if(nrow(object@Protein2Symbol) > 0){
-      input <- as.logical(readline(message("Do you want to use the Protein2Symbol slot contents? [T/F]: ")))
-    }
-    if(is.na(input)){stop("Wrong input! The answer should be a logical value!", call. = FALSE)}
-    if(input){
-      aux <- object@Protein2Symbol
-    } else {
-      aux <- species
-    }
+    aux <- species
     if (is.data.frame(aux)) {
-        species <- check_species1(species)
+      species <- check_species1(species)
     } else {
-        check_species1(species)
+      check_species1(species)
     }
     rm(aux)
     check_adjustMethod1(adjustMethod)
     check_trend(trend)
+    check_boundaryConditions(boundaryConditions)
     check_levels(levels)
     if (length(levels) != (ncol(object@transcriptogramS2) -
         2)) {
@@ -370,7 +364,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     contrasts <- limma::makeContrasts(contrasts = contrasts,
         levels = design)
     rm(design)
-    message("calculating statistics... step 1 of 3")
+    message("calculating statistics... step 1 of 4")
     ct.fit <- limma::eBayes(limma::contrasts.fit(fit, contrasts), trend = trend)
     res.fit <- limma::decideTests(ct.fit, method = "global",
         adjust.method = adjustMethod, p.value = pValue)
@@ -387,7 +381,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     rm(temp)
     colnames(DElimma)[c(3, 4, 5)] <- c("logFC", "pValue", "DEgenes")
     rownames(DElimma) <- NULL
-    message("identifying clusters... step 2 of 3")
+    message("identifying clusters... step 2 of 4")
     pBreaks <- list()
     positions <- DElimma$Position
     clusterStartIndex <- clusterNumber <- 1
@@ -460,7 +454,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
         return(NULL)
     }))
     DElimma <- DElimma[, c(1, 2, 6, 3, 4, 5)]
-    message("generating plot... step 3 of 3")
+    message("generating plot... step 3 of 4")
     case <- object@transcriptogramS2[, -c(1, 2)]
     control <- case[, which(levels == TRUE)]
     case <- case[, which(levels == FALSE)]
@@ -472,7 +466,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }, numeric(1))
     smoothedLine <- stats::smooth.spline(object@transcriptogramS2$Position,
                                          caseValues, spar = 0.35)
-    lim <- max(abs(min(caseValues)), abs(max(caseValues)))
+    lim <- max(abs(caseValues))
     rm(case, control, n, caseValues)
     lim <- round(lim, digits = 1)
     if(object@pbc){
@@ -504,57 +498,53 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       return(NULL)
     }))
     suppressMessages(graphics::plot(p))
-    # mod
-    if (!is.null(species)) {
-        symbols <- NULL
-        message("translating ENSEMBL Peptide ID to SYMBOL... extra step")
-        taxonomyID <- NULL
-        if (grepl("\\.", object@ordering[1, 1])) {
-            taxonomyID <- strsplit(object@ordering[1, 1], "\\.")[[1]][1]
-            taxonomyID <- paste0(taxonomyID, ".")
-        }
-        if (is.character(species)) {
-            message("** this may take some time...")
-            species <- tolower(species)
-            species <- gsub("^([[:alpha:]]).* ", "\\1", species)
-            species <- paste0(species, "_gene_ensembl")
-            ensembl <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
-                dataset = species)
-            proteins <- NULL
-            if (grepl("\\.", object@ordering[1, 1])) {
-                proteins <- sapply(strsplit(object@ordering[, 1], "\\."),
-                    "[", 2)
-            } else {
-                proteins <- object@ordering[, 1]
-            }
-            symbols <- biomaRt::getBM(filters = "ensembl_peptide_id",
-                attributes = c("ensembl_peptide_id", "external_gene_name"),
-                values = proteins, mart = ensembl)
-        } else if (is.data.frame(species)) {
-            symbols <- species
-            if (grepl("\\.", symbols[1, 1])) {
-                symbols$ensembl_peptide_id <- sapply(strsplit(symbols[,
-                  1], "\\."), "[", 2)
-            }
-        }
-        symbols[symbols == ""] <- NA
-        symbols <- stats::na.omit(symbols)
-        symbols$ensembl_peptide_id <- paste0(taxonomyID,
-                                             symbols$ensembl_peptide_id)
-        DElimma$Symbol <- NA_character_
-        object@Protein2Symbol = symbols
-        invisible(sapply(seq.int(1, nrow(DElimma)), function(i) {
-            DElimma$Symbol <<- symbols[match(DElimma[, "Protein"],
-                                             symbols[,"ensembl_peptide_id"]),
-                                       "external_gene_name"]
-            return(NULL)
-        }))
-        if(any(is.na(DElimma$Symbol))){
-          idx <- which(is.na(DElimma$Symbol))
-          DElimma[idx, "Symbol"] <- DElimma[idx, "Protein"]
-        }
+    symbols <- NULL
+    message("translating ENSEMBL Peptide ID to SYMBOL... step 3 of 4")
+    taxonomyID <- NULL
+    if (grepl("\\.", object@ordering[1, 1])) {
+      taxonomyID <- strsplit(object@ordering[1, 1], "\\.")[[1]][1]
+      taxonomyID <- paste0(taxonomyID, ".")
     }
-    # mod
+    if (is.character(species)) {
+      message("** this may take some time...")
+      species <- tolower(species)
+      species <- gsub("^([[:alpha:]]).* ", "\\1", species)
+      species <- paste0(species, "_gene_ensembl")
+      ensembl <- biomaRt::useMart("ENSEMBL_MART_ENSEMBL",
+                                  dataset = species)
+      proteins <- NULL
+      if (grepl("\\.", object@ordering[1, 1])) {
+        proteins <- sapply(strsplit(object@ordering[, 1], "\\."),
+                           "[", 2)
+      } else {
+        proteins <- object@ordering[, 1]
+      }
+      symbols <- biomaRt::getBM(filters = "ensembl_peptide_id",
+                                attributes = c("ensembl_peptide_id", "external_gene_name"),
+                                values = proteins, mart = ensembl)
+    } else if (is.data.frame(species)) {
+      symbols <- species
+      if (grepl("\\.", symbols[1, 1])) {
+        symbols$ensembl_peptide_id <- sapply(strsplit(symbols[,
+                                                              1], "\\."), "[", 2)
+      }
+    }
+    symbols[symbols == ""] <- NA
+    symbols <- stats::na.omit(symbols)
+    symbols$ensembl_peptide_id <- paste0(taxonomyID,
+                                         symbols$ensembl_peptide_id)
+    DElimma$Symbol <- NA_character_
+    object@Protein2Symbol = symbols
+    invisible(sapply(seq.int(1, nrow(DElimma)), function(i) {
+      DElimma$Symbol <<- symbols[match(DElimma[, "Protein"],
+                                       symbols[,"ensembl_peptide_id"]),
+                                 "external_gene_name"]
+      return(NULL)
+    }))
+    if(any(is.na(DElimma$Symbol))){
+      idx <- which(is.na(DElimma$Symbol))
+      DElimma[idx, "Symbol"] <- DElimma[idx, "Protein"]
+    }
     object@status = 3L
     object@DE = DElimma
     object@clusters = pBreaks
