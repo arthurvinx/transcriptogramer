@@ -8,10 +8,12 @@
 \title{Displays graphs of the differentially expressed clusters}
 \usage{
 clusterVisualization(object, maincomp = FALSE, connected = FALSE,
-  host = "127.0.0.1", port = 9091, clusters = NULL)
+  host = "127.0.0.1", port = 9091, clusters = NULL,
+  windowCenterOnly = TRUE)
 
 \S4method{clusterVisualization}{Transcriptogram}(object, maincomp = FALSE,
-  connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL)
+  connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL,
+  windowCenterOnly = TRUE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -30,6 +32,9 @@ listen.}
 
 \item{clusters}{An integer vector specifying the clusters to be
 displayed, if NULL, all clusters will be displayed.}
+
+\item{windowCenterOnly}{Logical value, set as TRUE to get only the central
+gene of each window. The default value of this argument is TRUE.}
 }
 \value{
 This function returns an object of the RedPort Class.

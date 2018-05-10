@@ -561,20 +561,21 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
 setMethod("clusterVisualization", "Transcriptogram",
     function(object,
     maincomp = FALSE, connected = FALSE,
-    host = "127.0.0.1", port = 9091, clusters = NULL) {
+    host = "127.0.0.1", port = 9091, clusters = NULL, windowCenterOnly = TRUE) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
     }
     check_maincomp(maincomp)
+    check_windowCenterOnly(windowCenterOnly)
     check_connected(connected)
     check_host(host)
     check_port(port)
     if(is.null(clusters)){
-        clusters  <- unique(object@DE$ClusterNumber)
+        clusters  <- sort(unique(object@DE$ClusterNumber))
     }else{
         if(is.numeric(clusters)){
-            clusters <- as.integer(unique(clusters))
+            clusters <- sort(as.integer(unique(clusters)))
         }
         if(!is.integer(clusters) || !all(clusters %in%
             unique(object@DE$ClusterNumber))){
@@ -588,27 +589,50 @@ setMethod("clusterVisualization", "Transcriptogram",
     message("generating the graphs... step 2 of 4")
     g <- igraph::graph.data.frame(d = object@association,
         directed = FALSE)
-    n <- length(clusters)
+    n <- length(unique(object@DE$ClusterNumber))
     myColors <- grDevices::rainbow(n)
-    sgList <- lapply(seq.int(1, n), function(i) {
+    sgList <- list()
+    if(windowCenterOnly){
+      sgList <- lapply(clusters, function(i) {
         RedeR::subg(g = g, dat = object@DE[
-            which(object@DE$ClusterNumber ==
-            i), ], refcol = 1, maincomp = maincomp,
-            connected = connected, transdat = TRUE)
-    })
+          which(object@DE$ClusterNumber ==
+                  i), ], refcol = 1, maincomp = maincomp,
+          connected = connected, transdat = TRUE)
+      })
+    }else{
+      sgList <- lapply(clusters, function(i) {
+        positions <- c()
+        if(object@pbc && (i == 1)){
+          positions <- c(positions,
+                         object@clusters[[1]][1]:object@clusters[[1]][2])
+          positions <- c(positions,
+                         object@clusters[[length(object@clusters)]][1]:
+                           object@clusters[[length(object@clusters)]][2])
+
+        }else{
+          positions <- c(positions,
+                         object@clusters[[i]][1]:object@clusters[[i]][2])
+        }
+        df <- object@ordering[object@ordering$Position %in% positions, 1]
+        df <- as.data.frame(cbind("Protein" = df, "Symbol" = object@Protein2Symbol[match(df, object@Protein2Symbol$ensembl_peptide_id), 2]), stringsAsFactors = FALSE)
+        RedeR::subg(g = g, dat = df,
+          refcol = 1, maincomp = maincomp,
+          connected = connected, transdat = TRUE)
+      })
+    }
     rm(g)
     message("adding graphs into RedeR... step 3 of 4")
-    if (n > 3) {
+    if (length(clusters) > 3) {
         message("** this may take some time...")
     }
-    dim <- ceiling(sqrt(n))
+    dim <- ceiling(sqrt(length(clusters)))
     slice <- 100/dim
     myTheme <- list(isNest = TRUE, theme = 3, gscale = slice,
         nestFontSize = 50, zoom = 40)
     x <- y <- 0
-    invisible(sapply(clusters, function(i) {
+    invisible(sapply(seq.int(1, length(clusters)), function(i) {
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
-            cols = myColors[i])
+            cols = myColors[clusters[i]])
         igraph::E(sgList[[i]])$edgeColor <<- "grey80"
         igraph::V(sgList[[i]])$nodeLineColor <<- "grey80"
         sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],

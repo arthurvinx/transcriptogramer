@@ -438,6 +438,9 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param clusters An integer vector specifying the clusters to be
 #' displayed, if NULL, all clusters will be displayed.
 #'
+#' @param windowCenterOnly Logical value, set as TRUE to get only the central
+#' gene of each window. The default value of this argument is TRUE.
+#'
 #' @return This function returns an object of the RedPort Class.
 #'
 #' @examples
@@ -487,7 +490,8 @@ setGeneric("differentiallyExpressed", function(object,
 setGeneric("clusterVisualization", function(object,
     maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
-    port = 9091, clusters = NULL) standardGeneric("clusterVisualization"),
+    port = 9091, clusters = NULL,
+    windowCenterOnly = TRUE) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
 
 # clusterEnrichment ####
