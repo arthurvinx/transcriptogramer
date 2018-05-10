@@ -572,10 +572,10 @@ setMethod("clusterVisualization", "Transcriptogram",
     check_host(host)
     check_port(port)
     if(is.null(clusters)){
-        clusters  <- sort(unique(object@DE$ClusterNumber))
+        clusters  <- unique(object@DE$ClusterNumber)
     }else{
         if(is.numeric(clusters)){
-            clusters <- sort(as.integer(unique(clusters)))
+            clusters <- as.integer(unique(clusters))
         }
         if(!is.integer(clusters) || !all(clusters %in%
             unique(object@DE$ClusterNumber))){
@@ -593,14 +593,14 @@ setMethod("clusterVisualization", "Transcriptogram",
     myColors <- grDevices::rainbow(n)
     sgList <- list()
     if(windowCenterOnly){
-      sgList <- lapply(clusters, function(i) {
+      sgList <- lapply(seq.int(1, n), function(i) {
         RedeR::subg(g = g, dat = object@DE[
           which(object@DE$ClusterNumber ==
                   i), ], refcol = 1, maincomp = maincomp,
           connected = connected, transdat = TRUE)
       })
     }else{
-      sgList <- lapply(clusters, function(i) {
+      sgList <- lapply(seq.int(1, n), function(i) {
         positions <- c()
         if(object@pbc && (i == 1)){
           positions <- c(positions,
@@ -622,31 +622,32 @@ setMethod("clusterVisualization", "Transcriptogram",
     }
     rm(g)
     message("adding graphs into RedeR... step 3 of 4")
-    if (length(clusters) > 3) {
+    n <- length(clusters)
+    if (n > 3) {
         message("** this may take some time...")
     }
-    dim <- ceiling(sqrt(length(clusters)))
+    dim <- ceiling(sqrt(n))
     slice <- 100/dim
     myTheme <- list(isNest = TRUE, theme = 3, gscale = slice,
         nestFontSize = 50, zoom = 40)
     x <- y <- 0
-    invisible(sapply(seq.int(1, length(clusters)), function(i) {
-        sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
-            cols = myColors[clusters[i]])
-        igraph::E(sgList[[i]])$edgeColor <<- "grey80"
-        igraph::V(sgList[[i]])$nodeLineColor <<- "grey80"
-        sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
-                                        from = "Symbol", to = "nodeAlias")
-        message("** adding cluster ", i, "...")
-        suppressMessages(RedeR::addGraph(rdp, sgList[[i]],
-            theme = c(myTheme, nestAlias = paste0("C", i)),
-            gcoord = c(x * slice, y * slice)))
-        x <<- x + 1
-        if (x == dim) {
-            x <<- 0
-            y <<- y + 1
-        }
-        return(NULL)
+    invisible(sapply(clusters, function(i) {
+      sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
+                                      cols = myColors[i])
+      igraph::E(sgList[[i]])$edgeColor <<- "grey80"
+      igraph::V(sgList[[i]])$nodeLineColor <<- "grey80"
+      sgList[[i]] <<- RedeR::att.setv(g = sgList[[i]],
+                                      from = "Symbol", to = "nodeAlias")
+      message("** adding cluster ", i, "...")
+      suppressMessages(RedeR::addGraph(rdp, sgList[[i]],
+                                       theme = c(myTheme, nestAlias = paste0("C", i)),
+                                       gcoord = c(x * slice, y * slice)))
+      x <<- x + 1
+      if (x == dim) {
+        x <<- 0
+        y <<- y + 1
+      }
+      return(NULL)
     }))
     RedeR::selectNodes(rdp, NULL)
     message("relaxing nodes... step 4 of 4")
