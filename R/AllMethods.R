@@ -561,13 +561,13 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
 setMethod("clusterVisualization", "Transcriptogram",
     function(object,
     maincomp = FALSE, connected = FALSE,
-    host = "127.0.0.1", port = 9091, clusters = NULL, windowCenterOnly = TRUE) {
+    host = "127.0.0.1", port = 9091, clusters = NULL, onlyGenesInDE = TRUE) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
     }
     check_maincomp(maincomp)
-    check_windowCenterOnly(windowCenterOnly)
+    check_onlyGenesInDE(onlyGenesInDE)
     check_connected(connected)
     check_host(host)
     check_port(port)
@@ -592,7 +592,7 @@ setMethod("clusterVisualization", "Transcriptogram",
     n <- length(unique(object@DE$ClusterNumber))
     myColors <- grDevices::rainbow(n)
     sgList <- list()
-    if(windowCenterOnly){
+    if(onlyGenesInDE){
       sgList <- lapply(seq.int(1, n), function(i) {
         RedeR::subg(g = g, dat = object@DE[
           which(object@DE$ClusterNumber ==
@@ -664,7 +664,7 @@ setMethod("clusterVisualization", "Transcriptogram",
 setMethod("clusterEnrichment", "Transcriptogram", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher", pValue = 0.05,
-    adjustMethod = "BH", nCores = 1L) {
+    adjustMethod = "BH", nCores = 1L, onlyGenesInDE = TRUE) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
@@ -672,6 +672,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
     nCores <- check_nCores(nCores)
     check_universe(universe)
     check_pValue(pValue)
+    check_onlyGenesInDE(onlyGenesInDE)
     aux <- species
     if (is.data.frame(species)) {
         species <- check_species2(species)
@@ -732,8 +733,24 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         suppressMessages(topGO::groupGOTerms(e))
         attach(e)
         on.exit(detach(e))
-        genesOfInterest <- object@DE[which(object@DE$ClusterNumber ==
-            i), 1]
+        genesOfInterest <- c()
+        if(onlyGenesInDE){
+          genesOfInterest <- object@DE[which(object@DE$ClusterNumber == i), 1]
+        }else{
+          positions <- c()
+          if(object@pbc && (i == 1)){
+            positions <- c(positions,
+                           object@clusters[[1]][1]:object@clusters[[1]][2])
+            positions <- c(positions,
+                           object@clusters[[length(object@clusters)]][1]:
+                             object@clusters[[length(object@clusters)]][2])
+
+          }else{
+            positions <- c(positions,
+                           object@clusters[[i]][1]:object@clusters[[i]][2])
+          }
+          genesOfInterest <- object@ordering[object@ordering$Position %in% positions, 1]
+        }
         if (grepl("\\.", genesOfInterest[1])) {
             genesOfInterest <- sapply(strsplit(genesOfInterest,
                 "\\."), "[", 2)
@@ -755,23 +772,16 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         result$pValue <- as.numeric(result$pValue)
         result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
         result <- result[result$pValue <= pValue, ]
+        result$ClusterNumber <- i
         if (nrow(result) == 0) {
             return(NULL)
         }
         rownames(result) <- NULL
         return(result)
     })
-    df <- data.frame()
-    invisible(sapply(seq.int(1, n), function(i){
-        if(!is.null(enrichment[[i]])){
-            enrichment[[i]]$ClusterNumber <- i
-            df <<- rbind(df, enrichment[[i]])
-        }
-        return (NULL)
-    }))
-    rm(enrichment)
+    enrichment <- do.call("rbind", enrichment)
     message("done!")
-    return(df)
+    return(enrichment)
 })
 
 # radius ####

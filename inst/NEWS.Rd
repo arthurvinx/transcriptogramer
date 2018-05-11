@@ -6,6 +6,8 @@
   \itemize{
     \item Argument boundaryConditions added to the differentiallyExpressed() method.
     \item Slots Protein2Symbol, clusters, and pbc added to the Transcriptogram class.
+    \item Argument onlyGenesInDE added to the clusterVisualization() method.
+    \item Argument onlyGenesInDE added to the clusterEnrichment() method.
   }
 }
 

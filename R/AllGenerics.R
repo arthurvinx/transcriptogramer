@@ -438,8 +438,9 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param clusters An integer vector specifying the clusters to be
 #' displayed, if NULL, all clusters will be displayed.
 #'
-#' @param windowCenterOnly Logical value, set as TRUE to get only the central
-#' gene of each window. The default value of this argument is TRUE.
+#' @param onlyGenesInDE Logical value, set as TRUE to use only the genes
+#' in the DE slot. Set as FALSE to use all the genes referring to the positions
+#' in the clusters slot. The default value of this argument is TRUE.
 #'
 #' @return This function returns an object of the RedPort Class.
 #'
@@ -491,7 +492,7 @@ setGeneric("clusterVisualization", function(object,
     maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
     port = 9091, clusters = NULL,
-    windowCenterOnly = TRUE) standardGeneric("clusterVisualization"),
+    onlyGenesInDE = TRUE) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
 
 # clusterEnrichment ####
@@ -547,6 +548,10 @@ setGeneric("clusterVisualization", function(object,
 #' should be used, and FALSE indicating the use of just one processing core.
 #' The default value of this argument is 1.
 #'
+#' @param onlyGenesInDE Logical value, set as TRUE to use only the genes
+#' in the DE slot. Set as FALSE to use all the genes referring to the positions
+#' in the clusters slot. The default value of this argument is TRUE.
+#'
 #' @return A data.frame containing the most significant terms of each cluster.
 #'
 #' @examples
@@ -600,7 +605,7 @@ setGeneric("clusterVisualization", function(object,
 setGeneric("clusterEnrichment", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher",
-    pValue = 0.05, adjustMethod = "BH", nCores = 1L)
+    pValue = 0.05, adjustMethod = "BH", nCores = 1L, onlyGenesInDE = TRUE)
     standardGeneric("clusterEnrichment"),
     package = "transcriptogramer")
 

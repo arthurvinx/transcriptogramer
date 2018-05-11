@@ -223,8 +223,8 @@ check_boundaryConditions <- function(argument){
   }
 }
 
-check_windowCenterOnly <- function(argument){
-  name <- "windowCenterOnly"
+check_onlyGenesInDE <- function(argument){
+  name <- "onlyGenesInDE"
   if (!is.logical(argument) || length(argument) != 1) {
     error(name)
   }
