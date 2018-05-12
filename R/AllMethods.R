@@ -772,10 +772,10 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         result$pValue <- as.numeric(result$pValue)
         result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
         result <- result[result$pValue <= pValue, ]
-        result$ClusterNumber <- i
         if (nrow(result) == 0) {
             return(NULL)
         }
+        result$ClusterNumber <- i
         rownames(result) <- NULL
         return(result)
     })
