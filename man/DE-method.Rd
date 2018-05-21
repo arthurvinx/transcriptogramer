@@ -23,7 +23,13 @@ Gets the content of the DE slot of an object of class Transcriptogram.
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+\dontrun{
+transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+transcriptogram <- transcriptogramStep2(transcriptogram)
+levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 DE(transcriptogram)
+}
 
 }
 \seealso{

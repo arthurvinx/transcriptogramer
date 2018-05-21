@@ -25,7 +25,7 @@ be used to indicate case samples, and TRUE to indicate control samples.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
 family-wise error rate
-or false discovery rate, the default value is 0.05.}
+or false discovery rate. The default value is 0.05.}
 
 \item{species}{A character string that will be used,
 ignoring case sensitivity,
@@ -37,16 +37,16 @@ value for this argument is the content of the object Protein2Symbol slot.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
-'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
+'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm'. The default value
 for this argument is 'BH'.}
 
-\item{trend}{Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
-the default value of this argument is FALSE.}
+\item{trend}{Logical value, set as TRUE to use the limma-trend approach for RNA-Seq.
+The default value of this argument is FALSE.}
 
-\item{title}{An overall title for the plot, the default value of this argument is "Differential expression"}
+\item{title}{An overall title for the plot. The default value of this argument is "Differential expression"}
 
-\item{boundaryConditions}{Logical value, set as TRUE to check if nearby clusters could be merged,
-the default value of this argument is FALSE.}
+\item{boundaryConditions}{Logical value, set as TRUE to check if nearby clusters could be merged.
+The default value of this argument is FALSE.}
 }
 \value{
 This method creates a data.frame to feed the DE slot of an object

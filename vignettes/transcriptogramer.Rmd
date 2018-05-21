@@ -231,19 +231,20 @@ build a Protein2GO data.frame using the given species name, or data.frame.
 
 ```{r message = FALSE}
 ## using the HsBPTerms dataset to create the Protein2GO data.frame
-terms <- clusterEnrichment(object = t, species = HsBPTerms,
+t <- clusterEnrichment(object = t, species = HsBPTerms,
                            pValue = 0.005, nCores = 1)
 ```
 ```{r eval = FALSE}
 ## using the biomaRt package to create the Protein2GO data.frame
 ## Internet connection is required for this command
-terms <- clusterEnrichment(object = t, species = "Homo sapiens",
+t <- clusterEnrichment(object = t, species = "Homo sapiens",
                            pValue = 0.005, nCores = 1)
+```
+```{r eval = FALSE}
+head(Terms(t))
 ```
 ```{r echo = FALSE}
 load("terms.RData")
-```
-```{r}
 head(terms)
 ```
 

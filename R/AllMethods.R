@@ -718,6 +718,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
                 "\\."), "[", 2)
         }
     }
+    object@Protein2GO = GO
     gene2GO <- split(GO$go_id, GO$ensembl_peptide_id)
     gene2GO <- lapply(gene2GO, unique)
     rm(species, GO)
@@ -780,9 +781,117 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         return(result)
     })
     enrichment <- do.call("rbind", enrichment)
+    object@Terms = enrichment
+    object@status = 4L
     message("done!")
-    return(enrichment)
+    return(object)
 })
+
+# enrichmentPlot ####
+
+#' @rdname enrichmentPlot-method
+#' @aliases enrichmentPlot-method
+
+setMethod("enrichmentPlot", "Transcriptogram",
+          function(object, nCores = 1L, nTerms = 2L,
+                   GOIDs = NULL, title = "Enrichment") {
+            nCores <- check_nCores(nCores)
+            nTerms <- check_nTerms(nTerms)
+            check_title(title)
+            if (object@status < 4L) {
+              stop("argument of class Transcriptogram - be sure to ",
+                   "call the method clusterEnrichment() before this one!")
+            }
+            if(is.null(GOIDs)){
+              terms <- object@Terms[order(object@Terms$pValue),]
+              v <- sort(unique(terms$ClusterNumber))
+              GOIDs <- lapply(v, function(i){
+                stats::na.omit(head(terms[terms$ClusterNumber==i, c(1, 2)], nTerms))
+              })
+              GOIDs <- do.call("rbind", GOIDs)
+            }else{
+              if(is.character(GOIDs)){
+                GOIDs <- unique(GOIDs)
+                GOIDs <- data.frame(GO.ID = GOIDs,
+                                    Term = terms[match(GOIDs, terms$GO.ID), 2],
+                                    stringsAsFactors = F)
+              }else{
+                stop("argument GOIDs - does not have a valid value!")
+              }
+            }
+            v <- unique(GOIDs$GO.ID)
+            ord <- object@ordering
+            min <- ord$Position[1]
+            max <- ord$Position[nrow(object@ordering)]
+            ntasks <- nrow(ord)
+            pb <- progress::progress_bar$new(format = "running [:bar] :percent elapsed time :elapsed",
+                                             total = ntasks, clear = FALSE,
+                                             width = 60)
+            message("applying sliding window and mounting resulting ",
+                    "data... step 1 of 2")
+            message("** this may take some time...")
+            cl <- snow::makeSOCKcluster(nCores)
+            on.exit(snow::stopCluster(cl))
+            doSNOW::registerDoSNOW(cl)
+            progress <- function() {
+              pb$tick()
+            }
+            opts <- list(progress = progress)
+            i <- NULL
+            data <- foreach::foreach(i = seq.int(1, ntasks),
+                                     .combine = "rbind", .options.snow = opts) %dopar%
+                                     {
+                                       pos <- i-1
+                                       l1 <- pos - object@radius
+                                       l2 <- pos + object@radius
+                                       temp <- data.frame()
+                                       if (l1 >= min && l2 <= max) {
+                                         temp <- ord[which(ord$Position >=
+                                                             l1 & ord$Position <=
+                                                             l2),]
+                                       } else if (l1 < min) {
+                                         temp <- ord[which(ord$Position <=
+                                                             l2),]
+                                         temp <- rbind(temp, ord[which(ord$Position >=
+                                                                         (max + 1 + l1 - min)),])
+                                       } else if (l2 > max) {
+                                         temp <- ord[which(ord$Position >=
+                                                             l1),]
+                                         temp <- rbind(temp, ord[which(ord$Position <=
+                                                                         (l2 %% max + min - 1)),])
+                                       }
+                                       temp <- temp[, 1]
+                                       if(grepl("\\.", temp[1])){
+                                         taxonomyID <- strsplit(temp[1], "\\.")[[1]][1]
+                                         temp <- gsub(paste0(taxonomyID, "."), "",
+                                                      temp, fixed = TRUE)
+                                       }
+                                       n <- length(temp)
+                                       aux <- GOmapping[GOmapping$ensembl_peptide_id %in% temp,]
+                                       rates <- vapply(v, function(x) {
+                                         nrow(aux[aux[, 2] == x,])/n
+                                       }, numeric(1))
+                                       return(data.frame(Position = i - 1, t(rates)))}
+            invisible(sapply(seq.int(2, ncol(data)), function(i) {
+              smoothedLine <- stats::smooth.spline(data[, 1], data[, i], spar = 0.35)
+              data[, i] <<- smoothedLine$y
+              return(NULL)
+            }))
+            colnames(data) <- c("Position", GOIDs[match(v, GOIDs$GO.ID), 2])
+            data <- data[, colSums(data) != 0]
+            data <- tidyr::gather(data, key, value, -Position)
+            colnames(data) <- c("x", "Terms", "y")
+            message("generating plot... step 2 of 2")
+            p <- ggplot2::ggplot(data, ggplot2::aes(x = x, y = y, colour = Terms)) +
+              ggplot2::geom_line() +
+              ggplot2::scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25)) +
+              ggplot2::scale_x_continuous(limits = c(0, length(ord$Position) - 1),
+                                          breaks = seq.int(0, length(ord$Position) - 1, 1000)) +
+              ggplot2::labs(x = "Gene position", y = "Rate", title = title) +
+              ggplot2::theme_bw() + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+            plot(p)
+            p
+          })
 
 # radius ####
 
@@ -803,6 +912,16 @@ setMethod("DE", "Transcriptogram",
     function(object) {
         object@DE
     })
+
+# Terms ####
+
+#' @rdname Terms-method
+#' @aliases Terms-method
+
+setMethod("Terms", "Transcriptogram",
+          function(object) {
+            object@Terms
+          })
 
 # show ####
 
