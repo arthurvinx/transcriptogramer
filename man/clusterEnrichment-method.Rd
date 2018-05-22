@@ -33,27 +33,27 @@ and the second containing its respective Gene Ontology term (character).}
 \item{ontology}{A character string specifying the Gene Ontology domain,
 ignoring case sensitivity,
 the possible values are 'biological process', 'cellular component' and
-'molecular function',
-the default value of this argument is 'biological process'.}
+'molecular function'.
+The default value of this argument is 'biological process'.}
 
 \item{algorithm}{Character string specifying which algorithm to use, the
 possible values are
-'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-the default value of this argument is 'classic'.}
+'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild'.
+The default value of this argument is 'classic'.}
 
 \item{statistic}{Character string specifying which test to use, the possible
 values are
-'fisher', 'ks', 't', 'sum' and 'globaltest',
-the default value of this argument is 'fisher'.}
+'fisher', 'ks', 't', 'sum' and 'globaltest'.
+The default value of this argument is 'fisher'.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
-family-wise error rate or false discovery rate, the default value is 0.05.}
+family-wise error rate or false discovery rate. The default value of this argument is 0.05.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
-'bonferroni', and 'holm',
-the default value of this argument is 'BH'.}
+'bonferroni', and 'holm'.
+The default value of this argument is 'BH'.}
 
 \item{nCores}{An integer number, referring to the number of processing cores
 to be used; or a logical value, TRUE indicating that all processing cores
@@ -65,7 +65,9 @@ in the DE slot. Set as FALSE to use all the genes referring to the positions
 in the clusters slot. The default value of this argument is TRUE.}
 }
 \value{
-A data.frame containing the most significant terms of each cluster.
+This method creates a data.frame, containing the most significant
+terms of each cluster, to feed the Terms slot of an object of class
+Transcriptogram.
 }
 \description{
 If \code{species} is a character, this method uses the \pkg{biomaRt} package
@@ -82,11 +84,11 @@ transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
 transcriptogram <- transcriptogramStep2(transcriptogram)
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
-terms <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
+transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 pValue = 0.005)
 
 ## this call also works
-terms <- clusterEnrichment(transcriptogram, species = HsBPTerms,
+transcriptogram <- clusterEnrichment(transcriptogram, species = HsBPTerms,
 pValue = 0.005)
 }
 

@@ -30,6 +30,11 @@
 #' @slot Protein2Symbol A data.frame containing two columns, the first one with
 #' ENSEMBL Peptide IDs, and the second containing its respective Symbol.
 #'
+#' @slot Protein2GO A data.frame containing two columns, the first one with
+#' ENSEMBL Peptide IDs, and the second containing its respective Gene Ontology accession.
+#'
+#' @slot Terms A data.frame containing the enriched Gene Ontology terms.
+#'
 #' @seealso
 #' \link[transcriptogramer]{transcriptogramPreprocess},
 #' \link[transcriptogramer:DE-method]{DE},
@@ -52,9 +57,11 @@ setClass("Transcriptogram", representation(association = "data.frame",
     ordering = "data.frame", transcriptogramS1 = "data.frame",
     transcriptogramS2 = "data.frame", DE = "data.frame",
     radius = "integer", status = "integer", clusters = "list", pbc = "logical",
-    Protein2Symbol = "data.frame"),
+    Protein2Symbol = "data.frame", Protein2GO = "data.frame",
+    Terms = "data.frame"),
     prototype = list(association = data.frame(),
         ordering = data.frame(), transcriptogramS1 = data.frame(),
         transcriptogramS2 = data.frame(),
         DE = data.frame(), radius = 0L, status = NA_integer_, clusters = list(),
-        pbc = FALSE, Protein2Symbol = data.frame()))
+        pbc = FALSE, Protein2Symbol = data.frame(), Protein2GO = data.frame(),
+        Terms = data.frame()))

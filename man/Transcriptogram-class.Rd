@@ -37,6 +37,11 @@ first and the last cluster.}
 
 \item{\code{Protein2Symbol}}{A data.frame containing two columns, the first one with
 ENSEMBL Peptide IDs, and the second containing its respective Symbol.}
+
+\item{\code{Protein2GO}}{A data.frame containing two columns, the first one with
+ENSEMBL Peptide IDs, and the second containing its respective Gene Ontology accession.}
+
+\item{\code{Terms}}{A data.frame containing the enriched Gene Ontology terms.}
 }}
 
 \seealso{

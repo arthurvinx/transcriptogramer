@@ -131,6 +131,18 @@ check_radius <- function(argument){
     }
 }
 
+check_nTerms <- function(argument){
+  name <- "nTerms"
+  if (is.numeric(argument)) {
+    argument <- as.integer(argument)
+  }
+  if (!is.integer(argument) || (argument < 0) || length(argument) != 1) {
+    error(name)
+  } else {
+    return(argument)
+  }
+}
+
 check_pValue <- function(argument){
     name <- "pValue"
     if (!is.numeric(argument) || (argument < 0 || argument > 1) ||

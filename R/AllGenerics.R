@@ -317,7 +317,7 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
 #' family-wise error rate
-#' or false discovery rate, the default value is 0.05.
+#' or false discovery rate. The default value of this argument is 0.05.
 #'
 #' @param species A character string that will be used,
 #' ignoring case sensitivity,
@@ -325,20 +325,20 @@ setGeneric("radius<-", signature = "object",
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
 #' and the second containing its respective Symbol (character). The default
-#' value for this argument is the content of the object Protein2Symbol slot.
+#' value of this argument is the content of the object Protein2Symbol slot.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
-#' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm', the default value
+#' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY' and 'holm'. The default value
 #' for this argument is 'BH'.
 #'
-#' @param trend Logical value, set as TRUE to use the limma-trend approach for RNA-Seq,
-#' the default value of this argument is FALSE.
+#' @param trend Logical value, set as TRUE to use the limma-trend approach for RNA-Seq.
+#' The default value of this argument is FALSE.
 #'
-#' @param title An overall title for the plot, the default value of this argument is "Differential expression"
+#' @param title An overall title for the plot. The default value of this argument is "Differential expression"
 #'
-#' @param boundaryConditions Logical value, set as TRUE to check if nearby clusters could be merged,
-#' the default value of this argument is FALSE.
+#' @param boundaryConditions Logical value, set as TRUE to check if nearby clusters could be merged.
+#' The default value of this argument is FALSE.
 #'
 #' @return This method creates a data.frame to feed the DE slot of an object
 #' of class Transcriptogram. This data.frame of differentially expressed
@@ -424,10 +424,10 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param object An object of class Transcriptogram.
 #'
 #' @param maincomp Logical value, set as TRUE if you want to display only the main component of
-#' each cluster, the default value of this argument is FALSE.
+#' each cluster. The default value of this argument is FALSE.
 #'
-#' @param connected Logical value, set as TRUE if you want to display only connected nodes,
-#' the default value of this argument is FALSE.
+#' @param connected Logical value, set as TRUE if you want to display only connected nodes.
+#' The default value of this argument is FALSE.
 #'
 #' @param host The domain name of the machine that is running the RedeR XML-RPC
 #' server.
@@ -521,27 +521,27 @@ setGeneric("clusterVisualization", function(object,
 #' @param ontology A character string specifying the Gene Ontology domain,
 #' ignoring case sensitivity,
 #' the possible values are 'biological process', 'cellular component' and
-#' 'molecular function',
-#' the default value of this argument is 'biological process'.
+#' 'molecular function'.
+#' The default value of this argument is 'biological process'.
 #'
 #' @param algorithm Character string specifying which algorithm to use, the
 #' possible values are
-#' 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild',
-#' the default value of this argument is 'classic'.
+#' 'classic', 'elim', 'weight', 'weight01', 'lea' and 'parentchild'.
+#' The default value of this argument is 'classic'.
 #'
 #' @param statistic Character string specifying which test to use, the possible
 #' values are
-#' 'fisher', 'ks', 't', 'sum' and 'globaltest',
-#' the default value of this argument is 'fisher'.
+#' 'fisher', 'ks', 't', 'sum' and 'globaltest'.
+#' The default value of this argument is 'fisher'.
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
-#' family-wise error rate or false discovery rate, the default value is 0.05.
+#' family-wise error rate or false discovery rate. The default value of this argument is 0.05.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
 #' 'none', 'BH', 'fdr' (equivalent to 'BH'), 'BY', 'hochberg', 'hommel',
-#' 'bonferroni', and 'holm',
-#' the default value of this argument is 'BH'.
+#' 'bonferroni', and 'holm'.
+#' The default value of this argument is 'BH'.
 #'
 #' @param nCores An integer number, referring to the number of processing cores
 #' to be used; or a logical value, TRUE indicating that all processing cores
@@ -552,7 +552,9 @@ setGeneric("clusterVisualization", function(object,
 #' in the DE slot. Set as FALSE to use all the genes referring to the positions
 #' in the clusters slot. The default value of this argument is TRUE.
 #'
-#' @return A data.frame containing the most significant terms of each cluster.
+#' @return This method creates a data.frame, containing the most significant
+#' terms of each cluster, to feed the Terms slot of an object of class
+#' Transcriptogram.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -561,11 +563,11 @@ setGeneric("clusterVisualization", function(object,
 #' transcriptogram <- transcriptogramStep2(transcriptogram)
 #' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
-#' terms <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
+#' transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 #' pValue = 0.005)
 #'
 #' ## this call also works
-#' terms <- clusterEnrichment(transcriptogram, species = HsBPTerms,
+#' transcriptogram <- clusterEnrichment(transcriptogram, species = HsBPTerms,
 #' pValue = 0.005)
 #' }
 #'
@@ -660,7 +662,13 @@ setGeneric("radius", function(object)
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 #' DE(transcriptogram)
+#' }
 #'
 #' @seealso
 #' \link[transcriptogramer]{Hs900},
@@ -677,3 +685,132 @@ setGeneric("radius", function(object)
 setGeneric("DE", function(object)
     standardGeneric("DE"),
     package = "transcriptogramer")
+
+# Terms ####
+
+#' Get terms
+#'
+#' Gets the content of the Terms slot of an object of class Transcriptogram.
+#'
+#' @param object An object of class Transcriptogram.
+#'
+#' @return This method returns the content of the Terms slot of an object of
+#' class Transcriptogram.
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
+#' transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
+#' pValue = 0.005)
+#' Terms(transcriptogram)
+#' }
+#'
+#' @seealso
+#' \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{HsBPTerms},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
+#' \link[transcriptogramer:clusterEnrichment-method]{clusterEnrichment}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname Terms-method
+#' @export
+
+setGeneric("Terms", function(object)
+  standardGeneric("Terms"),
+  package = "transcriptogramer")
+
+# enrichmentPlot ####
+
+#' Projects Gene Ontology terms on the ordering
+#'
+#' Plots the rate (number of genes related to a term inside the
+#' window/total number of genes in the windows) of given terms.
+#'
+#' @param object An object of class Transcriptogram.
+#'
+#' @param nCores An integer number, referring to the number of processing cores
+#' to be used; or a logical value, TRUE indicating that all processing cores
+#' should be used, and FALSE indicating the use of just one processing core.
+#' The default value of this argument is 1.
+#'
+#' @param nTerms An integer number referring to the number of top terms from
+#' each cluster. The default value of this argument is 1.
+#'
+#' @param GOIDs A character vector containing the Gene Ontology
+#' accessions to be plotted. If NULL, the top \code{nTerms} of each cluster
+#' will be used.
+#'
+#' @param title An overall title for the plot. The default value of this
+#' argument is "Enrichment"
+#'
+#' @return This method returns an ggplot2 object.
+#'
+#' @examples
+#' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
+#' \dontrun{
+#' transcriptogram <- transcriptogramStep1(transcriptogram, GSE9988, GPL570)
+#' transcriptogram <- transcriptogramStep2(transcriptogram)
+#' levels <- c(rep(FALSE, 3), rep(TRUE, 3))
+#' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
+#' transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
+#' pValue = 0.005)
+#'
+#' }
+#'
+#' @importFrom foreach %dopar%
+#' @importFrom progress progress_bar
+#' @importFrom parallel detectCores
+#' @importFrom snow makeSOCKcluster
+#' @importFrom snow stopCluster
+#' @importFrom doSNOW registerDoSNOW
+#' @importFrom foreach foreach
+#' @importFrom tidyr gather
+#' @importFrom graphics plot
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 geom_line
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 labs
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 element_text
+#' @importFrom stats na.omit
+#' @importFrom stats smooth.spline
+#'
+#' @seealso
+#' \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
+#' \link[transcriptogramer]{transcriptogramPreprocess},
+#' \link[transcriptogramer]{GSE9988},
+#' \link[transcriptogramer]{GPL570},
+#' \link[transcriptogramer]{Hs900},
+#' \link[transcriptogramer]{HsBPTerms},
+#' \link[transcriptogramer]{association},
+#' \link[transcriptogramer:transcriptogramStep1-method]{transcriptogramStep1},
+#' \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
+#' \link[transcriptogramer:clusterEnrichment-method]{clusterEnrichment}
+#'
+#' @author
+#' Diego Morais
+#'
+#' @docType methods
+#' @rdname enrichmentPlot-method
+#' @export
+
+setGeneric("enrichmentPlot", function(object, nCores = 1L, nTerms = 1L,
+                                      GOIDs = NULL, title = "Enrichment")
+standardGeneric("enrichmentPlot"),
+package = "transcriptogramer")
