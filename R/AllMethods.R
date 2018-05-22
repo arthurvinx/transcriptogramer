@@ -793,7 +793,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
 #' @aliases enrichmentPlot-method
 
 setMethod("enrichmentPlot", "Transcriptogram",
-          function(object, nCores = 1L, nTerms = 2L,
+          function(object, nCores = 1L, nTerms = 1L,
                    GOIDs = NULL, title = "Enrichment") {
             nCores <- check_nCores(nCores)
             nTerms <- check_nTerms(nTerms)
@@ -836,6 +836,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
             progress <- function() {
               pb$tick()
             }
+            GOmapping <- object@Protein2GO
             opts <- list(progress = progress)
             i <- NULL
             data <- foreach::foreach(i = seq.int(1, ntasks),
@@ -889,8 +890,9 @@ setMethod("enrichmentPlot", "Transcriptogram",
                                           breaks = seq.int(0, length(ord$Position) - 1, 1000)) +
               ggplot2::labs(x = "Gene position", y = "Rate", title = title) +
               ggplot2::theme_bw() + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
-            plot(p)
-            p
+            message("done!")
+            suppressWarnings(graphics::plot(p))
+            return(p)
           })
 
 # radius ####

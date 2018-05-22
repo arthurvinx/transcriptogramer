@@ -2,6 +2,14 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.3.3}{
+  \itemize{
+    \item Changes on the clusterEnrichment() method return.
+    \item Slots Protein2GO, and Terms added to the Transcriptogram class.
+    \item New method: enrichmentPlot().
+  }
+}
+
 \section{Version 1.3.1}{
   \itemize{
     \item Argument boundaryConditions added to the differentiallyExpressed() method.

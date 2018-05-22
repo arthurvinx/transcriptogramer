@@ -247,6 +247,11 @@ head(Terms(t))
 load("terms.RData")
 head(terms)
 ```
+```{r eval = FALSE}
+enrichmentPlot(t)
+```
+
+![](enrichmentPlot.png)
 
 # Session info
 

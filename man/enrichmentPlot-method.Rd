@@ -7,10 +7,10 @@
 \alias{enrichmentPlot-method}
 \title{Projects Gene Ontology terms on the ordering}
 \usage{
-enrichmentPlot(object, nCores = 1L, nTerms = 2L, GOIDs = NULL,
+enrichmentPlot(object, nCores = 1L, nTerms = 1L, GOIDs = NULL,
   title = "Enrichment")
 
-\S4method{enrichmentPlot}{Transcriptogram}(object, nCores = 1L, nTerms = 2L,
+\S4method{enrichmentPlot}{Transcriptogram}(object, nCores = 1L, nTerms = 1L,
   GOIDs = NULL, title = "Enrichment")
 }
 \arguments{
@@ -22,7 +22,7 @@ should be used, and FALSE indicating the use of just one processing core.
 The default value of this argument is 1.}
 
 \item{nTerms}{An integer number referring to the number of top terms from
-each cluster. The default value of this argument is 2.}
+each cluster. The default value of this argument is 1.}
 
 \item{GOIDs}{A character vector containing the Gene Ontology
 accessions to be plotted. If NULL, the top \code{nTerms} of each cluster

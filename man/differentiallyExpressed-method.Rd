@@ -25,7 +25,7 @@ be used to indicate case samples, and TRUE to indicate control samples.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
 family-wise error rate
-or false discovery rate. The default value is 0.05.}
+or false discovery rate. The default value of this argument is 0.05.}
 
 \item{species}{A character string that will be used,
 ignoring case sensitivity,
@@ -33,7 +33,7 @@ to translate the ENSEMBL Peptide ID to Symbol (Gene Name); or a data.frame
 containing two columns, the first one with ENSEMBL Peptide IDs (character),
 which may, or not, to contain the taxonomy ID of the species as prefix,
 and the second containing its respective Symbol (character). The default
-value for this argument is the content of the object Protein2Symbol slot.}
+value of this argument is the content of the object Protein2Symbol slot.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are

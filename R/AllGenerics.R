@@ -317,7 +317,7 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
 #' family-wise error rate
-#' or false discovery rate. The default value is 0.05.
+#' or false discovery rate. The default value of this argument is 0.05.
 #'
 #' @param species A character string that will be used,
 #' ignoring case sensitivity,
@@ -325,7 +325,7 @@ setGeneric("radius<-", signature = "object",
 #' containing two columns, the first one with ENSEMBL Peptide IDs (character),
 #' which may, or not, to contain the taxonomy ID of the species as prefix,
 #' and the second containing its respective Symbol (character). The default
-#' value for this argument is the content of the object Protein2Symbol slot.
+#' value of this argument is the content of the object Protein2Symbol slot.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
@@ -535,7 +535,7 @@ setGeneric("clusterVisualization", function(object,
 #' The default value of this argument is 'fisher'.
 #'
 #' @param pValue A numeric value between 0 and 1 giving the required
-#' family-wise error rate or false discovery rate. The default value is 0.05.
+#' family-wise error rate or false discovery rate. The default value of this argument is 0.05.
 #'
 #' @param adjustMethod Character string specifying p-value adjustment method,
 #' the possible values are
@@ -552,8 +552,9 @@ setGeneric("clusterVisualization", function(object,
 #' in the DE slot. Set as FALSE to use all the genes referring to the positions
 #' in the clusters slot. The default value of this argument is TRUE.
 #'
-#' @return This method creates a data.frame to feed the Terms slot of an object
-#' of class Transcriptogram.
+#' @return This method creates a data.frame, containing the most significant
+#' terms of each cluster, to feed the Terms slot of an object of class
+#' Transcriptogram.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -746,7 +747,7 @@ setGeneric("Terms", function(object)
 #' The default value of this argument is 1.
 #'
 #' @param nTerms An integer number referring to the number of top terms from
-#' each cluster. The default value of this argument is 2.
+#' each cluster. The default value of this argument is 1.
 #'
 #' @param GOIDs A character vector containing the Gene Ontology
 #' accessions to be plotted. If NULL, the top \code{nTerms} of each cluster
@@ -809,7 +810,7 @@ setGeneric("Terms", function(object)
 #' @rdname enrichmentPlot-method
 #' @export
 
-setGeneric("enrichmentPlot", function(object, nCores = 1L, nTerms = 2L,
+setGeneric("enrichmentPlot", function(object, nCores = 1L, nTerms = 1L,
                                       GOIDs = NULL, title = "Enrichment")
 standardGeneric("enrichmentPlot"),
 package = "transcriptogramer")

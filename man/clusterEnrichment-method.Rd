@@ -47,7 +47,7 @@ values are
 The default value of this argument is 'fisher'.}
 
 \item{pValue}{A numeric value between 0 and 1 giving the required
-family-wise error rate or false discovery rate. The default value is 0.05.}
+family-wise error rate or false discovery rate. The default value of this argument is 0.05.}
 
 \item{adjustMethod}{Character string specifying p-value adjustment method,
 the possible values are
@@ -65,8 +65,9 @@ in the DE slot. Set as FALSE to use all the genes referring to the positions
 in the clusters slot. The default value of this argument is TRUE.}
 }
 \value{
-This method creates a data.frame to feed the Terms slot of an object
-of class Transcriptogram.
+This method creates a data.frame, containing the most significant
+terms of each cluster, to feed the Terms slot of an object of class
+Transcriptogram.
 }
 \description{
 If \code{species} is a character, this method uses the \pkg{biomaRt} package
