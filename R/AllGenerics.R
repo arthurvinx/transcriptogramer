@@ -767,7 +767,7 @@ setGeneric("Terms", function(object)
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 #' transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 #' pValue = 0.005)
-#'
+#' enrichmentPlot(transcriptogram)
 #' }
 #'
 #' @importFrom foreach %dopar%
