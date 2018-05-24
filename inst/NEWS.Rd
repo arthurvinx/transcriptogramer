@@ -6,7 +6,7 @@
   \itemize{
     \item Changes on the clusterEnrichment() method return.
     \item Slots Protein2GO, and Terms added to the Transcriptogram class.
-    \item New method: enrichmentPlot().
+    \item New methods: enrichmentPlot() and Terms().
   }
 }
 
