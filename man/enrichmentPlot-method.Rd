@@ -36,7 +36,7 @@ This method returns an ggplot2 object.
 }
 \description{
 Plots the rate (number of genes related to a term inside the
-window/total number of genes in the windows) of given terms.
+window/total number of genes in the window) of given terms.
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -47,7 +47,7 @@ levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 pValue = 0.005)
-enrichmentPlot(transcriptogram)
+
 }
 
 }
