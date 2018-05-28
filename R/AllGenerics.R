@@ -737,7 +737,7 @@ setGeneric("Terms", function(object)
 #' Projects Gene Ontology terms on the ordering
 #'
 #' Plots the rate (number of genes related to a term inside the
-#' window/total number of genes in the windows) of given terms.
+#' window/total number of genes in the window) of given terms.
 #'
 #' @param object An object of class Transcriptogram.
 #'
@@ -767,7 +767,7 @@ setGeneric("Terms", function(object)
 #' transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 #' transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 #' pValue = 0.005)
-#' enrichmentPlot(transcriptogram)
+#'
 #' }
 #'
 #' @importFrom foreach %dopar%
