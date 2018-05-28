@@ -47,7 +47,7 @@ levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 transcriptogram <- differentiallyExpressed(transcriptogram, levels, 0.01)
 transcriptogram <- clusterEnrichment(transcriptogram, species = "Homo sapiens",
 pValue = 0.005)
-
+enrichmentPlot(transcriptogram)
 }
 
 }
