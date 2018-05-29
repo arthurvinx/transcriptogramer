@@ -685,7 +685,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
     check_ontology(ontology)
     check_adjustMethod2(adjustMethod)
     if (is.null(universe)) {
-        universe <- object@transcriptogramS2$Protein
+        universe <- object@ordering$Protein
     }
     if (!any(object@DE[, "Protein"] %in% universe)) {
         stop("argument of class Transcriptogram - none of ",
@@ -878,7 +878,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
               data[, i] <<- smoothedLine$y
               return(NULL)
             }))
-            colnames(data) <- c("Position", GOIDs[match(v, GOIDs$GO.ID), 2])
+            colnames(data) <- c("Position", paste0(GOIDs[match(v, GOIDs$GO.ID), 2], " (", v, ")"))
             data <- data[, colSums(data) != 0]
             data <- tidyr::gather(data, key, value, -Position)
             colnames(data) <- c("x", "Terms", "y")
@@ -888,7 +888,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
               ggplot2::scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25)) +
               ggplot2::scale_x_continuous(limits = c(0, length(ord$Position) - 1),
                                           breaks = seq.int(0, length(ord$Position) - 1, 1000)) +
-              ggplot2::labs(x = "Gene position", y = "Rate", title = title) +
+              ggplot2::labs(x = "Gene position", y = "GO term rate by window", title = title) +
               ggplot2::theme_bw() + ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
             message("done!")
             suppressWarnings(graphics::plot(p))

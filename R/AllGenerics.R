@@ -510,7 +510,7 @@ setGeneric("clusterVisualization", function(object,
 #'
 #' @param universe A character vector containing ENSEMBL Peptide IDs, or NULL,
 #' if the universe
-#' is composed by all the proteins present in the transcriptogramS2 slot of
+#' is composed by all the proteins present in the ordering slot of
 #' \code{object}.
 #'
 #' @param species A character string specifying the species; or a data.frame

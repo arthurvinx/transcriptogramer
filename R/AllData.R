@@ -35,7 +35,7 @@
 #'
 #' @format Each row of the data.frame contains two variables:
 #' \describe{
-#'  \item{ENSP}{The ENSEMBL Peptide ID}
+#'  \item{Protein}{The ENSEMBL Peptide ID}
 #'  \item{Probe}{The probe identifier}
 #' }
 #'

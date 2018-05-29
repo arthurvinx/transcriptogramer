@@ -2,6 +2,12 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.3.4}{
+  \itemize{
+    \item Argument universe from clusterEnrichment(): default changed from "all the proteins present in the transcriptogramS2 slot" to "all the proteins present in the ordering slot".
+  }
+}
+
 \section{Version 1.3.3}{
   \itemize{
     \item Changes on the clusterEnrichment() method return.

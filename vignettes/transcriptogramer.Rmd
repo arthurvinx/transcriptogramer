@@ -222,7 +222,7 @@ rdp <- clusterVisualization(object = t)
 
 The `clusterEnrichment()` method performs a Gene Ontology enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by
-all the proteins present in the transcriptogramS2 slot, the ontology is setted
+all the proteins present in the ordering slot, the ontology is setted
 to biological process, the algorithm is setted to classic, the statistic is
 setted to fisher, and the p-values are adjusted by the Benjamini-Hochberg
 procedure. For this example, the p-value threshold for false
