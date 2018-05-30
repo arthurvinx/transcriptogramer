@@ -326,8 +326,9 @@
 
 #' Dictionary Protein2Symbol
 #'
-#' A mapping between ENSEMBL Peptide ID and Symbol (Gene Name) of a reduced set
-#' of proteins.
+#' A mapping between ENSEMBL Peptide ID and Symbol (Gene Name).
+#' This dataset was created to map the Homo sapiens proteins,
+#' from STRINGdb release 10.5, of combined score greater than or equal to 900.
 #'
 #' @format Each row of the data.frame contains two variables:
 #' \describe{
@@ -349,8 +350,9 @@
 
 #' Dictionary Protein2GO
 #'
-#' A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
-#' terms of a set of proteins.
+#' A mapping between ENSEMBL Peptide ID and Gene Ontology, biological processes,
+#' terms. This dataset was created to map the Homo sapiens proteins,
+#' from STRINGdb release 10.5, of combined score greater than or equal to 900.
 #'
 #' @format Each row of the data.frame contains two variables:
 #' \describe{

@@ -13,8 +13,9 @@
 HsBPTerms
 }
 \description{
-A mapping between ENSEMBL Peptide ID and Gene Ontology, biological process,
-terms of a set of proteins.
+A mapping between ENSEMBL Peptide ID and Gene Ontology, biological processes,
+terms. This dataset was created to map the Homo sapiens proteins,
+from STRINGdb release 10.5, of combined score greater than or equal to 900.
 }
 \details{
 This dataset was created to map the Homo sapiens proteins

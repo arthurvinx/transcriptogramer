@@ -196,7 +196,7 @@ eleven clusters were detected, and each one is represented by a color. The genes
 that are above the horizontal black line are upregulated, and the genes that
 are below are downregulated.
 
-![](Rplot.png)
+![](Rplot1.png)
 
 The differentially expressed genes identified by this method are stored in the
 DE slot of the Transcriptogram object, its content can be obtained using the
@@ -218,7 +218,7 @@ of the RedeR package. This method requires the Java Runtime Environment
 rdp <- clusterVisualization(object = t)
 ```
 
-![](RedeR.png)
+![](Rplot2.png)
 
 The `clusterEnrichment()` method performs a Gene Ontology enrichment analysis
 using the `r Biocpkg("topGO")` package. By default, the universe is composed by
@@ -251,7 +251,7 @@ head(terms)
 enrichmentPlot(t)
 ```
 
-![](enrichmentPlot.png)
+![](Rplot3.png)
 
 # Session info
 
