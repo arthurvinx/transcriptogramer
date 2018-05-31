@@ -19,10 +19,10 @@
 #' Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide transcriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
 #'
 #' @seealso
-#' Bioconductor : \href{https://doi.org/doi:10.18129/B9.bioc.transcriptogramer}{release},
+#' Bioconductor: \href{https://doi.org/doi:10.18129/B9.bioc.transcriptogramer}{release},
 #' \href{https://bioconductor.org/packages/devel/bioc/html/transcriptogramer.html}{devel}
 #'
-#' Github repository: \href{https://github.com/arthurvinx/transcriptogramer}{source code},
+#' Github: \href{https://github.com/arthurvinx/transcriptogramer}{source code},
 #' \href{https://github.com/arthurvinx/transcriptogramer/issues}{bug reports}
 #'
 #' References: (\href{https://doi.org/10.1186/1471-2164-15-1181}{da Silva et al., 2014};

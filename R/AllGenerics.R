@@ -790,6 +790,7 @@ setGeneric("Terms", function(object)
 #' @importFrom ggplot2 element_text
 #' @importFrom stats na.omit
 #' @importFrom stats smooth.spline
+#' @importFrom utils head
 #'
 #' @seealso
 #' \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},

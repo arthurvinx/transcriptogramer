@@ -478,9 +478,9 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     }
     df <- data.frame(x = smoothedLine$x, y = smoothedLine$y)
     rm(smoothedLine)
-    p <- ggplot2::ggplot(df, ggplot2::aes(x, y)) +
-      ggplot2::geom_line(lwd = 1, ggplot2::aes(y = 0, colour = "c1")) +
-      ggplot2::geom_line(lwd = 1, ggplot2::aes(y = y, colour = "c2")) +
+    p <- ggplot2::ggplot(df, ggplot2::aes_string("x", "y")) +
+      ggplot2::geom_line(lwd = 1, ggplot2::aes_string(y = "0", colour = '"c1"')) +
+      ggplot2::geom_line(lwd = 1, ggplot2::aes_string(y = "y", colour = '"c2"')) +
       ggplot2::scale_y_continuous(limits = c(-lim, lim), breaks = round(seq(-lim, lim, 0.1), digits = 1)) +
       ggplot2::scale_x_continuous(limits = c(0, length(object@ordering$Position) - 1),
                                   breaks = seq.int(0, length(object@ordering$Position) - 1, 1000)) +
@@ -494,8 +494,8 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       idx <- which(df$x >= pBreaks[[i]][1] & df$x <= pBreaks[[i]][2])
       aux <- data.frame(x = df$x[idx], y = df$y[idx])
       p <<- p + ggplot2::geom_line(data = aux, lwd = 1.4, col = myColors[i],
-                                   ggplot2::aes(x = x, y = y)) +
-        ggplot2::geom_line(ggplot2::aes(linetype = "lines"))
+                                   ggplot2::aes_string(x = "x", y = "y")) +
+        ggplot2::geom_line(ggplot2::aes_string(linetype = '"lines"'))
       return(NULL)
     }))
     suppressMessages(graphics::plot(p))
@@ -806,7 +806,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
               terms <- object@Terms[order(object@Terms$pValue),]
               v <- sort(unique(terms$ClusterNumber))
               GOIDs <- lapply(v, function(i){
-                stats::na.omit(head(terms[terms$ClusterNumber==i, c(1, 2)], nTerms))
+                stats::na.omit(utils::head(terms[terms$ClusterNumber==i, c(1, 2)], nTerms))
               })
               GOIDs <- do.call("rbind", GOIDs)
             }else{
@@ -880,10 +880,10 @@ setMethod("enrichmentPlot", "Transcriptogram",
             }))
             colnames(data) <- c("Position", paste0(GOIDs[match(v, GOIDs$GO.ID), 2], " (", v, ")"))
             data <- data[, colSums(data) != 0]
-            data <- tidyr::gather(data, key, value, -Position)
+            data <- tidyr::gather(data, "key", "value", -Position)
             colnames(data) <- c("x", "Terms", "y")
             message("generating plot... step 2 of 2")
-            p <- ggplot2::ggplot(data, ggplot2::aes(x = x, y = y, colour = Terms)) +
+            p <- ggplot2::ggplot(data, ggplot2::aes_string(x = "x", y = "y", colour = "Terms")) +
               ggplot2::geom_line() +
               ggplot2::scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25)) +
               ggplot2::scale_x_continuous(limits = c(0, length(ord$Position) - 1),

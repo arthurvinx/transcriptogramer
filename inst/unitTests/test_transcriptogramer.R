@@ -3,7 +3,7 @@ testData <- function(){
         nrow(association) == 547620 && ncol(association) ==
         2, "association")
     checkTrue(is.data.frame(GPL570) &&
-        nrow(GPL570) == 33031 && ncol(GPL570) ==
+        nrow(GPL570) == 33043 && ncol(GPL570) ==
         2, "GPL570")
     checkTrue(is.data.frame(GSE9988) &&
         nrow(GSE9988) == 24804 && ncol(GSE9988) ==
