@@ -6,11 +6,11 @@
 #' sample, the first 3 columns are case samples, and the last 3 are control
 #' samples. Each row contains expression values obtained by the probe mentioned
 #' in its respective rowname. The expression values were normalized using the
-#' \pkg{affy} package and, to reduce the storage space required for the data,
-#' this data.frame is a subset from the original samples (GSM252443, GSM252444,
-#' GSM252445, GSM252465, GSM252466, GSM252467), containing
-#' only the rows on which the probes are mapped by the GPL570
-#' dictionary to proteins, from STRINGdb release 10.5,
+#' \pkg{affy} package and, to reduce the required storage space,
+#' this data.frame contains only 6 samples (GSM252443, GSM252444,
+#' GSM252445, GSM252465, GSM252466, GSM252467). The rows of each sample
+#' are composed only by probes mapped, by the GPL570 dictionary,
+#' to proteins, from STRINGdb release 10.5,
 #' of combined score greater than or equal to 900.
 #'
 #' @examples
@@ -336,10 +336,6 @@
 #'  \item{external_gene_name}{The Gene Name}
 #' }
 #'
-#' @details
-#' This dataset was created to map the differentially expressed
-#' proteins of the vignette example.
-#'
 #' @examples
 #' DEsymbols
 #'
@@ -359,11 +355,6 @@
 #'  \item{ensembl_peptide_id}{The ENSEMBL Peptide ID}
 #'  \item{go_id}{The Gene Ontology ID}
 #' }
-#'
-#' @details
-#' This dataset was created to map the Homo sapiens proteins
-#' that appear in the slot transcriptogramS2
-#' of the vignette example.
 #'
 #' @examples
 #' HsBPTerms
