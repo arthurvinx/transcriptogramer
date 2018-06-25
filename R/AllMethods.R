@@ -802,8 +802,8 @@ setMethod("enrichmentPlot", "Transcriptogram",
               stop("argument of class Transcriptogram - be sure to ",
                    "call the method clusterEnrichment() before this one!")
             }
+            terms <- object@Terms[order(object@Terms$pValue),]
             if(is.null(GOIDs)){
-              terms <- object@Terms[order(object@Terms$pValue),]
               v <- sort(unique(terms$ClusterNumber))
               GOIDs <- lapply(v, function(i){
                 stats::na.omit(utils::head(terms[terms$ClusterNumber==i, c(1, 2)], nTerms))
