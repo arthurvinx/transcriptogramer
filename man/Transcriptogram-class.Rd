@@ -42,6 +42,9 @@ ENSEMBL Peptide IDs, and the second containing its respective Symbol.}
 ENSEMBL Peptide IDs, and the second containing its respective Gene Ontology accession.}
 
 \item{\code{Terms}}{A data.frame containing the enriched Gene Ontology terms.}
+
+\item{\code{topGOdata}}{A list of GO terms and its respective ENSEMBL Peptide IDs, feeded by
+the clusterEnrichment() method.}
 }}
 
 \seealso{
@@ -54,7 +57,8 @@ ENSEMBL Peptide IDs, and the second containing its respective Gene Ontology acce
 \link[transcriptogramer:transcriptogramStep2-method]{transcriptogramStep2},
 \link[transcriptogramer:differentiallyExpressed-method]{differentiallyExpressed},
 \link[transcriptogramer:clusterVisualization-method]{clusterVisualization},
-\link[transcriptogramer:clusterEnrichment-method]{clusterEnrichment}
+\link[transcriptogramer:clusterEnrichment-method]{clusterEnrichment},
+\link[transcriptogramer:enrichmentPlot-method]{enrichmentPlot}
 }
 \author{
 Diego Morais

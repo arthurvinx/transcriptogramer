@@ -11,9 +11,9 @@ clusterVisualization(object, maincomp = FALSE, connected = FALSE,
   host = "127.0.0.1", port = 9091, clusters = NULL,
   onlyGenesInDE = TRUE)
 
-\S4method{clusterVisualization}{Transcriptogram}(object, maincomp = FALSE,
-  connected = FALSE, host = "127.0.0.1", port = 9091, clusters = NULL,
-  onlyGenesInDE = TRUE)
+\S4method{clusterVisualization}{Transcriptogram}(object,
+  maincomp = FALSE, connected = FALSE, host = "127.0.0.1",
+  port = 9091, clusters = NULL, onlyGenesInDE = TRUE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}

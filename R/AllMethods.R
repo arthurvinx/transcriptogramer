@@ -729,6 +729,7 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         "\\1\\2", ontology))
     cl <- snow::makeSOCKcluster(nCores)
     on.exit(snow::stopCluster(cl))
+    temporary <- NULL
     enrichment <- snow::parLapply(cl, seq.int(1, n), function(i){
         e <- environment()
         suppressMessages(topGO::groupGOTerms(e))
@@ -777,10 +778,13 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
             return(NULL)
         }
         result$ClusterNumber <- i
+        temporary <<- myGOdata
         rownames(result) <- NULL
         return(result)
     })
     enrichment <- do.call("rbind", enrichment)
+    object@topGOdata = topGO::genesInTerm(temporary, unique(enrichment$GO.ID))
+    rm(temporary)
     object@Terms = enrichment
     object@status = 4L
     message("done!")

@@ -10,8 +10,8 @@
 enrichmentPlot(object, nCores = 1L, nTerms = 1L, GOIDs = NULL,
   title = "Enrichment")
 
-\S4method{enrichmentPlot}{Transcriptogram}(object, nCores = 1L, nTerms = 1L,
-  GOIDs = NULL, title = "Enrichment")
+\S4method{enrichmentPlot}{Transcriptogram}(object, nCores = 1L,
+  nTerms = 1L, GOIDs = NULL, title = "Enrichment")
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
