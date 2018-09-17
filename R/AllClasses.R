@@ -35,7 +35,7 @@
 #'
 #' @slot Terms A data.frame containing the enriched Gene Ontology terms.
 #'
-#' @slot topGOdata A list of GO terms and its respective ENSEMBL Peptide IDs, feeded by
+#' @slot genesInTerm A list of GO terms and its respective ENSEMBL Peptide IDs, feeded by
 #' the clusterEnrichment() method.
 #'
 #' @seealso
@@ -62,10 +62,10 @@ setClass("Transcriptogram", representation(association = "data.frame",
     transcriptogramS2 = "data.frame", DE = "data.frame",
     radius = "integer", status = "integer", clusters = "list", pbc = "logical",
     Protein2Symbol = "data.frame", Protein2GO = "data.frame",
-    Terms = "data.frame", topGOdata = "list"),
+    Terms = "data.frame", genesInTerm = "list"),
     prototype = list(association = data.frame(),
         ordering = data.frame(), transcriptogramS1 = data.frame(),
         transcriptogramS2 = data.frame(),
         DE = data.frame(), radius = 0L, status = NA_integer_, clusters = list(),
         pbc = FALSE, Protein2Symbol = data.frame(), Protein2GO = data.frame(),
-        Terms = data.frame(), topGOdata = list()))
+        Terms = data.frame(), genesInTerm = list()))

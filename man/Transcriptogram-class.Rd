@@ -43,7 +43,7 @@ ENSEMBL Peptide IDs, and the second containing its respective Gene Ontology acce
 
 \item{\code{Terms}}{A data.frame containing the enriched Gene Ontology terms.}
 
-\item{\code{topGOdata}}{A list of GO terms and its respective ENSEMBL Peptide IDs, feeded by
+\item{\code{genesInTerm}}{A list of GO terms and its respective ENSEMBL Peptide IDs, feeded by
 the clusterEnrichment() method.}
 }}
 

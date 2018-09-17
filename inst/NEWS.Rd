@@ -4,7 +4,7 @@
 
 \section{Version 1.3.6}{
   \itemize{
-    \item Slot topGOdata added to the Transcriptogram class.
+    \item Slot genesInTerm added to the Transcriptogram class.
   }
 }
 
