@@ -782,14 +782,14 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
       rownames(result) <- NULL
       if(i == 1){
         temporary <- list()
-        temporary[1] <- result
+        temporary[[1]] <- result
         temporary[2] <- myGOdata
         return(temporary)
       }
       return(result)
     }, onlyGenesInDE, object, universe, e)
     temporary <- enrichment[[1]][[2]]
-    enrichment[1] <- enrichment[[1]][[1]]
+    enrichment[[1]] <- enrichment[[1]][[1]]
     enrichment <- do.call("rbind", enrichment)
     object@topGOdata = topGO::genesInTerm(temporary, unique(enrichment$GO.ID))
     rm(temporary)
