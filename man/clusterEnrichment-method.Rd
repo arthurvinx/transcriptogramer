@@ -9,13 +9,13 @@
 \usage{
 clusterEnrichment(object, universe = NULL, species,
   ontology = "biological process", algorithm = "classic",
-  statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L,
-  onlyGenesInDE = TRUE)
+  statistic = "fisher", pValue = 0.05, adjustMethod = "BH",
+  nCores = 1L, onlyGenesInDE = TRUE)
 
 \S4method{clusterEnrichment}{Transcriptogram}(object, universe = NULL,
   species, ontology = "biological process", algorithm = "classic",
-  statistic = "fisher", pValue = 0.05, adjustMethod = "BH", nCores = 1L,
-  onlyGenesInDE = TRUE)
+  statistic = "fisher", pValue = 0.05, adjustMethod = "BH",
+  nCores = 1L, onlyGenesInDE = TRUE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}

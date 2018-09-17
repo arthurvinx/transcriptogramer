@@ -9,8 +9,8 @@
 \usage{
 transcriptogramStep1(object, expression, dictionary, nCores = 1L)
 
-\S4method{transcriptogramStep1}{Transcriptogram}(object, expression, dictionary,
-  nCores = 1L)
+\S4method{transcriptogramStep1}{Transcriptogram}(object, expression,
+  dictionary, nCores = 1L)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -56,9 +56,11 @@ da Silva, S. R. M., Perrone, G. C., Dinis, J. M., and de Almeida, R. M. C. (2014
 
 de Almeida, R. M. C., Clendenon, S. G., Richards, W. G., Boedigheimer, M., Damore, M., Rossetti, S., Harris, P. C., Herbert, B. S., Xu, W. M., Wandinger-Ness, A., Ward, H. H., Glazier, J. A. and Bacallao, R. L. (2016). Transcriptome analysis reveals manifold mechanisms of cyst development in ADPKD. Human Genomics, 10(1), 1–24.
 
-Ferrareze, P. A. G., Streit, R. S. A., Santos, P. R. dos, Santos, F. M. dos, Almeida, R. M. C. de, Schrank, A., Kmetzsch, L., Vainstein, M. H. and Staats, C. C. (2017). Transcriptional Analysis Allows Genome Reannotation and Reveals that Cryptococcus gattii VGII Undergoes Nutrient Restriction during Infection. Microorganisms.
+Ferrareze, P. A. G., Streit, R. S. A., Santos, P. R. dos, Santos, F. M. dos, de Almeida, R. M. C., Schrank, A., Kmetzsch, L., Vainstein, M. H. and Staats, C. C. (2017). Transcriptional Analysis Allows Genome Reannotation and Reveals that Cryptococcus gattii VGII Undergoes Nutrient Restriction during Infection. Microorganisms.
 
 Rybarczyk-Filho, J. L., Castro, M. A. A., Dalmolin, R. J. S., Moreira, J. C. F., Brunnet, L. G., and de Almeida, R. M. C. (2011). Towards a genome-wide transcriptogram: the Saccharomyces cerevisiae case. Nucleic Acids Research, 39(8), 3005-3016.
+
+Xavier, L. A. da C., Bezerra, J. F., de Rezende, A. A., Oliveira, R. A. de C., Dalmolin, R. J. S., do Amaral, V. S. (2017). Analysis of genome instability biomarkers in children with non-syndromic orofacial clefts. Mutagenesis, 32(2), 313–321.
 }
 \seealso{
 \link[transcriptogramer]{transcriptogramPreprocess},

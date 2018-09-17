@@ -2,6 +2,12 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.3.6}{
+  \itemize{
+    \item Slot genesInTerm added to the Transcriptogram class.
+  }
+}
+
 \section{Version 1.3.4}{
   \itemize{
     \item Argument universe from clusterEnrichment(): default changed from "all the proteins present in the transcriptogramS2 slot" to "all the proteins present in the ordering slot".

@@ -8,13 +8,14 @@
 \title{Identify which genes are differentially expressed}
 \usage{
 differentiallyExpressed(object, levels, pValue = 0.05,
-  species = object@Protein2Symbol, adjustMethod = "BH", trend = FALSE,
-  title = "Differential expression", boundaryConditions = FALSE)
-
-\S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
-  pValue = 0.05, species = object@Protein2Symbol, adjustMethod = "BH",
+  species = object@Protein2Symbol, adjustMethod = "BH",
   trend = FALSE, title = "Differential expression",
   boundaryConditions = FALSE)
+
+\S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
+  pValue = 0.05, species = object@Protein2Symbol,
+  adjustMethod = "BH", trend = FALSE,
+  title = "Differential expression", boundaryConditions = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}

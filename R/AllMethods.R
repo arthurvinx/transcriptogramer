@@ -729,58 +729,70 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         "\\1\\2", ontology))
     cl <- snow::makeSOCKcluster(nCores)
     on.exit(snow::stopCluster(cl))
-    enrichment <- snow::parLapply(cl, seq.int(1, n), function(i){
-        e <- environment()
-        suppressMessages(topGO::groupGOTerms(e))
-        attach(e)
-        on.exit(detach(e))
-        genesOfInterest <- c()
-        if(onlyGenesInDE){
-          genesOfInterest <- object@DE[which(object@DE$ClusterNumber == i), 1]
-        }else{
-          positions <- c()
-          if(object@pbc && (i == 1)){
-            positions <- c(positions,
-                           object@clusters[[1]][1]:object@clusters[[1]][2])
-            positions <- c(positions,
-                           object@clusters[[length(object@clusters)]][1]:
-                             object@clusters[[length(object@clusters)]][2])
+    e <- environment()
+    suppressMessages(topGO::groupGOTerms(e))
+    enrichment <- snow::parLapply(cl, seq.int(1, n), function(i,
+                                                              onlyGenesInDE,
+                                                              object, universe, e){
+      attach(e)
+      on.exit(detach(e))
+      genesOfInterest <- c()
+      if(onlyGenesInDE){
+        genesOfInterest <- object@DE[which(object@DE$ClusterNumber == i), 1]
+      }else{
+        positions <- c()
+        if(object@pbc && (i == 1)){
+          positions <- c(positions,
+                         object@clusters[[1]][1]:object@clusters[[1]][2])
+          positions <- c(positions,
+                         object@clusters[[length(object@clusters)]][1]:
+                           object@clusters[[length(object@clusters)]][2])
 
-          }else{
-            positions <- c(positions,
-                           object@clusters[[i]][1]:object@clusters[[i]][2])
-          }
-          genesOfInterest <- object@ordering[object@ordering$Position %in% positions, 1]
+        }else{
+          positions <- c(positions,
+                         object@clusters[[i]][1]:object@clusters[[i]][2])
         }
-        if (grepl("\\.", genesOfInterest[1])) {
-            genesOfInterest <- sapply(strsplit(genesOfInterest,
-                "\\."), "[", 2)
-        }
-        geneList <- factor(as.integer(universe %in% genesOfInterest))
-        names(geneList) <- universe
-        myGOdata <- suppressMessages(methods::new("topGOdata",
-            ontology = ontology, allGenes = geneList,
-            annot = topGO::annFUN.gene2GO,
-            gene2GO = gene2GO))
-        result <- topGO::runTest(myGOdata, algorithm = algorithm,
-            statistic = statistic)
-        result <- topGO::GenTable(myGOdata, result,
-            topNodes = length(result@score))
-        colnames(result)[6] <- "pValue"
-        if(any(TRUE %in% grepl("^<", result[, "pValue"]))){
-            result$pValue <- gsub("^<", "", result$pValue)
-        }
-        result$pValue <- as.numeric(result$pValue)
-        result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
-        result <- result[result$pValue <= pValue, ]
-        if (nrow(result) == 0) {
-            return(NULL)
-        }
-        result$ClusterNumber <- i
-        rownames(result) <- NULL
-        return(result)
-    })
+        genesOfInterest <- object@ordering[object@ordering$Position %in% positions, 1]
+      }
+      if (grepl("\\.", genesOfInterest[1])) {
+        genesOfInterest <- sapply(strsplit(genesOfInterest,
+                                           "\\."), "[", 2)
+      }
+      geneList <- factor(as.integer(universe %in% genesOfInterest))
+      names(geneList) <- universe
+      myGOdata <- suppressMessages(methods::new("topGOdata",
+                                                ontology = ontology, allGenes = geneList,
+                                                annot = topGO::annFUN.gene2GO,
+                                                gene2GO = gene2GO))
+      result <- topGO::runTest(myGOdata, algorithm = algorithm,
+                               statistic = statistic)
+      result <- topGO::GenTable(myGOdata, result,
+                                topNodes = length(result@score))
+      colnames(result)[6] <- "pValue"
+      if(any(TRUE %in% grepl("^<", result[, "pValue"]))){
+        result$pValue <- gsub("^<", "", result$pValue)
+      }
+      result$pValue <- as.numeric(result$pValue)
+      result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
+      result <- result[result$pValue <= pValue, ]
+      if (nrow(result) == 0) {
+        return(NULL)
+      }
+      result$ClusterNumber <- i
+      rownames(result) <- NULL
+      if(i == 1){
+        temporary <- list()
+        temporary[[1]] <- result
+        temporary[2] <- myGOdata
+        return(temporary)
+      }
+      return(result)
+    }, onlyGenesInDE, object, universe, e)
+    temporary <- enrichment[[1]][[2]]
+    enrichment[[1]] <- enrichment[[1]][[1]]
     enrichment <- do.call("rbind", enrichment)
+    object@genesInTerm = topGO::genesInTerm(temporary, unique(enrichment$GO.ID))
+    rm(temporary)
     object@Terms = enrichment
     object@status = 4L
     message("done!")

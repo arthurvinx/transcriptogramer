@@ -34,7 +34,7 @@ in the same metabolic pathway exponentially decreases with the increase of
 the distance between two proteins of the ordering. Transcriptograms are,
 hence, genome wide gene expression profiles that provide a global view for
 the cellular metabolism, while indicating gene sets whose expression are
-altered [@Silva2014; @Filho2011; @Almeida2016; @Ferrareze2017].
+altered [@Silva2014; @Filho2011; @Almeida2016; @Ferrareze2017; @Xavier2017].
 
 Methods are provided to analyze topological properties of an
 interactome, to generate transcriptograms, to detect and to display
@@ -54,7 +54,7 @@ on Windows.
 
 # Quick start
 The first step is to create a Transcriptogram object by running the
-`transcriptogramPreprocess()` function. This example uses a subset of the
+`transcriptogramPreprocess()` method. This example uses a subset of the
 *Homo sapiens* protein network data, from STRINGdb release 10.5, containing only
 associations of proteins of combined score greater than or equal to 900
 (see **Hs900** and **association** datasets).
@@ -209,7 +209,7 @@ DE <- DE(object = t)
 
 The `clusterVisualization()` method uses the `r Biocpkg("RedeR")` package to
 display graphs of the differentially expressed clusters and returns an
-object of the RedPort Class, allowing interactions through functions
+object of the RedPort Class, allowing interactions through methods
 of the RedeR package. This method requires the Java Runtime Environment
 (>= 6).
 
