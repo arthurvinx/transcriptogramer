@@ -793,6 +793,7 @@ setGeneric("Terms", function(object)
 #' @importFrom ggplot2 scale_y_continuous
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 theme
+#' @importFrom ggplot2 annotate
 #' @importFrom ggplot2 theme_bw
 #' @importFrom ggplot2 element_text
 #' @importFrom stats na.omit

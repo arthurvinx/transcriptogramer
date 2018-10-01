@@ -775,7 +775,12 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
       result$pValue <- as.numeric(result$pValue)
       result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
       result <- result[result$pValue <= pValue, ]
-      if (nrow(result) == 0) {
+      if (nrow(result) == 0 && i == 1) {
+        temporary <- list()
+        temporary[[1]] <- NULL
+        temporary[2] <- myGOdata
+        return(temporary)
+      } else if(nrow(result) == 0){
         return(NULL)
       }
       result$ClusterNumber <- i
@@ -895,8 +900,20 @@ setMethod("enrichmentPlot", "Transcriptogram",
             data <- tidyr::gather(data, "key", "value", -Position)
             colnames(data) <- c("x", "Terms", "y")
             message("generating plot... step 2 of 2")
-            p <- ggplot2::ggplot(data, ggplot2::aes_string(x = "x", y = "y", colour = "Terms")) +
-              ggplot2::geom_line() +
+            if(object@pbc){
+              myColors <- grDevices::rainbow(length(object@clusters)-1)
+              myColors <- c(myColors, myColors[1])
+            }else{
+              myColors <- grDevices::rainbow(length(object@clusters))
+            }
+            p <- ggplot2::ggplot(data, ggplot2::aes_string(x = "x", y = "y", colour = "Terms"))
+            invisible(sapply(seq.int(1, length(myColors)), function(i) {
+              p <<- p + ggplot2::annotate("rect", fill = myColors[i], alpha = 0.15,
+                                 xmin = object@clusters[[i]][1], xmax = object@clusters[[i]][2],
+                                 ymin = -Inf, ymax = Inf)
+              return(NULL)
+            }))
+            p <- p + ggplot2::geom_line() +
               ggplot2::scale_y_continuous(limits = c(0, 1), breaks = seq(0, 1, 0.25)) +
               ggplot2::scale_x_continuous(limits = c(0, length(ord$Position) - 1),
                                           breaks = seq.int(0, length(ord$Position) - 1, 1000)) +
