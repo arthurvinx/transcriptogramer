@@ -343,8 +343,13 @@ setGeneric("radius<-", signature = "object",
 #'
 #' @param title An overall title for the plot. The default value of this argument is "Differential expression"
 #'
-#' @param boundaryConditions Logical value, set as TRUE to check if nearby clusters could be merged.
-#' The default value of this argument is FALSE.
+#' @param boundaryConditions Logical value, defines whether the clusters limits will be extended using the
+#' current value of the radius slot.
+#' If TRUE, nearby clusters will be merged if its limits overlap.
+#' The default value of this argument is TRUE.
+#'
+#' @param colors Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+#' to generate the colors. The color vector must contain a color for each cluster.
 #'
 #' @return This method creates a data.frame to feed the DE slot of an object
 #' of class Transcriptogram. This data.frame of differentially expressed
@@ -417,7 +422,7 @@ setGeneric("differentiallyExpressed", function(object,
     levels, pValue = 0.05, species = object@Protein2Symbol,
     adjustMethod = "BH", trend = FALSE,
     title = "Differential expression",
-    boundaryConditions = FALSE) standardGeneric("differentiallyExpressed"),
+    boundaryConditions = TRUE, colors = NULL) standardGeneric("differentiallyExpressed"),
     package = "transcriptogramer")
 
 # clusterVisualization ####
@@ -446,7 +451,10 @@ setGeneric("differentiallyExpressed", function(object,
 #'
 #' @param onlyGenesInDE Logical value, set as TRUE to use only the genes
 #' in the DE slot. Set as FALSE to use all the genes referring to the positions
-#' in the clusters slot. The default value of this argument is TRUE.
+#' in the clusters slot. The default value of this argument is FALSE.
+#'
+#' @param colors Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+#' to generate the colors. The color vector must contain a color for each cluster.
 #'
 #' @return This function returns an object of the RedPort Class.
 #'
@@ -498,7 +506,7 @@ setGeneric("clusterVisualization", function(object,
     maincomp = FALSE,
     connected = FALSE, host = "127.0.0.1",
     port = 9091, clusters = NULL,
-    onlyGenesInDE = TRUE) standardGeneric("clusterVisualization"),
+    onlyGenesInDE = FALSE, colors = NULL) standardGeneric("clusterVisualization"),
     package = "transcriptogramer")
 
 # clusterEnrichment ####
@@ -556,7 +564,7 @@ setGeneric("clusterVisualization", function(object,
 #'
 #' @param onlyGenesInDE Logical value, set as TRUE to use only the genes
 #' in the DE slot. Set as FALSE to use all the genes referring to the positions
-#' in the clusters slot. The default value of this argument is TRUE.
+#' in the clusters slot. The default value of this argument is FALSE.
 #'
 #' @return This method creates a data.frame, containing the most significant
 #' terms of each cluster, to feed the Terms slot of an object of class
@@ -614,7 +622,7 @@ setGeneric("clusterVisualization", function(object,
 setGeneric("clusterEnrichment", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher",
-    pValue = 0.05, adjustMethod = "BH", nCores = 1L, onlyGenesInDE = TRUE)
+    pValue = 0.05, adjustMethod = "BH", nCores = 1L, onlyGenesInDE = FALSE)
     standardGeneric("clusterEnrichment"),
     package = "transcriptogramer")
 
@@ -763,6 +771,12 @@ setGeneric("Terms", function(object)
 #' @param title An overall title for the plot. The default value of this
 #' argument is "Enrichment"
 #'
+#' @param alpha The alpha value indicates the color transparency of the clusters regions.
+#' This value goes from 0 to 1, where 0 is completely transparent, and 1 is opaque.
+#'
+#' @param colors Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+#' to generate the colors. The color vector must contain a color for each cluster.
+#'
 #' @return This method returns an ggplot2 object.
 #'
 #' @examples
@@ -820,6 +834,7 @@ setGeneric("Terms", function(object)
 #' @export
 
 setGeneric("enrichmentPlot", function(object, nCores = 1L, nTerms = 1L,
-                                      GOIDs = NULL, title = "Enrichment")
+                                      GOIDs = NULL, title = "Enrichment",
+                                      alpha = 0.15, colors = NULL)
 standardGeneric("enrichmentPlot"),
 package = "transcriptogramer")

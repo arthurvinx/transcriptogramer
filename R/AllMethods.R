@@ -190,15 +190,21 @@ setMethod("transcriptogramStep1", "Transcriptogram",
         expression <- check_expression(expression)
         if (!(any(rownames(expression) %in%
             unique(dictionary$identifier)))) {
-            stop("arguments expression and dictionary - does not match!")
+            stop("arguments expression and dictionary - identifiers do not match!")
+        }
+        if (!(any(dictionary$protein %in%
+                  object@ordering$Protein))) {
+          stop("arguments dictionary and ordering - identifiers do not match!")
         }
         dictionary <- dictionary[which(dictionary$protein %in%
             object@ordering$Protein), ]
-        singletons <- names(which(table(dictionary$identifier) ==
-            1))
-        dictionary <- dictionary[which(dictionary$identifier %in%
-            singletons), ]
-        rm(singletons)
+        if(any(duplicated(dictionary$protein))){
+          singletons <- names(which(table(dictionary$identifier) ==
+                                      1))
+          dictionary <- dictionary[which(dictionary$identifier %in%
+                                           singletons), ]
+          rm(singletons)
+        }
         rownames(dictionary) <- NULL
         nsamples <- ncol(expression)
         samples <- expression
@@ -330,13 +336,14 @@ setMethod("transcriptogramStep2", "Transcriptogram",
 setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     levels, pValue = 0.05, species = object@Protein2Symbol, adjustMethod = "BH",
     trend = FALSE, title = "Differential expression",
-    boundaryConditions = FALSE) {
+    boundaryConditions = TRUE, colors = NULL) {
     if (object@status < 2L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the methods transcriptogramStep1() and ",
             "transcriptogramStep2() before this one!")
     }
     check_pValue(pValue)
+    check_colors(colors)
     check_title(title)
     aux <- species
     if (is.data.frame(aux)) {
@@ -470,11 +477,31 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     lim <- max(abs(caseValues))
     rm(case, control, n, caseValues)
     lim <- round(lim, digits = 1)
-    if(object@pbc){
-      myColors <- grDevices::rainbow(length(pBreaks) - 1)
-      myColors <- c(myColors, myColors[1])
+    myColors <- NULL
+    if(is.null(colors)){
+      if(object@pbc){
+        myColors <- grDevices::rainbow(length(pBreaks) - 1)
+        myColors <- c(myColors, myColors[1])
+      }else{
+        myColors <- grDevices::rainbow(length(pBreaks))
+      }
     }else{
-      myColors <- grDevices::rainbow(length(pBreaks))
+      if(object@pbc){
+        if((length(pBreaks) - 1) > length(colors)){
+          stop("argument colors - does not have a valid length! Expected length: ", (length(pBreaks) - 1),
+               "!")
+        }
+        colors <- colors[1:(length(pBreaks) - 1)]
+        myColors <- colors
+        myColors <- c(myColors, myColors[1])
+      }else{
+        if(length(pBreaks) > length(colors)){
+          stop("argument colors - does not have a valid length! Expected length: ", length(pBreaks),
+               "!")
+        }
+        colors <- colors[1:length(pBreaks)]
+        myColors <- colors
+      }
     }
     df <- data.frame(x = smoothedLine$x, y = smoothedLine$y)
     rm(smoothedLine)
@@ -561,7 +588,8 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
 setMethod("clusterVisualization", "Transcriptogram",
     function(object,
     maincomp = FALSE, connected = FALSE,
-    host = "127.0.0.1", port = 9091, clusters = NULL, onlyGenesInDE = TRUE) {
+    host = "127.0.0.1", port = 9091, clusters = NULL, onlyGenesInDE = FALSE,
+    colors = NULL) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
@@ -571,6 +599,7 @@ setMethod("clusterVisualization", "Transcriptogram",
     check_connected(connected)
     check_host(host)
     check_port(port)
+    check_colors(colors)
     if(is.null(clusters)){
         clusters  <- unique(object@DE$ClusterNumber)
     }else{
@@ -590,7 +619,17 @@ setMethod("clusterVisualization", "Transcriptogram",
     g <- igraph::graph.data.frame(d = object@association,
         directed = FALSE)
     n <- length(unique(object@DE$ClusterNumber))
-    myColors <- grDevices::rainbow(n)
+    myColors <- NULL
+    if(is.null(colors)){
+      myColors <- grDevices::rainbow(n)
+    }else{
+      if(n > length(colors)){
+        stop("argument colors - does not have a valid length! Expected length: ", n,
+             "!")
+      }
+      colors <- colors[1:n]
+      myColors <- colors
+    }
     sgList <- list()
     if(onlyGenesInDE){
       sgList <- lapply(seq.int(1, n), function(i) {
@@ -664,7 +703,7 @@ setMethod("clusterVisualization", "Transcriptogram",
 setMethod("clusterEnrichment", "Transcriptogram", function(object,
     universe = NULL, species, ontology = "biological process",
     algorithm = "classic", statistic = "fisher", pValue = 0.05,
-    adjustMethod = "BH", nCores = 1L, onlyGenesInDE = TRUE) {
+    adjustMethod = "BH", nCores = 1L, onlyGenesInDE = FALSE) {
     if (object@status < 3L) {
         stop("argument of class Transcriptogram - be sure to ",
             "call the method differentiallyExpressed() before this one!")
@@ -811,10 +850,12 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
 
 setMethod("enrichmentPlot", "Transcriptogram",
           function(object, nCores = 1L, nTerms = 1L,
-                   GOIDs = NULL, title = "Enrichment") {
+                   GOIDs = NULL, title = "Enrichment", alpha = 0.15, colors = NULL) {
             nCores <- check_nCores(nCores)
             nTerms <- check_nTerms(nTerms)
+            check_alpha(alpha)
             check_title(title)
+            check_colors(colors)
             if (object@status < 4L) {
               stop("argument of class Transcriptogram - be sure to ",
                    "call the method clusterEnrichment() before this one!")
@@ -900,15 +941,35 @@ setMethod("enrichmentPlot", "Transcriptogram",
             data <- tidyr::gather(data, "key", "value", -Position)
             colnames(data) <- c("x", "Terms", "y")
             message("generating plot... step 2 of 2")
-            if(object@pbc){
-              myColors <- grDevices::rainbow(length(object@clusters)-1)
-              myColors <- c(myColors, myColors[1])
+            myColors <- NULL
+            if(is.null(colors)){
+              if(object@pbc){
+                myColors <- grDevices::rainbow(length(object@clusters) - 1)
+                myColors <- c(myColors, myColors[1])
+              }else{
+                myColors <- grDevices::rainbow(length(object@clusters))
+              }
             }else{
-              myColors <- grDevices::rainbow(length(object@clusters))
+              if(object@pbc){
+                if((length(object@clusters) - 1) > length(colors)){
+                  stop("argument colors - does not have a valid length! Expected length: ", (length(object@clusters) - 1),
+                       "!")
+                }
+                colors <- colors[1:(length(object@clusters) - 1)]
+                myColors <- colors
+                myColors <- c(myColors, myColors[1])
+              }else{
+                if(length(object@clusters) > length(colors)){
+                  stop("argument colors - does not have a valid length! Expected length: ", length(object@clusters),
+                       "!")
+                }
+                colors <- colors[1:length(object@clusters)]
+                myColors <- colors
+              }
             }
             p <- ggplot2::ggplot(data, ggplot2::aes_string(x = "x", y = "y", colour = "Terms"))
             invisible(sapply(seq.int(1, length(myColors)), function(i) {
-              p <<- p + ggplot2::annotate("rect", fill = myColors[i], alpha = 0.15,
+              p <<- p + ggplot2::annotate("rect", fill = myColors[i], alpha = alpha,
                                  xmin = object@clusters[[i]][1], xmax = object@clusters[[i]][2],
                                  ymin = -Inf, ymax = Inf)
               return(NULL)

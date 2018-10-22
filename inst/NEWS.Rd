@@ -5,6 +5,9 @@
 \section{Version 1.3.6}{
   \itemize{
     \item Slot genesInTerm added to the Transcriptogram class.
+    \item Argument boundaryConditions from differentiallyExpressed(): default changed from FALSE to TRUE.
+    \item Argument onlyGenesInDE from clusterVisualization(): default changed from TRUE to FALSE.
+    \item Argument onlyGenesInDE from clusterEnrichment(): default changed from TRUE to FALSE.
   }
 }
 

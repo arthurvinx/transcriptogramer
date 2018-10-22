@@ -9,11 +9,12 @@
 \usage{
 clusterVisualization(object, maincomp = FALSE, connected = FALSE,
   host = "127.0.0.1", port = 9091, clusters = NULL,
-  onlyGenesInDE = TRUE)
+  onlyGenesInDE = FALSE, colors = NULL)
 
 \S4method{clusterVisualization}{Transcriptogram}(object,
   maincomp = FALSE, connected = FALSE, host = "127.0.0.1",
-  port = 9091, clusters = NULL, onlyGenesInDE = TRUE)
+  port = 9091, clusters = NULL, onlyGenesInDE = FALSE,
+  colors = NULL)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -35,7 +36,10 @@ displayed, if NULL, all clusters will be displayed.}
 
 \item{onlyGenesInDE}{Logical value, set as TRUE to use only the genes
 in the DE slot. Set as FALSE to use all the genes referring to the positions
-in the clusters slot. The default value of this argument is TRUE.}
+in the clusters slot. The default value of this argument is FALSE.}
+
+\item{colors}{Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+to generate the colors. The color vector must contain a color for each cluster.}
 }
 \value{
 This function returns an object of the RedPort Class.

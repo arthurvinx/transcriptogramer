@@ -10,12 +10,12 @@
 clusterEnrichment(object, universe = NULL, species,
   ontology = "biological process", algorithm = "classic",
   statistic = "fisher", pValue = 0.05, adjustMethod = "BH",
-  nCores = 1L, onlyGenesInDE = TRUE)
+  nCores = 1L, onlyGenesInDE = FALSE)
 
 \S4method{clusterEnrichment}{Transcriptogram}(object, universe = NULL,
   species, ontology = "biological process", algorithm = "classic",
   statistic = "fisher", pValue = 0.05, adjustMethod = "BH",
-  nCores = 1L, onlyGenesInDE = TRUE)
+  nCores = 1L, onlyGenesInDE = FALSE)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -62,7 +62,7 @@ The default value of this argument is 1.}
 
 \item{onlyGenesInDE}{Logical value, set as TRUE to use only the genes
 in the DE slot. Set as FALSE to use all the genes referring to the positions
-in the clusters slot. The default value of this argument is TRUE.}
+in the clusters slot. The default value of this argument is FALSE.}
 }
 \value{
 This method creates a data.frame, containing the most significant

@@ -372,6 +372,21 @@ species2Check <- function(argument) {
     }
 }
 
+check_alpha <- function(argument){
+  name <- "alpha"
+  if (!is.numeric(argument) || (argument < 0 || argument > 1) ||
+      length(argument) != 1) {
+    error(name)
+  }
+}
+
+check_colors <- function(argument){
+  name <- "colors"
+  if (!(is.character(argument) || is.null(argument))) {
+    error(name)
+  }
+}
+
 error <- function(name) {
     stop("argument ", name, " - does not have a valid value!", call. = FALSE)
 }

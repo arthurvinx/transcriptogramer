@@ -10,12 +10,13 @@
 differentiallyExpressed(object, levels, pValue = 0.05,
   species = object@Protein2Symbol, adjustMethod = "BH",
   trend = FALSE, title = "Differential expression",
-  boundaryConditions = FALSE)
+  boundaryConditions = TRUE, colors = NULL)
 
 \S4method{differentiallyExpressed}{Transcriptogram}(object, levels,
   pValue = 0.05, species = object@Protein2Symbol,
   adjustMethod = "BH", trend = FALSE,
-  title = "Differential expression", boundaryConditions = FALSE)
+  title = "Differential expression", boundaryConditions = TRUE,
+  colors = NULL)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -46,8 +47,13 @@ The default value of this argument is FALSE.}
 
 \item{title}{An overall title for the plot. The default value of this argument is "Differential expression"}
 
-\item{boundaryConditions}{Logical value, set as TRUE to check if nearby clusters could be merged.
-The default value of this argument is FALSE.}
+\item{boundaryConditions}{Logical value, defines whether the clusters limits will be extended using the
+current value of the radius slot.
+If TRUE, nearby clusters will be merged if its limits overlap.
+The default value of this argument is TRUE.}
+
+\item{colors}{Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+to generate the colors. The color vector must contain a color for each cluster.}
 }
 \value{
 This method creates a data.frame to feed the DE slot of an object

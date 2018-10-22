@@ -8,10 +8,11 @@
 \title{Projects Gene Ontology terms on the ordering}
 \usage{
 enrichmentPlot(object, nCores = 1L, nTerms = 1L, GOIDs = NULL,
-  title = "Enrichment")
+  title = "Enrichment", alpha = 0.15, colors = NULL)
 
 \S4method{enrichmentPlot}{Transcriptogram}(object, nCores = 1L,
-  nTerms = 1L, GOIDs = NULL, title = "Enrichment")
+  nTerms = 1L, GOIDs = NULL, title = "Enrichment", alpha = 0.15,
+  colors = NULL)
 }
 \arguments{
 \item{object}{An object of class Transcriptogram.}
@@ -30,6 +31,12 @@ will be used.}
 
 \item{title}{An overall title for the plot. The default value of this
 argument is "Enrichment"}
+
+\item{alpha}{The alpha value indicates the color transparency of the clusters regions.
+This value goes from 0 to 1, where 0 is completely transparent, and 1 is opaque.}
+
+\item{colors}{Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
+to generate the colors. The color vector must contain a color for each cluster.}
 }
 \value{
 This method returns an ggplot2 object.
