@@ -613,8 +613,9 @@ setMethod("clusterVisualization", "Transcriptogram",
     }
     message("invoking RedeR... step 1 of 4")
     message("** this may take some time...")
-    rdp <- RedeR::RedPort()
+    rdp <- RedeR::RedPort(host = host, port = port)
     RedeR::calld(rdp)
+    RedeR::resetd(rdp)
     message("generating the graphs... step 2 of 4")
     g <- igraph::graph.data.frame(d = object@association,
         directed = FALSE)
