@@ -8,6 +8,10 @@
     \item Argument boundaryConditions from differentiallyExpressed(): default changed from FALSE to TRUE.
     \item Argument onlyGenesInDE from clusterVisualization(): default changed from TRUE to FALSE.
     \item Argument onlyGenesInDE from clusterEnrichment(): default changed from TRUE to FALSE.
+    \item Argument colors added to the differentiallyExpressed() method.
+    \item Argument colors added to the clusterVisualization() method.
+    \item Argument colors added to the enrichmentPlot() method.
+    \item Argument alpha added to the enrichmentPlot() method.
   }
 }
 
