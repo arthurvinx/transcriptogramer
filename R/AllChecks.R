@@ -191,7 +191,7 @@ check_nCores <- function(argument){
         argument <- as.integer(argument)
         if(argument < 1 || argument > nc){
             stop("argument nCores - should be greater than 0 and ",
-                "less than or equal to ", nc)
+                "less than or equal to ", nc, "!")
         }else{
             return (argument)
         }
