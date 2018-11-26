@@ -1,8 +1,8 @@
 Package: transcriptogramer
 Type: Package
 Title: Transcriptional analysis based on transcriptograms
-Version: 1.5.0
-Date: 2018-10-22
+Version: 1.5.1
+Date: 2018-11-26
 Authors@R: c(
     person("Diego", "Morais", email = "vinx@ufrn.edu.br",
     role = c("aut", "cre")),
@@ -39,7 +39,7 @@ Imports: biomaRt,
     stats,
     tidyr,
     topGO
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
 SystemRequirements: Java Runtime Environment (>= 6)

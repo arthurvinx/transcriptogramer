@@ -311,9 +311,8 @@ setGeneric("radius<-", signature = "object",
 #' instead.
 #' If the translation fail for some protein, its ENSEMBL
 #' Peptide ID will be present
-#' into the Symbol column. This method also groups the proteins detected as
-#' differentially expressed
-#' in clusters, and plots a graphical representation of the groupings.
+#' into the Symbol column. This method also groups the differentially expressed proteins detected
+#' in clusters, and plots a graphical representation of this clustering.
 #'
 #' @param object An object of class Transcriptogram.
 #'
@@ -354,8 +353,8 @@ setGeneric("radius<-", signature = "object",
 #' @return This method creates a data.frame to feed the DE slot of an object
 #' of class Transcriptogram. This data.frame of differentially expressed
 #' proteins
-#' contains the log2-fold-change, the p-values and an
-#' integer number that indicates if the protein is downregulated or upregulated.
+#' contains log2-fold-change, raw p-values, adjusted p-values, and an
+#' integer number that indicates if the protein is downregulated (-1) or upregulated (1).
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
@@ -408,6 +407,7 @@ setGeneric("radius<-", signature = "object",
 #' @importFrom ggplot2 theme_bw
 #' @importFrom ggplot2 element_text
 #' @importFrom grDevices rainbow
+#' @importFrom stats p.adjust
 #' @importFrom stats na.omit
 #' @importFrom stats model.matrix
 #' @importFrom stats smooth.spline

@@ -253,6 +253,23 @@ enrichmentPlot(t)
 
 ![](Rplot3.png)
 
+# Frequently asked questions
+> How does transcriptogramer deal in cases where Protein-Protein Interactions (PPIs) for expressed proteins are missing?
+
+The `transcriptogramStep1()` method removes rows from the expression data which are not present in the set of ordered proteins. As the association and ordering arguments of the `transcriptogramPreprocess()` method must contain the same proteins, if a row of the expression data cannot be mapped to one of these proteins, it will be discarded.
+
+***
+
+> How does transcriptogramer deal in cases where there’s no expression data for some PPIs in the network?
+
+When there is no expression data related to a given protein of the set of ordered proteins, this protein expression value is treated as a missing value. In this case, the sliding window will discard any missing value and average the remaining ones while running the `transcriptogramStep2()` method, allowing some windows to be smaller than `radius * 2 + 1`.
+
+***
+
+> Does the transcriptogramer accept/convert protein/gene IDs other than the ones used in the vignette?
+
+Not currently. The transcriptogramer is only able to automatically convert ENSEMBL Peptide IDs to Symbols. As this can be done by the biomaRt package, arguments will be added in the future to allow the automatic conversion of other IDs, such as ENTREZ to ENSEMBL Gene ID. This change will be reported here and in the package NEWS.
+
 # Session info
 
 ```{r}

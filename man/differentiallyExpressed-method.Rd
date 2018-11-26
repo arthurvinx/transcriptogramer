@@ -59,8 +59,8 @@ to generate the colors. The color vector must contain a color for each cluster.}
 This method creates a data.frame to feed the DE slot of an object
 of class Transcriptogram. This data.frame of differentially expressed
 proteins
-contains the log2-fold-change, the p-values and an
-integer number that indicates if the protein is downregulated or upregulated.
+contains log2-fold-change, raw p-values, adjusted p-values, and an
+integer number that indicates if the protein is downregulated (-1) or upregulated (1).
 }
 \description{
 This method uses the \pkg{limma} package to identify which genes are
@@ -79,9 +79,8 @@ Peptide ID to Symbol
 instead.
 If the translation fail for some protein, its ENSEMBL
 Peptide ID will be present
-into the Symbol column. This method also groups the proteins detected as
-differentially expressed
-in clusters, and plots a graphical representation of the groupings.
+into the Symbol column. This method also groups the differentially expressed proteins detected
+in clusters, and plots a graphical representation of this clustering.
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)

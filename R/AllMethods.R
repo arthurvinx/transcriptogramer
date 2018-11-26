@@ -376,7 +376,8 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
     res.fit <- limma::decideTests(ct.fit, method = "global",
         adjust.method = adjustMethod, p.value = pValue)
     temp <- data.frame(Protein = ct.fit$Protein, Position = ct.fit$Position,
-        logFC = ct.fit$coef, pValue = ct.fit$p.value,
+        logFC = ct.fit$coefficients, pValue = ct.fit$p.value,
+        pAdj = stats::p.adjust(ct.fit$p.value, method = adjustMethod),
         degenes = as.integer(unclass(res.fit)), stringsAsFactors = FALSE)
     rm(contrasts)
     features <- rowSums(res.fit != 0) > 0
@@ -386,7 +387,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
             "meeting the p-value requirement, was detected!")
     }
     rm(temp)
-    colnames(DElimma)[c(3, 4, 5)] <- c("logFC", "pValue", "DEgenes")
+    colnames(DElimma)[c(3, 4, 5, 6)] <- c("logFC", "pValue", "pAdj", "DEgenes")
     rownames(DElimma) <- NULL
     message("identifying clusters... step 2 of 4")
     pBreaks <- list()
@@ -461,7 +462,7 @@ setMethod("differentiallyExpressed", "Transcriptogram", function(object,
       }
         return(NULL)
     }))
-    DElimma <- DElimma[, c(1, 2, 6, 3, 4, 5)]
+    DElimma <- DElimma[, c(1, 2, 7, 3, 4, 5, 6)]
     message("generating plot... step 3 of 4")
     case <- object@transcriptogramS2[, -c(1, 2)]
     control <- case[, which(levels == TRUE)]
@@ -813,8 +814,8 @@ setMethod("clusterEnrichment", "Transcriptogram", function(object,
         result$pValue <- gsub("^<", "", result$pValue)
       }
       result$pValue <- as.numeric(result$pValue)
-      result$pValue <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
-      result <- result[result$pValue <= pValue, ]
+      result$pAdj <- stats::p.adjust(result[, "pValue"], method = adjustMethod)
+      result <- result[result$pAdj <= pValue, ]
       if (nrow(result) == 0 && i == 1) {
         temporary <- list()
         temporary[[1]] <- NULL
@@ -861,7 +862,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
               stop("argument of class Transcriptogram - be sure to ",
                    "call the method clusterEnrichment() before this one!")
             }
-            terms <- object@Terms[order(object@Terms$pValue),]
+            terms <- object@Terms[order(object@Terms$pAdj),]
             if(is.null(GOIDs)){
               v <- sort(unique(terms$ClusterNumber))
               GOIDs <- lapply(v, function(i){
