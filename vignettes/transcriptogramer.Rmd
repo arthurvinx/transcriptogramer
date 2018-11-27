@@ -94,23 +94,23 @@ radius(object = t) <- 50
 r <- radius(object = t)
 ```
 
-The output of the orderingProperties() method is partially affected by
-the radius slot. Only window related metrics will be affected by the radius change. Note that the sum of the window modularity increased using the radius 80.
+As window related metrics are affected by the radius, the output of the orderingProperties() method changes depending on the content of
+the radius slot. A window modularity value close to 1 indicates dense connections between the genes inside the window, as well as sparse connections between these genes and the other genes in the network. Note that the sum of the window modularity increased using the radius 80. 
 
-```{r message = FALSE}
+```{r message = FALSE, comment = ""}
 oPropertiesR50 <- orderingProperties(object = t, nCores = 1)
 
 ## slight change of radius
 radius(object = t) <- 80
 
-## this output is partially different comparing to oPropertiesR25
+## this output is partially different comparing to oPropertiesR50
 oPropertiesR80 <- orderingProperties(object = t, nCores = 1)
 
 sum(oPropertiesR50$windowModularity)
 sum(oPropertiesR80$windowModularity)
 ```
 
-However, the connectivityProperties() method does not uses a window, thus, its output is not
+However, the connectivityProperties() method does not use a window, thus, its output is not
 affected by the radius slot.
 
 ```{r message = FALSE}
@@ -182,21 +182,21 @@ columns referring to case samples.
 ## the default value for trend is FALSE
 levels <- c(rep(FALSE, 3), rep(TRUE, 3))
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
-                             trend = FALSE)
+                             trend = FALSE, title = "radius 80")
+
+## the radius 50 will affect the output significantly
+t2 <- differentiallyExpressed(object = t2, levels = levels, pValue = 0.01,
+                             species = DEsymbols, title = "radius 50")
 ```
 ```{r eval = FALSE}
 ## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
 ## Internet connection is required for this command
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
-                             species = "Homo sapiens")
+                             species = "Homo sapiens", title = "radius 80")
 
 ## translating ENSEMBL Peptide IDs to Symbols using the DEsymbols dataset
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
-                             species = DEsymbols)
-
-## the radius 50 will affect the output significantly
-t2 <- differentiallyExpressed(object = t2, levels = levels, pValue = 0.01,
-                             species = DEsymbols)
+                             species = DEsymbols, title = "radius 80")
 ```
 
 This method also produces a plot referring to its output. Each cluster detected is represented by a color. The genes
@@ -212,7 +212,7 @@ DE slot of the Transcriptogram object, its content can be obtained using the
 DE method. By default, the p-values are adjusted by the Benjamini-Hochberg
 procedure. Note that the differential expression on the object of radius 80 detected less clusters, but there are more windows centers significantly altered on it, thus, the clusters are more consistent. Therefore, the next methods will be performed only on the object of radius 80.
 
-```{r message = FALSE}
+```{r message = FALSE, comment = ""}
 DE <- DE(object = t)
 DE2 <- DE(object = t2)
 nrow(DE)
