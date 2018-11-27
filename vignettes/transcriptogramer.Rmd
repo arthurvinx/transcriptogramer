@@ -247,7 +247,7 @@ t <- clusterEnrichment(object = t, species = HsBPTerms,
                            pValue = 0.005, nCores = 1)
 ```
 ```{r eval = FALSE}
-## using the biomaRt package to create the Protein2GO data.frame
+## using the species argument to create the Protein2GO data.frame
 ## Internet connection is required for this command
 t <- clusterEnrichment(object = t, species = "Homo sapiens",
                            pValue = 0.005, nCores = 1)
