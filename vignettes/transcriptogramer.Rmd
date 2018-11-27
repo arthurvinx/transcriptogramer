@@ -80,34 +80,37 @@ preprocessing (see **Transcriptogram-class** documentation).
 ## creating the object and setting the radius as 0
 t <- transcriptogramPreprocess(association = association, ordering = Hs900)
 
-## creating the object and setting the radius as 50
+## creating the object and setting the radius as 80
 t <- transcriptogramPreprocess(association = association, ordering = Hs900,
-                               radius = 50)
+                               radius = 80)
 ```
 ```{r message = FALSE}
 ## after the preprocessing
 
 ## modifying the radius of an existing Transcriptogram object
-radius(object = t) <- 25
+radius(object = t) <- 50
 
 ## getting the radius of an existing Transcriptogram object
 r <- radius(object = t)
 ```
 
 The output of the orderingProperties() method is partially affected by
-the radius slot.
+the radius slot. Only window related metrics will be affected by the radius change. Note that the sum of the window modularity increased using the radius 80.
 
 ```{r message = FALSE}
-oPropertiesR25 <- orderingProperties(object = t, nCores = 1)
+oPropertiesR50 <- orderingProperties(object = t, nCores = 1)
 
 ## slight change of radius
-radius(object = t) <- 30
+radius(object = t) <- 80
 
 ## this output is partially different comparing to oPropertiesR25
-oPropertiesR30 <- orderingProperties(object = t, nCores = 1)
+oPropertiesR80 <- orderingProperties(object = t, nCores = 1)
+
+sum(oPropertiesR50$windowModularity)
+sum(oPropertiesR80$windowModularity)
 ```
 
-As the connectivityProperties() method does not uses a window, its output is not
+However, the connectivityProperties() method does not uses a window, thus, its output is not
 affected by the radius slot.
 
 ```{r message = FALSE}
@@ -131,6 +134,7 @@ identifiers related to it.
 ```{r message = FALSE}
 t <- transcriptogramStep1(object = t, expression = GSE9988,
                           dictionary = GPL570, nCores = 1)
+t2 <- t
 ```
 
 To each position of the ordering, the transcriptogramStep2() method assigns a
@@ -149,8 +153,8 @@ methods are affected by the content of the transcriptogramS2 slot, it can be
 recalculated using the content of the transcriptogramS1 slot.
 
 ```{r message = FALSE}
-radius(object = t) <- 80
-t <- transcriptogramStep2(object = t, nCores = 1)
+radius(object = t2) <- 50
+t2 <- transcriptogramStep2(object = t2, nCores = 1)
 ```
 
 ## Gene Ontology enrichment analysis
@@ -189,22 +193,30 @@ t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
 ## translating ENSEMBL Peptide IDs to Symbols using the DEsymbols dataset
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
                              species = DEsymbols)
+
+## the radius 50 will affect the output significantly
+t2 <- differentiallyExpressed(object = t2, levels = levels, pValue = 0.01,
+                             species = DEsymbols)
 ```
 
-This method also produces a plot referring to its output. In this case,
-eleven clusters were detected, and each one is represented by a color. The genes
+This method also produces a plot referring to its output. Each cluster detected is represented by a color. The genes
 that are above the horizontal black line are upregulated, and the genes that
 are below are downregulated.
 
-![](Rplot1.png)
+![](Rplot1-a.png)
+
+![](Rplot1-b.png)
 
 The differentially expressed genes identified by this method are stored in the
 DE slot of the Transcriptogram object, its content can be obtained using the
 DE method. By default, the p-values are adjusted by the Benjamini-Hochberg
-procedure.
+procedure. Note that the differential expression on the object of radius 80 detected less clusters, but there are more windows centers significantly altered on it, thus, the clusters are more consistent. Therefore, the next methods will be performed only on the object of radius 80.
 
 ```{r message = FALSE}
 DE <- DE(object = t)
+DE2 <- DE(object = t2)
+nrow(DE)
+nrow(DE2)
 ```
 
 The `clusterVisualization()` method uses the `r Biocpkg("RedeR")` package to

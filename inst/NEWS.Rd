@@ -2,6 +2,14 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.5.1}{
+  \itemize{
+    \item Change on the differentiallyExpressed() method return: output now contains raw p-values.
+    \item Change on the clusterEnrichment() method return: output now contains raw p-values.
+    \item A section called "Frequently asked questions" has been added in the vignette.
+  }
+}
+
 \section{Version 1.3.6}{
   \itemize{
     \item Slot genesInTerm added to the Transcriptogram class.
@@ -23,7 +31,7 @@
 
 \section{Version 1.3.3}{
   \itemize{
-    \item Changes on the clusterEnrichment() method return.
+    \item Change on the clusterEnrichment() method return.
     \item Slots Protein2GO, and Terms added to the Transcriptogram class.
     \item New methods: enrichmentPlot() and Terms().
   }
