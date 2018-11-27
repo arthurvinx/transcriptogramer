@@ -189,7 +189,7 @@ t2 <- differentiallyExpressed(object = t2, levels = levels, pValue = 0.01,
                              species = DEsymbols, title = "radius 50")
 ```
 ```{r eval = FALSE}
-## translating ENSEMBL Peptide IDs to Symbols using the biomaRt package
+## using the species argument to translate ENSEMBL Peptide IDs to Symbols
 ## Internet connection is required for this command
 t <- differentiallyExpressed(object = t, levels = levels, pValue = 0.01,
                              species = "Homo sapiens", title = "radius 80")
