@@ -35,6 +35,6 @@ testTranscriptogramStep2 <- function(){
             is.data.frame(t@transcriptogramS2) &&
             nrow(t@transcriptogramS2) == 846 && ncol(t@transcriptogramS2) == 8)
         checkTrue(t@transcriptogramS2[3,
-            3] == mean(c(t@transcriptogramS1[2, 3], t@transcriptogramS1[3, 3],
-            t@transcriptogramS1[4, 3], t@transcriptogramS1[5, 3])))
+            3] == sum(c(t@transcriptogramS1[2, 3], t@transcriptogramS1[3, 3],
+            t@transcriptogramS1[4, 3], t@transcriptogramS1[5, 3]))/(t@radius*2+1))
 }

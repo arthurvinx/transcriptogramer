@@ -287,6 +287,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
         message("applying sliding window and mounting resulting ",
             "data... step 1 of 1")
         col <- c(1, 2)
+        ws <- object@radius*2+1
         i <- NULL
         result <- foreach::foreach(i = seq.int(1, ntasks),
             .combine = "rbind", .options.snow = opts) %dopar%
@@ -313,7 +314,7 @@ setMethod("transcriptogramStep2", "Transcriptogram",
                     -col])
                 }
                 temp[1, ] <- t(apply(temp,
-                  2, mean))
+                  2, assignExpression, windowSize = ws))
                 return(temp[1, ])
             }
         rownames(result) <- NULL
@@ -927,7 +928,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
                                          temp <- gsub(paste0(taxonomyID, "."), "",
                                                       temp, fixed = TRUE)
                                        }
-                                       n <- length(temp)
+                                       n <- object@radius*2+1
                                        aux <- GOmapping[GOmapping$ensembl_peptide_id %in% temp,]
                                        rates <- vapply(v, function(x) {
                                          nrow(aux[aux[, 2] == x,])/n

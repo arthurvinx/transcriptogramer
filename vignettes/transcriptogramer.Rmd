@@ -274,7 +274,7 @@ The `transcriptogramStep1()` method removes rows from the expression data which 
 
 > How does transcriptogramer deal in cases where there’s no expression data for some PPIs in the network?
 
-When there is no expression data related to a given protein of the set of ordered proteins, this protein expression value is treated as a missing value. In this case, the sliding window will discard any missing value and average the remaining ones while running the `transcriptogramStep2()` method, allowing some windows to be smaller than `radius * 2 + 1`.
+When there is no expression data related to a given protein of the set of ordered proteins, this protein expression value is treated as a missing value. In this case, the sliding window will discard missing values, sum the remaining ones, and divide this value by `radius * 2 + 1` while running the `transcriptogramStep2()` method.
 
 ***
 
