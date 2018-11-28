@@ -928,7 +928,7 @@ setMethod("enrichmentPlot", "Transcriptogram",
                                          temp <- gsub(paste0(taxonomyID, "."), "",
                                                       temp, fixed = TRUE)
                                        }
-                                       n <- object@radius*2+1
+                                       n <- length(temp)
                                        aux <- GOmapping[GOmapping$ensembl_peptide_id %in% temp,]
                                        rates <- vapply(v, function(x) {
                                          nrow(aux[aux[, 2] == x,])/n

@@ -280,7 +280,7 @@ When there is no expression data related to a given protein of the set of ordere
 
 > Does the transcriptogramer accept/convert protein/gene IDs other than the ones used in the vignette?
 
-Not currently. The transcriptogramer is only able to automatically convert ENSEMBL Peptide IDs to Symbols. As this can be done by the biomaRt package, arguments will be added in the future to allow the automatic conversion of other IDs, such as ENTREZ to ENSEMBL Gene ID. This change will be reported here and in the package NEWS.
+This is not possible in the current transcriptogramer version. The transcriptogramer is only able to automatically convert ENSEMBL Peptide IDs to Symbols. As this can be done by the biomaRt package, arguments will be added in the future to allow the automatic conversion of other IDs, such as ENTREZ to ENSEMBL Gene ID. This change will be reported here and in the package NEWS.
 
 # Session info
 
