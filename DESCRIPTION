@@ -22,7 +22,7 @@ Encoding: UTF-8
 LazyData: true
 biocViews: Software, Network, Visualization, SystemsBiology, GeneExpression,
     GeneSetEnrichment, GraphAndNetwork, Clustering, DifferentialExpression,
-    Microarray, RNASeq, Transcription
+    Microarray, RNASeq, Transcription, ImmunoOncology
 Imports: biomaRt,
     data.table,
     doSNOW,
