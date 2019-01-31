@@ -24,7 +24,7 @@ vignette: >
 ![](logo.png)
 
 # Overview
-The transcriptogramer package is designed for transcriptional analysis
+The transcriptogramer package [@Morais2019] is designed for transcriptional analysis
 based on transcriptograms,
 a method to analyze transcriptomes that projects
 expression values on a set of

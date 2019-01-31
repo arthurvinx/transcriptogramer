@@ -1,11 +1,9 @@
-citEntry(entry = "Manual",
-  author = "Diego AA Morais and Rodrigo JS Dalmolin",
-  title = "Transcriptogramer: transcriptional analysis based on
-  transcriptograms",
-  year = "2017",
-  doi = "10.18129/B9.bioc.transcriptogramer",
-  note = "R package",
-  textVersion = "Morais DAA, Dalmolin RJS. Transcriptogramer: transcriptional
-  analysis based on transcriptograms. R package, 2017."
+citEntry(
+	entry = "article",
+	author = "Morais, D. A. A., Almeida, R. M. C. and Dalmolin, R. J. S.",
+	title = "Transcriptogramer: an R/Bioconductor package for transcriptional analysis based on protein–protein interaction",
+	year = 2019,
+	doi = "https://doi.org/10.1093/bioinformatics/btz007",
+	journal = "Bioinformatics",
+	textVersion = "Morais, D. A. A., Almeida, R. M. C. and Dalmolin, R. J. S. (2019). Transcriptogramer: an R/Bioconductor package for transcriptional analysis based on protein–protein interaction. Bioinformatics"
 )
-
