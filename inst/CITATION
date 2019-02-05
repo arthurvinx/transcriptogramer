@@ -1,9 +1,11 @@
 citEntry(
 	entry = "article",
-	author = "Morais, D. A. A., Almeida, R. M. C. and Dalmolin, R. J. S.",
+	author = personList(as.person("Diego A. A. Morais"),
+                      as.person("Rita M. C. Almeida"),
+                      as.person("Rodrigo J. S. Dalmolin")),
 	title = "Transcriptogramer: an R/Bioconductor package for transcriptional analysis based on protein–protein interaction",
 	year = 2019,
-	doi = "https://doi.org/10.1093/bioinformatics/btz007",
+	doi = "10.1093/bioinformatics/btz007",
 	journal = "Bioinformatics",
-	textVersion = "Morais, D. A. A., Almeida, R. M. C. and Dalmolin, R. J. S. (2019). Transcriptogramer: an R/Bioconductor package for transcriptional analysis based on protein–protein interaction. Bioinformatics"
+	textVersion = "Morais, D. A. A., Almeida, R. M. C. and Dalmolin, R. J. S. (2019). Transcriptogramer: an R/Bioconductor package for transcriptional analysis based on protein–protein interaction. Bioinformatics. doi: 10.1093/bioinformatics/btz007."
 )
