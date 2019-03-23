@@ -20,7 +20,7 @@ Plus 2.0 Array.
 }
 \details{
 This dataset was created to map the Homo sapiens proteins, from STRINGdb
-release 10.5, of combined score greater than or equal to 700.
+release 11, of combined score greater than or equal to 700.
 }
 \examples{
 GPL570

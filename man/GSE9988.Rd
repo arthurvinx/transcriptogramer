@@ -4,7 +4,7 @@
 \name{GSE9988}
 \alias{GSE9988}
 \title{Dataset containing expression values}
-\format{An object of class \code{data.frame} with 24804 rows and 6 columns.}
+\format{An object of class \code{data.frame} with 27828 rows and 6 columns.}
 \source{
 \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE9988}{GSE9988}
 }
@@ -22,7 +22,7 @@ in its respective rowname. The expression values were normalized using the
 this data.frame contains only 6 samples (GSM252443, GSM252444,
 GSM252445, GSM252465, GSM252466, GSM252467). The rows of each sample
 are composed only by probes mapped, by the GPL570 dictionary,
-to proteins, from STRINGdb release 10.5,
+to proteins, from STRINGdb release 11,
 of combined score greater than or equal to 900.
 }
 \examples{

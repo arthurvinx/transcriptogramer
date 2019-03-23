@@ -2,6 +2,12 @@
 \title{transcriptogramer News}
 \encoding{UTF-8}
 
+\section{Version 1.5.6}{
+  \itemize{
+    \item All datasets were updated to match data from STRINGdb release 11.
+  }
+}
+
 \section{Version 1.5.1}{
   \itemize{
     \item Change on the differentiallyExpressed() method return: output now contains raw p-values.

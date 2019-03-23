@@ -15,7 +15,7 @@ DEsymbols
 \description{
 A mapping between ENSEMBL Peptide ID and Symbol (Gene Name).
 This dataset was created to map the Homo sapiens proteins,
-from STRINGdb release 10.5, of combined score greater than or equal to 900.
+from STRINGdb release 11, of combined score greater than or equal to 900.
 }
 \examples{
 DEsymbols

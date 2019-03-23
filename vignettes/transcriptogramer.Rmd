@@ -50,7 +50,7 @@ and 900 (see **Hs900**, **Hs800**, **Hs700**, **Mm900**, **Mm800**, **Mm700**,
 **Sc900**, **Sc800**, **Sc700**, **Rn900**, **Rn800** and **Rn700** datasets).
 Custom sets of ordered proteins can be generated from protein network data using
 [The transcriptogramer](https://lief.if.ufrgs.br/pub/biosoftwares/transcriptogramer/)
-on Windows.
+on Windows or Linux.
 
 # Quick start
 The first step is to create a Transcriptogram object by running the
@@ -216,7 +216,9 @@ procedure. Note that the differential expression on the object of radius 80 dete
 DE <- DE(object = t)
 DE2 <- DE(object = t2)
 nrow(DE)
+nrow(DE)/length(unique(DE$ClusterNumber))
 nrow(DE2)
+nrow(DE2)/length(unique(DE2$ClusterNumber))
 ```
 
 The `clusterVisualization()` method uses the `r Biocpkg("RedeR")` package to
