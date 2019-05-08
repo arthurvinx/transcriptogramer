@@ -42,7 +42,7 @@ to generate the colors. The color vector must contain a color for each cluster.}
 This method returns an ggplot2 object.
 }
 \description{
-Plots the rate (number of genes related to a term inside the
+Plots the ratio (number of genes related to a term inside the
 window/total number of genes in the window) of given terms.
 }
 \examples{

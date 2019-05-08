@@ -36,10 +36,10 @@ hence, genome wide gene expression profiles that provide a global view for
 the cellular metabolism, while indicating gene sets whose expression are
 altered [@Silva2014; @Filho2011; @Almeida2016; @Ferrareze2017; @Xavier2017].
 
-Methods are provided to analyze topological properties of an
-interactome, to generate transcriptograms, to detect and to display
+Methods are provided to analyze topological properties of a
+Protein-Protein Interaction (PPI) network, to generate transcriptograms, to detect and to display
 differentially expressed gene clusters, and to perform a Gene Ontology 
-enrichment analysis on these clusters.
+Enrichment Analysis on these clusters.
 
 As a set of ordered proteins is required in order to run the methods,
 datasets are available for four species (*Homo sapiens*, *Mus musculus*,

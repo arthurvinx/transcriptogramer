@@ -757,7 +757,7 @@ setGeneric("Terms", function(object)
 
 #' Projects Gene Ontology terms on the ordering
 #'
-#' Plots the rate (number of genes related to a term inside the
+#' Plots the ratio (number of genes related to a term inside the
 #' window/total number of genes in the window) of given terms.
 #'
 #' @param object An object of class Transcriptogram.
