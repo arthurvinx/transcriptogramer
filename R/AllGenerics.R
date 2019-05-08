@@ -453,7 +453,7 @@ setGeneric("differentiallyExpressed", function(object,
 #' listen.
 #'
 #' @param clusters An integer vector specifying the clusters to be
-#' displayed, if NULL, all clusters will be displayed.
+#' displayed. If NULL, all clusters will be displayed.
 #'
 #' @param onlyGenesInDE Logical value, set as TRUE to use only the genes
 #' in the DE slot. Set as FALSE to use all the genes referring to the positions
