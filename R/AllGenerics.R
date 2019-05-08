@@ -462,7 +462,7 @@ setGeneric("differentiallyExpressed", function(object,
 #' @param colors Color vector used to distinguish the clusters. If NULL, the rainbow palette will be used
 #' to generate the colors. The color vector must contain a color for each cluster.
 #'
-#' @return This function returns an object of the RedPort Class.
+#' @return This method returns an object of the RedPort Class.
 #'
 #' @examples
 #' transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)

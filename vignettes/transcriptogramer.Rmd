@@ -50,7 +50,8 @@ and 900 (see **Hs900**, **Hs800**, **Hs700**, **Mm900**, **Mm800**, **Mm700**,
 **Sc900**, **Sc800**, **Sc700**, **Rn900**, **Rn800** and **Rn700** datasets).
 Custom sets of ordered proteins can be generated from protein network data using
 [The transcriptogramer](https://lief.if.ufrgs.br/pub/biosoftwares/transcriptogramer/)
-on Windows or Linux.
+on Windows, or [an implementation of the seriation algorithm](https://github.com/arthurvinx/seriation)
+on Linux.
 
 # Quick start
 The first step is to create a Transcriptogram object by running the

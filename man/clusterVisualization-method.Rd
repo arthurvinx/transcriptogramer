@@ -42,7 +42,7 @@ in the clusters slot. The default value of this argument is FALSE.}
 to generate the colors. The color vector must contain a color for each cluster.}
 }
 \value{
-This function returns an object of the RedPort Class.
+This method returns an object of the RedPort Class.
 }
 \description{
 This method uses the \pkg{RedeR} package to display graphs of the
