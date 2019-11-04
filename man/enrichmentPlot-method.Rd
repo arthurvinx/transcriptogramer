@@ -43,7 +43,7 @@ This method returns an ggplot2 object.
 }
 \description{
 Plots the ratio (number of genes related to a term inside the
-window/total number of genes in the window) of given terms.
+window/total number of genes in the window) from a set of Gene Ontology terms.
 }
 \examples{
 transcriptogram <- transcriptogramPreprocess(association, Hs900, 50)
