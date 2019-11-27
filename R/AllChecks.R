@@ -181,6 +181,9 @@ check_adjustMethod1 <- function(argument){
 check_nCores <- function(argument){
     name <- "nCores"
     nc <- parallel::detectCores()
+    if(is.na(nc)){
+        stop("NA returned by parallel::detectCores() - reinstall the parallel package!")
+    }
     if(is.logical(argument)){
         if(TRUE){
             return (nc)
