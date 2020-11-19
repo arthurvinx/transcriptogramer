@@ -44,7 +44,7 @@ Enrichment Analysis on these clusters.
 As a set of ordered proteins is required in order to run the methods,
 datasets are available for four species (*Homo sapiens*, *Mus musculus*,
 *Saccharomyces cerevisiae* and *Rattus norvegicus*). Each species has three 
-datasets, originated from [STRINGdb](https://string-db.org/) release 10.5
+datasets, originated from [STRINGdb](https://string-db.org/) release 11.0
 protein network data, with combined scores greater than or equal to 700, 800
 and 900 (see **Hs900**, **Hs800**, **Hs700**, **Mm900**, **Mm800**, **Mm700**,
 **Sc900**, **Sc800**, **Sc700**, **Rn900**, **Rn800** and **Rn700** datasets).
@@ -56,7 +56,7 @@ on Linux.
 # Quick start
 The first step is to create a Transcriptogram object by running the
 `transcriptogramPreprocess()` method. This example uses a subset of the
-*Homo sapiens* protein network data, from STRINGdb release 10.5, containing only
+*Homo sapiens* protein network data, from STRINGdb release 11.0, containing only
 associations of proteins of combined score greater than or equal to 900
 (see **Hs900** and **association** datasets).
 
